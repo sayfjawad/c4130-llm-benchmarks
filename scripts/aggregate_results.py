@@ -86,8 +86,8 @@ def load_raw_results(results_dir, model_id):
                 bench_text = f.read()
             import re
             # Zoek tg128 en pp512 regels
-            tg_match = re.search(r'tg128.*?(\d+\.\d+)\s*t/s', bench_text)
-            pp_match = re.search(r'pp512.*?(\d+\.\d+)\s*t/s', bench_text)
+            tg_match = re.search(r'tg128\s*\|\s*([\d.]+)', bench_text)
+            pp_match = re.search(r'pp512\s*\|\s*([\d.]+)', bench_text)
             if tg_match:
                 gen_tps = float(tg_match.group(1))
             if pp_match:

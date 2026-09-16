@@ -1,0 +1,281 @@
+{
+  "model": "nemotron-3.5-lightning",
+  "sizes": [
+    {
+      "ctx_requested": 8192,
+      "prompt_tokens": 10489,
+      "completion_tokens": 1288,
+      "content": "ANTWOORD 1: Het nieuwe ERP-project heeft de interne projectreferentie PRJ-2247 en een toegekend budget van 487.300 euro, te besteden over drie kwartalen.  \nANTWOORD 2: De controleaanduiding voor kwaliteitsregistratie op positie 25% is RK-93810-214.  \nANTWOORD 3: De controleaanduiding voor kwaliteitsregistratie op positie 50% is RK-13278-859.  \nANTWOORD 4: De controleaanduiding voor kwaliteitsregistratie op positie 75% is RK-46048-350.  \nANTWOORD 5: De controleaanduiding voor kwaliteitsregistratie op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 16.88,
+      "prefill_tps": 1510.65,
+      "decode_tps": 130.66,
+      "peak_vram_mb": [
+        7998,
+        6874,
+        8766,
+        7296
+      ]
+    },
+    {
+      "ctx_requested": 32768,
+      "prompt_tokens": 40431,
+      "completion_tokens": 1427,
+      "content": "ANTWOORD 1: Het nieuwe ERP-project heeft de projectreferentie PRJ-2247 en een toegekend budget van 487.300 euro, te besteden over drie kwartalen.\n\nANTWOORD 2: De controleaanduiding voor kwaliteitsregistratie op positie 25% is RK-93810-214.\n\nANTWOORD 3: De controleaanduiding voor kwaliteitsregistratie op positie 50% is RK-13278-859.\n\nANTWOORD 4: De controleaanduiding voor kwaliteitsregistratie op positie 75% is RK-46048-350.\n\nANTWOORD 5: De controleaanduiding voor kwaliteitsregistratie op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 39.83,
+      "prefill_tps": 1482.93,
+      "decode_tps": 116.26,
+      "peak_vram_mb": [
+        7998,
+        6874,
+        8766,
+        7296
+      ]
+    },
+    {
+      "ctx_requested": 65536,
+      "prompt_tokens": 80204,
+      "completion_tokens": 931,
+      "content": "ANTWOORD 1: PRJ-2247 en een budget van 487.300 euro.\nANTWOORD 2: RK-93810-214.\nANTWOORD 3: RK-13278-859.\nANTWOORD 4: RK-46048-350.\nANTWOORD 5: RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 68.24,
+      "prefill_tps": 1353.35,
+      "decode_tps": 109.49,
+      "peak_vram_mb": [
+        7998,
+        6874,
+        8766,
+        7296
+      ]
+    },
+    {
+      "ctx_requested": 131072,
+      "prompt_tokens": 159764,
+      "completion_tokens": 717,
+      "content": "ANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget bedraagt 487.300 euro, te besteden over drie kwartalen.\n\nANTWOORD 2: De controleaanduiding voor kwaliteitsregistratie op positie 25% is RK-93810-214.\n\nANTWOORD 3: De controleaanduiding voor kwaliteitsregistratie op positie 50% is RK-13278-859.\n\nANTWOORD 4: De controleaanduiding voor kwaliteitsregistratie op positie 75% is RK-46048-350.\n\nANTWOORD 5: De controleaanduiding voor kwaliteitsregistratie op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 146.44,
+      "prefill_tps": 1154.98,
+      "decode_tps": 97.3,
+      "peak_vram_mb": [
+        7998,
+        6874,
+        8766,
+        7296
+      ]
+    },
+    {
+      "ctx_requested": 200000,
+      "prompt_tokens": 243348,
+      "completion_tokens": 616,
+      "content": "ANTWOORD 1: PRJ-2247, 487.300 euro\nANTWOORD 2: RK-93810-214\nANTWOORD 3: RK-13278-859\nANTWOORD 4: RK-46048-350\nANTWOORD 5: RK-39256-242",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 253.26,
+      "prefill_tps": 993.71,
+      "decode_tps": 86.13,
+      "peak_vram_mb": [
+        7998,
+        6874,
+        8766,
+        7296
+      ]
+    },
+    {
+      "ctx_requested": 262144,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (318596 tokens) exceeds the available context size (262144 tokens), try increasing it\",\"type\":\"exceed_context_size_error\",\"n_prompt_tokens\":318596,\"n_ctx\":262144}}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 1.68,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        7998,
+        6874,
+        8766,
+        7296
+      ]
+    }
+  ]
+}

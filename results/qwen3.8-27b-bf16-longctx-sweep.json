@@ -1,0 +1,235 @@
+{
+  "model": "qwen3.8-27b-bf16",
+  "sizes": [
+    {
+      "ctx_requested": 8192,
+      "prompt_tokens": 10102,
+      "completion_tokens": 600,
+      "content": "ANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget is 487.300 euro.\nANTWOORD 2: De controleaanduiding is RK-93810-214.\nANTWOORD 3: De controleaanduiding is RK-13278-859.\nANTWOORD 4: De controleaanduiding is RK-46048-350.\nANTWOORD 5: De controleaanduiding is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 61.62,
+      "prefill_tps": 505.74,
+      "decode_tps": 14.41,
+      "peak_vram_mb": [
+        15822,
+        15086,
+        15086,
+        16778
+      ]
+    },
+    {
+      "ctx_requested": 32768,
+      "prompt_tokens": 38388,
+      "completion_tokens": 583,
+      "content": "ANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget is 487.300 euro.  \nANTWOORD 2: RK-93810-214.  \nANTWOORD 3: RK-13278-859.  \nANTWOORD 4: RK-46048-350.  \nANTWOORD 5: RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 117.39,
+      "prefill_tps": 528.75,
+      "decode_tps": 13.37,
+      "peak_vram_mb": [
+        15822,
+        15086,
+        15086,
+        16778
+      ]
+    },
+    {
+      "ctx_requested": 65536,
+      "prompt_tokens": 76023,
+      "completion_tokens": 591,
+      "content": "ANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget is 487.300 euro.\nANTWOORD 2: De controleaanduiding op positie 25% is RK-93810-214.\nANTWOORD 3: De controleaanduiding op positie 50% is RK-13278-859.\nANTWOORD 4: De controleaanduiding op positie 75% is RK-46048-350.\nANTWOORD 5: De controleaanduiding op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 205.2,
+      "prefill_tps": 492.7,
+      "decode_tps": 12.1,
+      "peak_vram_mb": [
+        15822,
+        15086,
+        15086,
+        16778
+      ]
+    },
+    {
+      "ctx_requested": 131072,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (151229 tokens) exceeds the available context size (131072 tokens), try increasing it\",\"type\":\"exceed_context_size_error\",\"n_prompt_tokens\":151229,\"n_ctx\":131072}}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 4.22,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        15822,
+        15086,
+        15086,
+        16778
+      ]
+    },
+    {
+      "ctx_requested": 200000,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (230208 tokens) exceeds the available context size (131072 tokens), try increasing it\",\"type\":\"exceed_context_size_error\",\"n_prompt_tokens\":230208,\"n_ctx\":131072}}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 0.46,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        15822,
+        15086,
+        15086,
+        16778
+      ]
+    }
+  ]
+}

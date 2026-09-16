@@ -1,0 +1,235 @@
+{
+  "model": "llama-3.3-70b",
+  "sizes": [
+    {
+      "ctx_requested": 8192,
+      "prompt_tokens": 10649,
+      "completion_tokens": 193,
+      "content": "ANTWOORD 1: De projectreferentie van het nieuwe ERP-project is PRJ-2247 en het toegekende budget is 487.300 euro.\n\nANTWOORD 2: De controleaanduiding die bij kwaliteitsregistratie op positie 25% wordt genoemd, is RK-93810-214.\n\nANTWOORD 3: De controleaanduiding die bij kwaliteitsregistratie op positie 50% wordt genoemd, is RK-13278-859.\n\nANTWOORD 4: De controleaanduiding die bij kwaliteitsregistratie op positie 75% wordt genoemd, is RK-46048-350.\n\nANTWOORD 5: De controleaanduiding die bij kwaliteitsregistratie op positie 100% wordt genoemd, is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 28.27,
+      "prefill_tps": 685.16,
+      "decode_tps": 15.21,
+      "peak_vram_mb": [
+        22818,
+        21494,
+        21494,
+        21696
+      ]
+    },
+    {
+      "ctx_requested": 32768,
+      "prompt_tokens": 40304,
+      "completion_tokens": 165,
+      "content": "ANTWOORD 1: Het project heeft de referentie PRJ-2247 en een toegekend budget van 487.300 euro.\n\nANTWOORD 2: De controleaanduiding voor kwaliteitsregistratie op positie 25% is RK-93810-214.\n\nANTWOORD 3: De controleaanduiding voor kwaliteitsregistratie op positie 50% is RK-13278-859.\n\nANTWOORD 4: De controleaanduiding voor kwaliteitsregistratie op positie 75% is RK-46048-350.\n\nANTWOORD 5: De controleaanduiding voor kwaliteitsregistratie op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 81.51,
+      "prefill_tps": 534.66,
+      "decode_tps": 12.48,
+      "peak_vram_mb": [
+        22818,
+        21494,
+        21494,
+        21696
+      ]
+    },
+    {
+      "ctx_requested": 65536,
+      "prompt_tokens": 79679,
+      "completion_tokens": 168,
+      "content": "ANTWOORD 1: Het project PRJ-2247 heeft een budget van 487.300 euro en een projectreferentie van PRJ-2247.\n\nANTWOORD 2: De controleaanduiding voor kwaliteitsregistratie op positie 25% is RK-93810-214.\n\nANTWOORD 3: De controleaanduiding voor kwaliteitsregistratie op positie 50% is RK-13278-859.\n\nANTWOORD 4: De controleaanduiding voor kwaliteitsregistratie op positie 75% is RK-46048-350.\n\nANTWOORD 5: De controleaanduiding voor kwaliteitsregistratie op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 186.36,
+      "prefill_tps": 393.85,
+      "decode_tps": 10.4,
+      "peak_vram_mb": [
+        22818,
+        21494,
+        21494,
+        21696
+      ]
+    },
+    {
+      "ctx_requested": 131072,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (158325 tokens) exceeds the available context size (131072 tokens), try increasing it\",\"type\":\"exceed_context_size_error\",\"n_prompt_tokens\":158325,\"n_ctx\":131072}}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 0.31,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        22818,
+        21494,
+        21494,
+        21696
+      ]
+    },
+    {
+      "ctx_requested": 200000,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (241048 tokens) exceeds the available context size (131072 tokens), try increasing it\",\"type\":\"exceed_context_size_error\",\"n_prompt_tokens\":241048,\"n_ctx\":131072}}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 0.39,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        22818,
+        21494,
+        21494,
+        21696
+      ]
+    }
+  ]
+}

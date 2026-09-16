@@ -1,0 +1,66 @@
+{
+  "hard_reasoning": {
+    "content": "**Stap 1: Ploeg 1**\nPloeg 1 werkt van 08:00 tot 16:00 (8 uur). De eerste 3 uur (08:00–11:00) verwerkt hij 120 pakketten per uur. De overige 5 uur (11:00–16:00) verwerkt hij 90 pakketten per uur.\n- Eerste 3 uur: 3 × 120 = 360 pakketten\n- Resterende 5 uur: 5 × 90 = 450 pakketten\n- Totaal Ploeg 1: 360 + 450 = 810 pakketten\n\n**Stap 2: Ploeg 2**\nPloeg 2 werkt constant 100 pakketten per uur, maar neemt na 5 uur werken een pauze van 45 minuten.\n- Werkt van 08:00 tot 13:00 (5 uur): 5 × 100 = 500 pakketten\n- Pauze van 45 minuten (13:00–13:45): geen verwerking\n- Werkt vervolgens van 13:45 tot 16:00: dit is 2 uur en 15 minuten = 2,25 uur\n- Pakketten in deze periode: 2,25 × 100 = 225 pakketten\n- Totaal Ploeg 2: 500 + 225 = 725 pakketten\n\n**Stap 3: Ploeg 3**\nPloeg 3 begint pas om 10:00 en werkt tot 16:00 (6 uur) met een snelheid van 110 pakketten per uur.\n- 6 × 110 = 660 pakketten\n\n**Stap 4: Totaal**\nSom van alle drie de ploegen:\n- Ploeg 1: 810\n- Ploeg 2: 725\n- Ploeg 3: 660\n- Totaal: 810 + 725 + 660 = 2195\n\nEINDANTWOORD: 2195",
+    "wall_seconds": 16.84,
+    "usage": {
+      "completion_tokens": 2101,
+      "prompt_tokens": 261,
+      "total_tokens": 2362,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 130.13202761748644,
+    "correct": true,
+    "score_note": "expected 2195, got 2195"
+  },
+  "hard_coding": {
+    "content": "```python\nfrom collections import OrderedDict\n\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.capacity = capacity\n        self.cache = OrderedDict()\n\n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        else:\n            if len(self.cache) >= self.capacity:\n                self.cache.popitem(last=False)\n        self.cache[key] = value\n```",
+    "wall_seconds": 14.23,
+    "usage": {
+      "completion_tokens": 1713,
+      "prompt_tokens": 184,
+      "total_tokens": 1897,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 124.88103658846599,
+    "correct": true,
+    "score_note": "has LRUCache=True, OrderedDict=True, get/put=True/True"
+  },
+  "scribr_notulen": {
+    "content": "**Besluiten**\n\n*   De begrotingswijziging voor de zwembadrenovatie wordt goedgekeurd zoals voorgesteld door raadsleden Verhoeven en El Amrani. Hierbij wordt 200.000 euro direct vrijgemaakt uit de algemene reserve, en wordt de resterende 140.000 euro pas na de subsidie-uitslag in juni besloten. Er is een harde voorwaarde gesteld: indien de subsidie wordt afgewezen, moet er een nieuw raadsvoorstel komen in plaats van automatisch bijstorten uit de reserve. (Stemming: 6 voor, 1 tegen).\n*   Er wordt nog geen besluit genomen over het herziene bestemmingsplan Noorderpark. Wethouder Smit zal een onafhankelijke verkeerstoets laten uitvoeren en de resultaten hiervan terugkoppelen in de vergadering van mei.\n\n**Actiepunten**\n\n*   **Wethouder Bakker:** Zorgt dat het raadsvoorstel voor de resterende 140.000 euro (tijdens de juli-vergadering) wordt geagendeerd, ongeacht de uitkomst van de subsidie-aanvraag.\n*   **Wethouder Smit:** Laat een onafhankelijke verkeerstoets uitvoeren voor het bestemmingsplan Noorderpark en de resultaten hiervan terugkoppelen in de vergadering van mei.\n*   **Burgemeester De Groot:** Vraagt de status van de fietsbrug bij het station na bij de projectleider en geeft hierover verslag in de volgende vergadering.\n*   **Wethouder Handhaving:** Verwerkt de klacht over geluidsoverlast van een lokaal bedrijf (hoewel deze wethouder niet aanwezig was tijdens de vergadering).\n\n**Openstaande vragen**\n\n*   Hoe wordt de parkeerdruk opgevangen als het deelauto-concept bij het bestemmingsplan Noorderpark niet voldoende blijkt te werken?",
+    "wall_seconds": 4.78,
+    "usage": {
+      "completion_tokens": 456,
+      "prompt_tokens": 1150,
+      "total_tokens": 1606,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 132.42689307881756,
+    "correct": true,
+    "score_note": "headers present: ## Besluiten, ## Actiepunten, ## Openstaande vragen"
+  },
+  "strict_instructions": {
+    "content": "{\n  \"samenvatting\": \"Temperatuurafwijking 8 graden 45 minuten, 12 van 400 eenheden afgekeurd, defecte sensor vervangen, geen klantlevering.\",\n  \"kernwoorden\": [\"temperatuur\", \"defect\", \"sensor\", \"kwaliteit\", \"productie\"],\n  \"risico_score\": 0.35,\n  \"vereist_escalatie\": false\n}",
+    "wall_seconds": 1.26,
+    "usage": {
+      "completion_tokens": 102,
+      "prompt_tokens": 248,
+      "total_tokens": 350,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 132.9417912392676,
+    "correct": true,
+    "score_note": "valid JSON, keys=True, word_limit=True"
+  },
+  "_summary": {
+    "n_correct": 4,
+    "n_total": 4
+  }
+}

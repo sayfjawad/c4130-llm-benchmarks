@@ -1,48 +1,697 @@
 {
- "meta": {
-  "title": "C4130 LLM Benchmark Suite",
-  "hardware": "Dell PowerEdge C4130 — 4× NVIDIA Tesla V100-SXM2-32GB (128GB dedicated VRAM)",
-  "memory_gb": 128,
-  "gpu_addressable_gb": 128,
-  "bandwidth_gbps": 900,
-  "last_updated": "2026-09-16",
-  "test_categories": [
-   {
-    "id": "speed",
-    "label": "Snelheid",
-    "tool": "llama-bench / server timings"
-   },
-   {
-    "id": "hard4",
-    "label": "Zware taken (4)",
-    "desc": "multi-stap redeneren, LRU-cache coding, notulen-structurering, strikte JSON-instructies"
-   },
-   {
-    "id": "longctx",
-    "label": "Long-context (6)",
-    "desc": "~8k-token transcript, 6 verifieerbare feiten verspreid vroeg/midden/laat"
-   },
-   {
-    "id": "reliability",
-    "label": "Betrouwbaarheid (5x)",
-    "desc": "dezelfde taak 5x herhaald, faalpercentage gemeten"
-   },
-   {
-    "id": "tools",
-    "label": "Tool-gebruik (4)",
-    "desc": "losse tool-call, gekoppelde tool-calls, tools terecht vermijden, conditionele multi-tool taak"
-   },
-   {
-    "id": "knowledge",
-    "label": "Kennis (14)",
-    "desc": "brede/niche feitenkennis + 2 kennis+redeneer-combinaties"
-   },
-   {
-    "id": "math",
-    "label": "Rekenen/redeneren (10)",
-    "desc": "logica, kansrekening, combinatoriek, algebra, getaltheorie, meetkunde, samengestelde rente, 2 valstrikvragen"
-   }
+  "meta": {
+    "title": "C4130 LLM Benchmark Suite",
+    "hardware": "Dell PowerEdge C4130 — 4× NVIDIA Tesla V100-SXM2-32GB (128GB dedicated VRAM)",
+    "memory_gb": 128,
+    "gpu_addressable_gb": 128,
+    "bandwidth_gbps": 900,
+    "last_updated": "2026-09-16",
+    "test_categories": [
+      {
+        "id": "speed",
+        "label": "Snelheid",
+        "tool": "llama-bench / server timings"
+      },
+      {
+        "id": "hard4",
+        "label": "Zware taken (4)",
+        "desc": "multi-stap redeneren, LRU-cache coding, notulen-structurering, strikte JSON-instructies"
+      },
+      {
+        "id": "longctx",
+        "label": "Long-context (6)",
+        "desc": "~8k-token transcript, 6 verifieerbare feiten verspreid vroeg/midden/laat"
+      },
+      {
+        "id": "reliability",
+        "label": "Betrouwbaarheid (5x)",
+        "desc": "dezelfde taak 5x herhaald, faalpercentage gemeten"
+      },
+      {
+        "id": "tools",
+        "label": "Tool-gebruik (4)",
+        "desc": "losse tool-call, gekoppelde tool-calls, tools terecht vermijden, conditionele multi-tool taak"
+      },
+      {
+        "id": "knowledge",
+        "label": "Kennis (14)",
+        "desc": "brede/niche feitenkennis + 2 kennis+redeneer-combinaties"
+      },
+      {
+        "id": "math",
+        "label": "Rekenen/redeneren (10)",
+        "desc": "logica, kansrekening, combinatoriek, algebra, getaltheorie, meetkunde, samengestelde rente, 2 valstrikvragen"
+      }
+    ]
+  },
+  "models": [
+    {
+      "id": "nemotron-3.5-lightning",
+      "name": "Nemotron-3.5-Lightning-30B-A3B",
+      "publisher": "NVIDIA",
+      "hf_repo": "unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF",
+      "quant": "UD-Q4_K_XL",
+      "params_total_b": 30,
+      "params_active_b": 3.0,
+      "architecture": "Hybride Mamba2-MoE",
+      "disk_gb": 25.5,
+      "ctx_cap": 262144,
+      "max_ctx_tokens": 243348,
+      "gen_tps": 142.01,
+      "prompt_tps": 1815.22,
+      "scores": {
+        "hard4": {
+          "n": 4,
+          "of": 4
+        },
+        "longctx": {
+          "n": 6,
+          "of": 6
+        },
+        "reliability": {
+          "n": 5,
+          "of": 5
+        },
+        "tools": {
+          "n": 4,
+          "of": 4
+        },
+        "knowledge": {
+          "n": 11,
+          "of": 14
+        },
+        "math": {
+          "n": 9,
+          "of": 10
+        }
+      },
+      "verdict": "Snelste (142 t/s) én 200k-capabel, kleinste footprint.",
+      "notes": "39/43. 6/52 attention-lagen → 6 KiB/token. Rekenvraag kans_dobbelsteen loopt leeg (thinking-runaway). Vereist enable_thinking:false voor formaat-taken.",
+      "longctx_sweep": [
+        {
+          "ctx_requested": 8192,
+          "prompt_tokens": 10489,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 130.66
+        },
+        {
+          "ctx_requested": 32768,
+          "prompt_tokens": 40431,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 116.26
+        },
+        {
+          "ctx_requested": 65536,
+          "prompt_tokens": 80204,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 109.49
+        },
+        {
+          "ctx_requested": 131072,
+          "prompt_tokens": 159764,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 97.3
+        },
+        {
+          "ctx_requested": 200000,
+          "prompt_tokens": 243348,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 86.13
+        },
+        {
+          "ctx_requested": 262144,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (318596 tokens) exceeds the available co",
+          "decode_tps": 0.0
+        }
+      ]
+    },
+    {
+      "id": "nemotron-3-super",
+      "name": "Nemotron-3-Super-120B-A12B",
+      "publisher": "NVIDIA",
+      "hf_repo": "unsloth/NVIDIA-Nemotron-3-Super-120B-A12B-GGUF",
+      "quant": "UD-Q4_K_M (3 shards)",
+      "params_total_b": 120,
+      "params_active_b": 12,
+      "architecture": "Hybride Mamba-MoE",
+      "disk_gb": 82.5,
+      "ctx_cap": 262144,
+      "max_ctx_tokens": 243348,
+      "gen_tps": 47.99,
+      "prompt_tps": 313.41,
+      "scores": {
+        "hard4": {
+          "n": 4,
+          "of": 4
+        },
+        "longctx": {
+          "n": 6,
+          "of": 6
+        },
+        "reliability": {
+          "n": 5,
+          "of": 5
+        },
+        "tools": {
+          "n": 4,
+          "of": 4
+        },
+        "knowledge": {
+          "n": 13,
+          "of": 14
+        },
+        "math": {
+          "n": 10,
+          "of": 10
+        }
+      },
+      "verdict": "Hét antwoord op 200k: enige 120B-klasse model dat 243k tokens serveert.",
+      "notes": "42/43. Slechts 8/88 attention-lagen → 8 KiB/token KV. 200k ≈ 87 GB van 128 GB VRAM. Enige model >80GB (expliciet getest).",
+      "longctx_sweep": [
+        {
+          "ctx_requested": 8192,
+          "prompt_tokens": 10489,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 45.17
+        },
+        {
+          "ctx_requested": 32768,
+          "prompt_tokens": 40431,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 43.4
+        },
+        {
+          "ctx_requested": 65536,
+          "prompt_tokens": 80204,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 41.87
+        },
+        {
+          "ctx_requested": 131072,
+          "prompt_tokens": 159764,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 39.22
+        },
+        {
+          "ctx_requested": 200000,
+          "prompt_tokens": 243348,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 36.71
+        },
+        {
+          "ctx_requested": 262144,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (318596 tokens) exceeds the available co",
+          "decode_tps": 0.0
+        }
+      ]
+    },
+    {
+      "id": "gpt-oss-120b",
+      "name": "GPT-OSS-120B",
+      "publisher": "OpenAI",
+      "hf_repo": "ggml-org/gpt-oss-120b-GGUF",
+      "quant": "MXFP4 (native)",
+      "params_total_b": 117,
+      "params_active_b": 5.1,
+      "architecture": "MoE (sliding-window attention)",
+      "disk_gb": 63.4,
+      "ctx_cap": 131072,
+      "max_ctx_tokens": 117239,
+      "gen_tps": 110.5,
+      "prompt_tps": 1263.94,
+      "scores": {
+        "hard4": {
+          "n": 4,
+          "of": 4
+        },
+        "longctx": {
+          "n": 5,
+          "of": 6
+        },
+        "reliability": {
+          "n": 5,
+          "of": 5
+        },
+        "tools": {
+          "n": 4,
+          "of": 4
+        },
+        "knowledge": {
+          "n": 14,
+          "of": 14
+        },
+        "math": {
+          "n": 10,
+          "of": 10
+        }
+      },
+      "verdict": "Snelste topkwaliteit op 128k — maar géén 200k.",
+      "notes": "42/43. SWA-KV-cache (36 KiB/token) laat 128k toe, maar max_position_embeddings=131072 is de harde grens.",
+      "longctx_sweep": [
+        {
+          "ctx_requested": 8192,
+          "prompt_tokens": 8197,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 99.04
+        },
+        {
+          "ctx_requested": 32768,
+          "prompt_tokens": 30044,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 86.19
+        },
+        {
+          "ctx_requested": 65536,
+          "prompt_tokens": 59110,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 77.32
+        },
+        {
+          "ctx_requested": 131072,
+          "prompt_tokens": 117239,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 63.37
+        },
+        {
+          "ctx_requested": 200000,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (178565 tokens) exceeds the available co",
+          "decode_tps": 0.0
+        }
+      ]
+    },
+    {
+      "id": "llama-3.3-70b",
+      "name": "Llama-3.3-70B-Instruct",
+      "publisher": "Meta",
+      "hf_repo": "bartowski/Llama-3.3-70B-Instruct-GGUF",
+      "quant": "Q4_K_M",
+      "params_total_b": 70,
+      "params_active_b": 70,
+      "architecture": "Dense",
+      "disk_gb": 42.5,
+      "ctx_cap": 131072,
+      "max_ctx_tokens": 79679,
+      "gen_tps": 16.15,
+      "prompt_tps": 363.22,
+      "scores": {
+        "hard4": {
+          "n": 4,
+          "of": 4
+        },
+        "longctx": {
+          "n": 6,
+          "of": 6
+        },
+        "reliability": {
+          "n": 5,
+          "of": 5
+        },
+        "tools": {
+          "n": 2,
+          "of": 4
+        },
+        "knowledge": {
+          "n": 12,
+          "of": 14
+        },
+        "math": {
+          "n": 8,
+          "of": 10
+        }
+      },
+      "verdict": "Dense 70B: 16 t/s, en tool-calling faalt op deze llama.cpp-build.",
+      "notes": "37/43. Tools 2/4 — llama.cpp's tool-parser verwerpt Llama-3.3's tool-output (HTTP 500). 320 KiB/token KV → 128k kost ~43 GB KV.",
+      "longctx_sweep": [
+        {
+          "ctx_requested": 8192,
+          "prompt_tokens": 10649,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 15.21
+        },
+        {
+          "ctx_requested": 32768,
+          "prompt_tokens": 40304,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 12.48
+        },
+        {
+          "ctx_requested": 65536,
+          "prompt_tokens": 79679,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 10.4
+        },
+        {
+          "ctx_requested": 131072,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (158325 tokens) exceeds the available co",
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 200000,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (241048 tokens) exceeds the available co",
+          "decode_tps": 0.0
+        }
+      ]
+    },
+    {
+      "id": "qwen3.8-27b-q8_0",
+      "name": "Qwen3.8-27B (Q8_0)",
+      "publisher": "Alibaba",
+      "hf_repo": "ggml-org/Qwen3.8-27B-GGUF",
+      "quant": "Q8_0",
+      "params_total_b": 27,
+      "params_active_b": 27,
+      "architecture": "Hybride Gated DeltaNet",
+      "disk_gb": 28.6,
+      "ctx_cap": 131072,
+      "max_ctx_tokens": 76023,
+      "gen_tps": 23.79,
+      "prompt_tps": 978.42,
+      "scores": {
+        "hard4": {
+          "n": 4,
+          "of": 4
+        },
+        "longctx": {
+          "n": 6,
+          "of": 6
+        },
+        "reliability": {
+          "n": 5,
+          "of": 5
+        },
+        "tools": {
+          "n": 4,
+          "of": 4
+        },
+        "knowledge": {
+          "n": 12,
+          "of": 14
+        },
+        "math": {
+          "n": 9,
+          "of": 10
+        }
+      },
+      "verdict": "GDN-hybride: 24 t/s, 131k-cap (open bug #27756 boven ~130k).",
+      "notes": "40/43. 16/64 attention-lagen → 64 KiB/token. Q8_0 is 1.6× sneller dan BF16 (geen BF16-hardware op Volta).",
+      "longctx_sweep": [
+        {
+          "ctx_requested": 8192,
+          "prompt_tokens": 10102,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 22.63
+        },
+        {
+          "ctx_requested": 32768,
+          "prompt_tokens": 38388,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 20.0
+        },
+        {
+          "ctx_requested": 65536,
+          "prompt_tokens": 76023,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 17.22
+        },
+        {
+          "ctx_requested": 131072,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (151229 tokens) exceeds the available co",
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 200000,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (230208 tokens) exceeds the available co",
+          "decode_tps": 0.0
+        }
+      ]
+    },
+    {
+      "id": "qwen3.8-27b-bf16",
+      "name": "Qwen3.8-27B (BF16)",
+      "publisher": "Alibaba",
+      "hf_repo": "ggml-org/Qwen3.8-27B-GGUF",
+      "quant": "BF16",
+      "params_total_b": 27,
+      "params_active_b": 27,
+      "architecture": "Hybride Gated DeltaNet",
+      "disk_gb": 53.8,
+      "ctx_cap": 131072,
+      "max_ctx_tokens": 76023,
+      "gen_tps": 15.1,
+      "prompt_tps": 253.83,
+      "scores": {
+        "hard4": {
+          "n": 4,
+          "of": 4
+        },
+        "longctx": {
+          "n": 6,
+          "of": 6
+        },
+        "reliability": {
+          "n": 5,
+          "of": 5
+        },
+        "tools": {
+          "n": 4,
+          "of": 4
+        },
+        "knowledge": {
+          "n": 12,
+          "of": 14
+        },
+        "math": {
+          "n": 10,
+          "of": 10
+        }
+      },
+      "verdict": "BF16 zonder hardware-support op Volta: 15 t/s, géén winst over Q8_0.",
+      "notes": "BF16 is geëmuleerd op sm_70 (geen BF16-hardware) → trager dan Q8_0. Bewijs dat BF16 op V100 geen zin heeft.",
+      "longctx_sweep": [
+        {
+          "ctx_requested": 8192,
+          "prompt_tokens": 10102,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 14.41
+        },
+        {
+          "ctx_requested": 32768,
+          "prompt_tokens": 38388,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 13.37
+        },
+        {
+          "ctx_requested": 65536,
+          "prompt_tokens": 76023,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 12.1
+        },
+        {
+          "ctx_requested": 131072,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (151229 tokens) exceeds the available co",
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 200000,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (230208 tokens) exceeds the available co",
+          "decode_tps": 0.0
+        }
+      ]
+    },
+    {
+      "id": "qwen2.5-72b",
+      "name": "Qwen2.5-72B-Instruct",
+      "publisher": "Alibaba",
+      "hf_repo": "bartowski/Qwen2.5-72B-Instruct-GGUF",
+      "quant": "Q4_K_M",
+      "params_total_b": 72,
+      "params_active_b": 72,
+      "architecture": "Dense",
+      "disk_gb": 47.4,
+      "ctx_cap": 32768,
+      "max_ctx_tokens": 11325,
+      "gen_tps": 14.94,
+      "prompt_tps": 364.21,
+      "scores": {
+        "hard4": {
+          "n": 4,
+          "of": 4
+        },
+        "longctx": {
+          "n": 6,
+          "of": 6
+        },
+        "reliability": {
+          "n": 5,
+          "of": 5
+        },
+        "tools": {
+          "n": 3,
+          "of": 4
+        },
+        "knowledge": {
+          "n": 11,
+          "of": 14
+        },
+        "math": {
+          "n": 7,
+          "of": 10
+        }
+      },
+      "verdict": "Dense 72B: 15 t/s, native 32k (géén YaRN) — clamt vroeg.",
+      "notes": "36/43. 32k native zonder YaRN-extensie → clamt al bij 32k. 320 KiB/token KV. 7/10 rekenen.",
+      "longctx_sweep": [
+        {
+          "ctx_requested": 8192,
+          "prompt_tokens": 11325,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 14.0
+        },
+        {
+          "ctx_requested": 32768,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (43436 tokens) exceeds the available con",
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 65536,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (86067 tokens) exceeds the available con",
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 131072,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (171261 tokens) exceeds the available co",
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 200000,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (260840 tokens) exceeds the available co",
+          "decode_tps": 0.0
+        }
+      ]
+    }
   ]
- },
- "models": []
 }

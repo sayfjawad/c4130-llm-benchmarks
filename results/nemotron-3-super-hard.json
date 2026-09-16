@@ -1,0 +1,66 @@
+{
+  "hard_reasoning": {
+    "content": "EINDANTWOORD:2195",
+    "wall_seconds": 17.22,
+    "usage": {
+      "completion_tokens": 735,
+      "prompt_tokens": 261,
+      "total_tokens": 996,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 47.127075076063036,
+    "correct": true,
+    "score_note": "expected 2195, got 2195"
+  },
+  "hard_coding": {
+    "content": "```python\nfrom collections import OrderedDict\n\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.cache = OrderedDict()\n        self.capacity = capacity\n\n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.capacity:\n            self.cache.popitem(last=False)\n```",
+    "wall_seconds": 6.01,
+    "usage": {
+      "completion_tokens": 205,
+      "prompt_tokens": 184,
+      "total_tokens": 389,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 46.20546665029846,
+    "correct": true,
+    "score_note": "has LRUCache=True, OrderedDict=True, get/put=True/True"
+  },
+  "scribr_notulen": {
+    "content": "## Besluiten\n- Het voorstel van raadslid Verhoeven om 200.000 euro vrij te maken uit de algemene reserve voor de zwembadrenovatie, met de voorwaarde van raadslid El Amrani dat bij afwijzing van de subsidie een nieuw raadsvoorstel moet komen in plaats van automatisch bijstorten uit de reserve, wordt aangenomen (6 stemmen voor, 1 tegen: Dijkstra).\n- Er wordt nog geen besluit genomen over het bestemmingsplan Noorderpark zelf; de raad wacht op de resultaten van de onafhankelijke verkeerstoets.\n\n## Actiepunten (met wie verantwoordelijk is)\n- Wethouder Bakker: zorgt dat het raadsvoorstel voor de resterende 140.000 euro voor de zwembadrenovatie uiterlijk in de raadsvergadering van juli wordt geagendeerd, ongeacht de uitkomst van de subsidieaanvraag.\n- Wethouder Smit: laat een onafhankelijke verkeerstoets uitvoeren voor het bestemmingsplan Noorderpark en koppelt de resultaten terug in de vergadering van mei.\n- Burgemeester De Groot: vraagt de status van de fietsbrug bij het station na bij de projectleider en koppelt dit terug in de volgende vergadering.\n- (Impliciet) Klacht geluidsoverlast: wordt doorgestuurd naar de wethouder Handhaving (hoewel niet benoemd als actiepunt met verantwoordelijke, wordt het vermeld als actie in de notulen; aangezien de wethouder Handhaving niet aanwezig is, wordt geen specifieke naam genoemd, maar de doorverwijzing is het actiepunt).\n\n## Openstaande vragen\n- Hoe wordt de parkeerdruk opgevangen als het deelauto-concept in het bestemmingsplan Noorderpark niet voldoende blijkt te zijn? (uit punt 2)\n- Wat is de status van de fietsbrug bij het station? (uit punt 3, rondvraag van Dijkstra)\n- Wat is de uitkomst van de handhaving van de geluidsoverlastklacht van een lokaal bedrijf, gemeld door raadslid El Amrani? (uit punt 3, rondvraag)",
+    "wall_seconds": 16.22,
+    "usage": {
+      "completion_tokens": 519,
+      "prompt_tokens": 1150,
+      "total_tokens": 1669,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 46.627772383378584,
+    "correct": true,
+    "score_note": "headers present: ## Besluiten, ## Actiepunten, ## Openstaande vragen"
+  },
+  "strict_instructions": {
+    "content": "{\n  \"samenvatting\": \"Temperatuurafwijking van 8 graden gedurende 45 minuten leidde tot afkeuring van 12 van 400 eenheden; defecte sensor vervangen, geen klantverzending.\",\n  \"kernwoorden\": [\"temperatuur\", \"afwijking\", \"sensor\", \"kwaliteitscontrole\", \"vervangen\"],\n  \"risico_score\": 0.15,\n  \"vereist_escalatie\": false\n}",
+    "wall_seconds": 4.31,
+    "usage": {
+      "completion_tokens": 114,
+      "prompt_tokens": 248,
+      "total_tokens": 362,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 47.019465226400804,
+    "correct": true,
+    "score_note": "valid JSON, keys=True, word_limit=True"
+  },
+  "_summary": {
+    "n_correct": 4,
+    "n_total": 4
+  }
+}

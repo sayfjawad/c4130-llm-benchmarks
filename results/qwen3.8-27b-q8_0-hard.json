@@ -1,0 +1,66 @@
+{
+  "hard_reasoning": {
+    "content": "Ploeg 1:  \n- Eerste 3 uur: 3 × 120 = 360 pakketten  \n- Resterende 5 uur: 5 × 90 = 450 pakketten  \n- Totaal ploeg 1: 360 + 450 = 810 pakketten  \n\nPloeg 2:  \n- Eerste 5 uur: 5 × 100 = 500 pakketten  \n- Pauze van 45 minuten: 0 pakketten  \n- Resterende 2 uur en 15 minuten: 2,25 × 100 = 225 pakketten  \n- Totaal ploeg 2: 500 + 225 = 725 pakketten  \n\nPloeg 3:  \n- Van 10:00 tot 16:00: 6 uur  \n- 6 × 110 = 660 pakketten  \n\nTotaal:  \n810 + 725 + 660 = 2195 pakketten  \n\nEINDANTWOORD: 2195",
+    "wall_seconds": 44.65,
+    "usage": {
+      "completion_tokens": 1021,
+      "prompt_tokens": 288,
+      "total_tokens": 1309,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 23.26522454055116,
+    "correct": true,
+    "score_note": "expected 2195, got 2195"
+  },
+  "hard_coding": {
+    "content": "```python\nfrom collections import OrderedDict\n\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.capacity = capacity\n        self.cache = OrderedDict()\n\n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]\n\n    def put(self, key: int, value: int) -> None:\n        if self.capacity <= 0:\n            return\n\n        if key in self.cache:\n            self.cache.move_to_end(key)\n            self.cache[key] = value\n        else:\n            if len(self.cache) >= self.capacity:\n                self.cache.popitem(last=False)\n            self.cache[key] = value\n```",
+    "wall_seconds": 26.22,
+    "usage": {
+      "completion_tokens": 586,
+      "prompt_tokens": 218,
+      "total_tokens": 804,
+      "prompt_tokens_details": {
+        "cached_tokens": 42
+      }
+    },
+    "predicted_per_second": 23.29969388583373,
+    "correct": true,
+    "score_note": "has LRUCache=True, OrderedDict=True, get/put=True/True"
+  },
+  "scribr_notulen": {
+    "content": "## Besluiten\n*   **Begrotingswijziging zwembad:** Er wordt 200.000 euro vrijgemaakt uit de algemene reserve voor de extra kosten van de zwembadrenovatie.\n*   **Begrotingswijziging zwembad (voorwaarde):** De resterende 140.000 euro wordt pas besloten na de subsidie-uitslag in juni. Als de subsidie wordt afgewezen, moet er een nieuw raadsvoorstel komen in plaats van automatisch bijstorten uit de reserve.\n*   **Bestemmingsplan Noorderpark:** Er wordt nog geen besluit genomen over het bestemmingsplan zelf.\n*   **Bestemmingsplan Noorderpark (verkeerstoets):** De raad stemt in met het uitvoeren van een onafhankelijke verkeerstoets voordat er definitief wordt besloten.\n\n## Actiepunten (met wie verantwoordelijk is)\n*   **Wethouder Bakker:** Zorgt dat het raadsvoorstel voor de resterende 140.000 euro (zwembad) uiterlijk in de raadsvergadering van juli wordt geagendeerd, ongeacht de uitkomst van de subsidie.\n*   **Wethouder Smit:** Laat een onafhankelijke verkeerstoets uitvoeren voor het bestemmingsplan Noorderpark en koppelt de resultaten terug in de vergadering van mei.\n*   **Burgemeester De Groot:** Vraagt de status van de fietsbrug bij het station na bij de projectleider en koppelt dit terug in de volgende vergadering.\n*   **Voorzitter (Burgemeester De Groot):** Doet de klacht over geluidsoverlast van een lokaal bedrijf door naar de wethouder Handhaving.\n\n## Openstaande vragen\n*   Hoe wordt de parkeerdruk in Noorderpark opgevangen als het deelauto-concept niet voldoende blijkt?",
+    "wall_seconds": 20.3,
+    "usage": {
+      "completion_tokens": 439,
+      "prompt_tokens": 1134,
+      "total_tokens": 1573,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 23.557381963801443,
+    "correct": true,
+    "score_note": "headers present: ## Besluiten, ## Actiepunten, ## Openstaande vragen"
+  },
+  "strict_instructions": {
+    "content": "{\n  \"samenvatting\": \"Temperatuurafwijking op lijn drie veroorzaakte twaalf afgekeurde eenheden. Defecte sensor vervangen. Geen klantproducten verzonden. Risico beperkt tot interne afval.\",\n  \"kernwoorden\": [\n    \"temperatuurafwijking\",\n    \"defecte sensor\",\n    \"kwaliteitscontrole\",\n    \"lijn drie\",\n    \"afgekeurde eenheden\"\n  ],\n  \"risico_score\": 0.25,\n  \"vereist_escalatie\": false\n}",
+    "wall_seconds": 6.48,
+    "usage": {
+      "completion_tokens": 135,
+      "prompt_tokens": 235,
+      "total_tokens": 370,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 23.691868508715338,
+    "correct": true,
+    "score_note": "valid JSON, keys=True, word_limit=True"
+  },
+  "_summary": {
+    "n_correct": 4,
+    "n_total": 4
+  }
+}

@@ -53,17 +53,17 @@ code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-
   <section id="winner">
     <h2 data-i18n="winnerTitle">🏆 Winnaars</h2>
     <div class="winner-card"><span class="trophy">🏆</span><div>
-      <h3 data-i18n="winnerHeading">8 modellen scoren 5/5</h3>
-      <p class="detail" data-i18n="winnerDetail1">De meeste modellen zijn consistent over 5 runs. Er is geen prestatieverlies bij herhaling — met één opvallende uitzondering.</p>
-      <p class="detail" data-i18n-html="winnerDetail2"><strong>MiniMax-M2 faalt catastrofaal:</strong> 0/5 runs correct. Het model komt in een <strong>herhalingslus</strong> terecht — het genereert dezelfde output steeds opnieuw tot het tokenbudget op is. Dit is een reproduceerbare bug die bij temperature=0.7 direct zichtbaar wordt.</p>
+      <h3 data-i18n="winnerHeading">Alle 7 modellen scoren 5/5</h3>
+      <p class="detail" data-i18n="winnerDetail1">Alle 7 C4130-modellen zijn perfect consistent over 5 runs — geen enkel model degradeert bij herhaling.</p>
+      <p class="detail" data-i18n-html="winnerDetail2"><strong>Geen herhalingslussen:</strong> deze test is ontworpen om de "letterlijke herhalingslus"-bug te vangen die in het gx10-project sommige modellen plaagde (een model herhaalt dezelfde zinnen tot het tokenbudget op is). Geen van de 7 C4130-modellen vertoonde dit gedrag.</p>
     </div></div>
   </section>
   <section id="reveals">
     <h2 data-i18n="revealsTitle">Wat onthult deze test?</h2>
-    <h3 data-i18n="revealsBugTitle">Reproduceerbare degradatie-bugs</h3>
-    <p data-i18n="revealsBugText">De MiniMax-M2 herhalingslus is geen theoretisch risico — het is een reproduceerbare bug die bij 5/5 runs optreedt. Dit soort bugs zijn onzichtbaar in single-run benchmarks maar fataal in productie. Alleen herhaald testen met niet-nul temperature kan ze blootleggen.</p>
-    <h3 data-i18n="revealsConsistencyTitle">Consistentie is de norm — behalve wanneer niet</h3>
-    <p data-i18n="revealsConsistencyText">De meerderheid van de modellen is perfect consistent (5/5). Maar de uitzonderingen zijn leerzaam: een model dat 4/4 scoort op de harde taken kan alsnog 0/5 scoren op betrouwbaarheid. Single-pass benchmarks missen deze dimensie volledig.</p>
+    <h3 data-i18n="revealsBugTitle">Geen letterlijke herhalingslussen op de C4130</h3>
+    <p data-i18n="revealsBugText">Deze test bestaat specifiek om de "letterlijke herhalingslus" te vangen: een model dat dezelfde zinnen blijft herhalen tot het tokenbudget op is. In het gx10-project plaagde deze bug sommige modellen bij temperature=0.7 — geen van de 7 C4130-modellen vertoonde het gedrag over 5 runs.</p>
+    <h3 data-i18n="revealsConsistencyTitle">Consistentie is de norm</h3>
+    <p data-i18n="revealsConsistencyText">Alle 7 modellen scoren 5/5: de notulen-taak wordt consistent uitgevoerd zonder degradatie. Toch blijft herhaald testen waardevol — degradatie-bugs als de herhalingslus zijn onzichtbaar in single-run benchmarks maar fataal in productie.</p>
   </section>
   <section id="all-models">
     <h2 data-i18n="resultsTitle">Alle modellen</h2>
@@ -87,14 +87,14 @@ const I18N = {
     breadcrumb: "← Dashboard", navOverview: "📊 Overzicht", navSpeed: "⚡ Snelheid", navHard: "🧩 Zware taken", navLongctx: "📄 Long-context", navReliability: "🔁 Betrouwbaarheid", navTools: "🔧 Tools", navKnowledge: "📚 Kennis", navMath: "🧮 Rekenen",
     whatTitle: "Wat test dit?", whatText1: "Dezelfde notulen-structureringstaak (raadsvergaderingstranscript → gestructureerde notulen) wordt <strong>5 keer herhaald</strong> met temperature=0.7. Dit test niet of het model de taak kán doen, maar of het de taak consistent kan doen zonder te degraderen.",
     infoRuns: "Herhalingen", infoTemp: "Temperature", infoTokens: "Max tokens", infoThinking: "Thinking", infoThinkingVal: "UIT aanbevolen",
-    winnerTitle: "🏆 Winnaars", winnerHeading: "8 modellen scoren 5/5",
-    winnerDetail1: "De meeste modellen zijn consistent over 5 runs. Er is geen prestatieverlies bij herhaling — met één opvallende uitzondering.",
-    winnerDetail2: "<strong>MiniMax-M2 faalt catastrofaal:</strong> 0/5 runs correct. Het model komt in een <strong>herhalingslus</strong> terecht — het genereert dezelfde output steeds opnieuw tot het tokenbudget op is. Dit is een reproduceerbare bug die bij temperature=0.7 direct zichtbaar wordt.",
+    winnerTitle: "🏆 Winnaars", winnerHeading: "Alle 7 modellen scoren 5/5",
+    winnerDetail1: "Alle 7 C4130-modellen zijn perfect consistent over 5 runs — geen enkel model degradeert bij herhaling.",
+    winnerDetail2: "<strong>Geen herhalingslussen:</strong> deze test is ontworpen om de \"letterlijke herhalingslus\"-bug te vangen die in het gx10-project sommige modellen plaagde (een model herhaalt dezelfde zinnen tot het tokenbudget op is). Geen van de 7 C4130-modellen vertoonde dit gedrag.",
     revealsTitle: "Wat onthult deze test?",
-    revealsBugTitle: "Reproduceerbare degradatie-bugs",
-    revealsBugText: "De MiniMax-M2 herhalingslus is geen theoretisch risico — het is een reproduceerbare bug die bij 5/5 runs optreedt. Dit soort bugs zijn onzichtbaar in single-run benchmarks maar fataal in productie. Alleen herhaald testen met niet-nul temperature kan ze blootleggen.",
-    revealsConsistencyTitle: "Consistentie is de norm — behalve wanneer niet",
-    revealsConsistencyText: "De meerderheid van de modellen is perfect consistent (5/5). Maar de uitzonderingen zijn leerzaam: een model dat 4/4 scoort op de harde taken kan alsnog 0/5 scoren op betrouwbaarheid. Single-pass benchmarks missen deze dimensie volledig.",
+    revealsBugTitle: "Geen letterlijke herhalingslussen op de C4130",
+    revealsBugText: "Deze test bestaat specifiek om de \"letterlijke herhalingslus\" te vangen: een model dat dezelfde zinnen blijft herhalen tot het tokenbudget op is. In het gx10-project plaagde deze bug sommige modellen bij temperature=0.7 — geen van de 7 C4130-modellen vertoonde het gedrag over 5 runs.",
+    revealsConsistencyTitle: "Consistentie is de norm",
+    revealsConsistencyText: "Alle 7 modellen scoren 5/5: de notulen-taak wordt consistent uitgevoerd zonder degradatie. Toch blijft herhaald testen waardevol — degradatie-bugs als de herhalingslus zijn onzichtbaar in single-run benchmarks maar fataal in productie.",
     resultsTitle: "Alle modellen", thModel: "Model", thScore: "Score", thNotes: "Notities",
     methTitle: "Methodologie",
     methText1: "Dezelfde notulen-taak 5× achter elkaar, zelfde prompt, temperature=0.7. Elke run wordt gecheckt op aanwezigheid van alle 3 verplichte headers (Besluiten, Actiepunten, Openstaande vragen).",
@@ -107,14 +107,14 @@ const I18N = {
     breadcrumb: "← Dashboard", navOverview: "📊 Overview", navSpeed: "⚡ Speed", navHard: "🧩 Hard Tasks", navLongctx: "📄 Long-Context", navReliability: "🔁 Reliability", navTools: "🔧 Tools", navKnowledge: "📚 Knowledge", navMath: "🧮 Math",
     whatTitle: "What Does This Test?", whatText1: "The same minutes-structuring task (council meeting transcript → structured minutes) is <strong>repeated 5 times</strong> at temperature=0.7. This tests not whether the model can do the task, but whether it can do it consistently without degrading.",
     infoRuns: "Repetitions", infoTemp: "Temperature", infoTokens: "Max Tokens", infoThinking: "Thinking", infoThinkingVal: "OFF recommended",
-    winnerTitle: "🏆 Winners", winnerHeading: "8 models score 5/5",
-    winnerDetail1: "Most models are consistent across 5 runs. There is no performance loss with repetition — with one notable exception.",
-    winnerDetail2: "<strong>MiniMax-M2 fails catastrophically:</strong> 0/5 runs correct. The model enters a <strong>repetition loop</strong> — it generates the same output over and over until the token budget runs out. This is a reproducible bug that becomes immediately visible at temperature=0.7.",
+    winnerTitle: "🏆 Winners", winnerHeading: "All 7 models score 5/5",
+    winnerDetail1: "All 7 C4130 models are perfectly consistent across 5 runs — no model degrades with repetition.",
+    winnerDetail2: "<strong>No repetition loops:</strong> this test was designed to catch the \"literal repetition loop\" bug that plagued some models in the gx10 project (a model keeps repeating the same sentences until the token budget runs out). None of the 7 C4130 models exhibited this behavior.",
     revealsTitle: "What This Test Reveals",
-    revealsBugTitle: "Reproducible Degradation Bugs",
-    revealsBugText: "The MiniMax-M2 repetition loop is not a theoretical risk — it's a reproducible bug occurring in 5/5 runs. These kinds of bugs are invisible in single-run benchmarks but fatal in production. Only repeated testing with non-zero temperature can expose them.",
-    revealsConsistencyTitle: "Consistency Is the Norm — Except When It Isn't",
-    revealsConsistencyText: "The majority of models are perfectly consistent (5/5). But the exceptions are instructive: a model scoring 4/4 on hard tasks can still score 0/5 on reliability. Single-pass benchmarks completely miss this dimension.",
+    revealsBugTitle: "No Literal Repetition Loops on the C4130",
+    revealsBugText: "This test exists specifically to catch the \"literal repetition loop\": a model that keeps repeating the same sentences until the token budget runs out. In the gx10 project, this bug plagued some models at temperature=0.7 — none of the 7 C4130 models exhibited the behavior across 5 runs.",
+    revealsConsistencyTitle: "Consistency Is the Norm",
+    revealsConsistencyText: "All 7 models score 5/5: the minutes task is executed consistently without degradation. Repeated testing still adds value — degradation bugs like the repetition loop are invisible in single-run benchmarks but fatal in production.",
     resultsTitle: "All Models", thModel: "Model", thScore: "Score", thNotes: "Notes",
     methTitle: "Methodology",
     methText1: "The same minutes task 5× consecutively, same prompt, temperature=0.7. Each run is checked for the presence of all 3 required headers (Decisions, Action Items, Open Questions).",

@@ -1,0 +1,96 @@
+{
+  "stap_korting": {
+    "question": "Een winkel past na elkaar drie kortingen toe op een product van 250 euro: eerst 20% korting, dan nog eens 10% korting op het resterende bedrag, en tot slot een vaste korting van 15 euro. Wat is de einprijs? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <bedrag>'.",
+    "answer": "Om de eindprijs te berekenen, volgen we de stappen zoals beschreven:\n\n1. **Eerste korting van 20%**: \n   - Oorspronkelijke prijs = 250 euro\n   - Korting = 20% van 250 euro = 0,20 * 250 = 50 euro\n   - Prijs na eerste korting = 250 - 50 = 200 euro\n\n2. **Tweede korting van 10%**:\n   - Prijs na eerste korting = 200 euro\n   - Korting = 10% van 200 euro = 0,10 * 200 = 20 euro\n   - Prijs na tweede korting = 200 - 20 = 180 euro\n\n3. **Vaste korting van 15 euro**:\n   - Prijs na tweede korting = 180 euro\n   - Vaste korting = 15 euro\n   - Eindprijs = 180 - 15 = 165 euro\n\nEINDANTWOORD: 165",
+    "predicted_answer": "165",
+    "expected_answer": "165 euro",
+    "correct": true,
+    "wall_seconds": 15.03,
+    "completion_tokens": 230
+  },
+  "logica_ridders": {
+    "question": "Op een eiland zijn er Ridders (spreken altijd de waarheid) en Schurken (liegen altijd). Je ontmoet A en B. A zegt: 'B is een schurk.' B zegt: 'A en ik zijn beiden ridders.' Wat zijn A en B? Redeneer stap voor stap en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: A=..., B=...'.",
+    "answer": "Laten we de situatie stap voor stap analyseren:\n\n1. A zegt dat B een schurk is. Als A een ridder is (iemand die altijd de waarheid spreekt), dan is B inderdaad een schurk. Maar als A een schurk is (iemand die altijd liegt), dan is B een ridder.\n\n2. B zegt dat A en hij beiden ridders zijn. Als B een ridder is, dan spreekt hij de waarheid, en dus is A ook een ridder. Maar als B een schurk is, dan liegt hij, en dus is A geen ridder (wat zou betekenen dat A een schurk is).\n\nNu combineren we deze informatie:\n\n- Als A een ridder is, dan is B een schurk (uit A's verklaring). Maar B zegt dat ze beiden ridders zijn, wat een leugen is als B een schurk is. Dit past bij de mogelijkheid dat A een ridder is en B een schurk.\n\n- Als A een schurk is, dan is B een ridder (uit A's leugen). Maar B zegt dat ze beiden ridders zijn, wat waar zou zijn als B inderdaad een ridder is. Dit zou betekenen dat A's verklaring over B een leugen is, wat past bij A als schurk.\n\nEchter, als we B's verklaring analyseren dat ze beiden ridders zijn en we aannemen dat A een schurk is (wat zou betekenen dat B een ridder is volgens A's leugen), dan zou B's verklaring over beiden als ridders een leugen zijn, wat in strijd is met de eigenschap van een ridder die altijd de waarheid spreekt.\n\nDus, de enige consistente verklaring is dat A een ridder is en B een schurk, omdat dit past bij zowel A's verklaring dat B een schurk is als bij B's leugen dat ze beiden ridders zijn.\n\nEINDANTWOORD: A=Ridder, B=Schurk",
+    "predicted_answer": "a=ridder, b=schurk",
+    "expected_answer": "A=ridder, B=schurk",
+    "correct": true,
+    "wall_seconds": 29.09,
+    "completion_tokens": 460
+  },
+  "kans_dobbelsteen": {
+    "question": "Je gooit twee eerlijke dobbelstenen. Wat is de kans dat de som van de ogen precies 7 is? Geef het antwoord als breuk EN als percentage, op de laatste regel als 'EINDANTWOORD: <breuk> = <percentage>%'.",
+    "answer": "Om de kans te berekenen dat de som van de ogen van twee dobbelstenen precies 7 is, moeten we eerst alle mogelijke uitkomsten tellen en vervolgens de gunstige uitkomsten (die waarbij de som 7 is) identificeren.\n\nElke dobbelsteen heeft 6 kanten, dus als we twee dobbelstenen gooien, zijn er 6 x 6 = 36 mogelijke uitkomsten.\n\nDe combinaties die resulteren in een som van 7 zijn:\n- (1,6)\n- (2,5)\n- (3,4)\n- (4,3)\n- (5,2)\n- (6,1)\n\nEr zijn 6 gunstige uitkomsten.\n\nDe kans op een som van 7 is dus het aantal gunstige uitkomsten gedeeld door het totale aantal uitkomsten:\nKans = 6 / 36 = 1 / 6\n\nOm dit om te zetten in een percentage, vermenigvuldigen we door 100:\nKans in percentage = (1 / 6) * 100 = 16,67%\n\nEINDANTWOORD: 1/6 = 16,67%",
+    "predicted_answer": "1/6 = 16,67%",
+    "expected_answer": "1/6",
+    "correct": true,
+    "wall_seconds": 17.82,
+    "completion_tokens": 271
+  },
+  "combinatoriek": {
+    "question": "Op hoeveel manieren kunnen 5 verschillende boeken worden verdeeld over 3 verschillende personen, als elke persoon minstens 1 boek moet krijgen? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "We hebben 5 verschillende boeken en 3 verschillende personen. Elke persoon moet minstens 1 boek krijgen. \n\nEerst geven we 1 boek aan elke persoon, zodat we nog 2 boeken over hebben om te verdelen. \n\nNu moeten we 2 boeken verdelen over 3 personen. We kunnen dit zien als het plaatsen van 2 ononderscheidbare objecten in 3 onderscheidbare dozen. \n\nHet aantal manieren om 2 ononderscheidbare objecten in 3 onderscheidbare dozen te plaatsen, is gelijk aan het aantal manieren om 2 identieke bollen in 3 verschillende dozen te plaatsen, waarbij elke doos maximaal 2 bollen kan bevatten. \n\nDit kan als volgt gebeuren:\n- 2 bollen in doos 1, 0 in doos 2, 0 in doos 3\n- 0 bollen in doos 1, 2 in doos 2, 0 in doos 3\n- 0 bollen in doos 1, 0 in doos 2, 2 in doos 3\n- 1 bal in doos 1, 1 bal in doos 2, 0 in doos 3\n- 1 bal in doos 1, 0 bollen in doos 2, 1 bal in doos 3\n- 0 bollen in doos 1, 1 bal in doos 2, 1 bal in doos 3\n\nEr zijn 6 manieren om 2 ononderscheidbare objecten in 3 onderscheidbare dozen te plaatsen.\n\nMaar nu moeten we nog rekening houden met de volgorde waarin de boeken aan de personen worden gegeven. \n\nEr zijn 5! / (1! * 1! * 1! * 2!) = 60 manieren om de 5 boeken te ordenen, waarbij 3 personen 1 boek krijgen en 1 persoon 2 boeken krijgt.\n\nEr zijn 3! / (1! * 1! * 1!) = 6 manieren om de 3 personen te ordenen die 1 boek krijgen.\n\nEr zijn 3 manieren om te kiezen welke persoon 2 boeken krijgt.\n\nDus het totale aantal manieren om 5 verschillende boeken te verdelen over 3 verschillende personen, waarbij elke persoon minstens 1 boek krijgt, is:\n\n60 * 6 * 3 = 1080\n\nMaar we hebben de boeken die aan elke persoon worden gegeven meerdere keren geteld. \n\nOm dit te corrigeren, moeten we door 6 delen (het aantal manieren om de 3 personen te ordenen).\n\n1080 / 6 = 180\n\nEINDANTWOORD: 180",
+    "predicted_answer": "180",
+    "expected_answer": "150",
+    "correct": false,
+    "wall_seconds": 41.5,
+    "completion_tokens": 659
+  },
+  "algebra": {
+    "question": "Twee getallen hebben een som van 47 en een verschil van 13. Wat zijn de twee getallen? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <groot getal> en <klein getal>'.",
+    "answer": "We hebben twee getallen, x en y, waarbij x > y. We weten dat hun som 47 is en hun verschil 13. Dit kan worden vertegenwoordigd door de volgende twee vergelijkingen:\n\n1) x + y = 47\n2) x - y = 13\n\nWe kunnen deze vergelijkingen oplossen door ze te combineren. Als we vergelijking (1) en vergelijking (2) bij elkaar optellen, krijgen we:\n\nx + y + x - y = 47 + 13\n2x = 60\nx = 30\n\nNu we x hebben, kunnen we y vinden door x terug te plaatsen in een van de oorspronkelijke vergelijkingen. We gebruiken vergelijking (1):\n\n30 + y = 47\ny = 47 - 30\ny = 17\n\nDus de twee getallen zijn 30 en 17.\n\nEINDANTWOORD: 30 en 17",
+    "predicted_answer": "30 en 17",
+    "expected_answer": "30 en 17",
+    "correct": true,
+    "wall_seconds": 14.97,
+    "completion_tokens": 222
+  },
+  "getaltheorie": {
+    "question": "Wat is de kleinste positieve gehele n waarvoor n! (n faculteit) deelbaar is door 1000? Toon je redenering en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "Om te bepalen wanneer n! deelbaar is door 1000, moeten we de priemfactorisatie van 1000 begrijpen, die 2^3 * 5^3 is. \n\nDus, we moeten genoeg 2's en 5's in de factorisatie van n! hebben om 2^3 * 5^3 te kunnen delen. \n\nAangezien er meer 2's dan 5's zijn in de factorisatie van n!, moeten we ons alleen concentreren op het vinden van genoeg 5's. \n\nWe kunnen de macht van 5 in n! berekenen door de som te nemen van de quotiënten van n gedeeld door 5, n gedeeld door 25, n gedeeld door 125, enzovoort, totdat de quotiënt kleiner is dan 1. \n\nLaten we beginnen met n = 10: \n10/5 = 2, \n10/25 = 0, \ndus de macht van 5 in 10! is 2, wat minder is dan 3. \n\nVoor n = 12: \n12/5 = 2, \n12/25 = 0, \ndus de macht van 5 in 12! is nog steeds 2. \n\nVoor n = 15: \n15/5 = 3, \n15/25 = 0, \ndus de macht van 5 in 15! is 3, wat precies is wat we nodig hebben. \n\nDus, de kleinste positieve gehele n waarvoor n! deelbaar is door 1000 is 15.\n\nEINDANTWOORD: 15",
+    "predicted_answer": "15",
+    "expected_answer": "15",
+    "correct": true,
+    "wall_seconds": 24.23,
+    "completion_tokens": 380
+  },
+  "meetkunde": {
+    "question": "Een rechthoekige driehoek heeft een hypotenusa van 13 cm en een rechthoekszijde van 5 cm. Wat is de oppervlakte van de driehoek? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> cm2'.",
+    "answer": "Om de oppervlakte van de rechthoekige driehoek te berekenen, hebben we de lengte van de andere rechthoekszijde nodig. We kunnen de stelling van Pythagoras gebruiken om deze te vinden:\n\na² + b² = c²\n\nwaar a en b de lengtes van de rechthoekszijden zijn en c de lengte van de hypotenusa is. We weten al dat c = 13 cm en een van de rechthoekszijden (laten we zeggen a) 5 cm is. We kunnen de formule gebruiken om de andere rechthoekszijde (b) te vinden:\n\n5² + b² = 13²\n25 + b² = 169\nb² = 169 - 25\nb² = 144\nb = √144\nb = 12 cm\n\nNu we de lengtes van beide rechthoekszijden hebben, kunnen we de oppervlakte van de driehoek berekenen met de formule:\n\nOppervlakte = ½ * basis * hoogte\n\nIn dit geval is de basis een van de rechthoekszijden (5 cm) en de hoogte de andere rechthoekszijde (12 cm):\n\nOppervlakte = ½ * 5 * 12\nOppervlakte = ½ * 60\nOppervlakte = 30 cm²\n\nEINDANTWOORD: 30 cm2",
+    "predicted_answer": "30 cm2",
+    "expected_answer": "30 cm2",
+    "correct": true,
+    "wall_seconds": 22.42,
+    "completion_tokens": 339
+  },
+  "rente": {
+    "question": "Je zet 1000 euro op een spaarrekening met 4% samengestelde rente per jaar. Na hoeveel volle jaren is het bedrag meer dan verdubbeld? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> jaar'.",
+    "answer": "Om te berekenen na hoeveel volle jaren het bedrag meer dan verdubbeld is, gebruiken we de formule voor samengestelde rente:\n\nA = P(1 + r)^n\n\nWaar:\n- A het eindbedrag is\n- P het beginbedrag is (in dit geval 1000 euro)\n- r de jaarlijkse rentevoet is (4% of 0,04)\n- n het aantal jaren is\n\nWe willen weten wanneer het bedrag meer dan verdubbeld is, dus wanneer A > 2*P. In dit geval is 2*P = 2*1000 = 2000 euro.\n\nWe stellen de ongelijkheid op:\n2000 < 1000(1 + 0,04)^n\n\nDeel beide kanten door 1000:\n2 < (1,04)^n\n\nNu moeten we n vinden. We kunnen dit doen door te itereren (jaar voor jaar berekenen) of door de natuurlijke logaritme te gebruiken. Hier gebruiken we iteratie voor eenvoud:\n\n- Na 1 jaar: 1000(1,04)^1 = 1040\n- Na 2 jaar: 1000(1,04)^2 = 1081,6\n- Na 3 jaar: 1000(1,04)^3 = 1124,864\n- Na 4 jaar: 1000(1,04)^4 = 1169,85856\n- Na 5 jaar: 1000(1,04)^5 = 1216,6296656\n- Na 6 jaar: 1000(1,04)^6 = 1264,98\n- Na 7 jaar: 1000(1,04)^7 = 1314,84864\n- Na 8 jaar: 1000(1,04)^8 = 1366,20878656\n- Na 9 jaar: 1000(1,04)^9 = 1419,10130112\n- Na 10 jaar: 1000(1,04)^10 = 1473,551324416\n- Na 11 jaar: 1000(1,04)^11 = 1529,5135035264\n- Na 12 jaar: 1000(1,04)^12 = 1587,030304692224\n- Na 13 jaar: 1000(1,04)^13 = 1646,1096904758784\n- Na 14 jaar: 1000(1,04)^14 = 1706,7744214401104\n- Na 15 jaar: 1000(1,04)^15 = 1769,0327228559424\n- Na 16 jaar: 1000(1,04)^16 = 1833,0123554710272\n- Na 17 jaar: 1000(1,04)^17 = 1898,7324197415296\n- Na 18 jaar: 1000(1,04)^18 = 1966,2401133694208\n- Na 19 jaar: 1000(1,04)^19 = 2035,5676306546432\n- Na 20 jaar: 1000(1,04)^20 = 2106,7532015096896\n- Na 21 jaar: 1000(1,04)^21 = 2179,8461593822976\n- Na 22 jaar: 1000(1,04)^22 = 2254,8648646562176\n- Na 23 jaar: 1000(1,04)^23 = 2331,8236762703872\n- Na 24 jaar: 1000(1,04)^24 = 2410,7379642164736\n- Na 25 jaar: 1000(1,04)^25 = 2491,6230665555456\n- Na 26 jaar: 1000(1,04)^26 = 2574,5034007969024\n- Na 27 jaar: 1000(1,04)^27 = 2659,3943504149056\n- Na 28 jaar: 1000(1,04)^28 = 2746,3094694447104\n- Na 29 jaar: 1000(1,04)^29 = 2835,2622940936096\n- Na 30 jaar: 1000(1,04)^30 = 2926,2564214448128\n- Na 31 jaar: 1000(1,04)^31 = 3019,2944445096896\n- Na 32 jaar: 1000(1,04)^32 = 3114,3789641104384\n- Na 33 jaar: 1000(1,04)^33 = 3211,5125705415296\n- Na 34 jaar: 1000(1,04)^34 = 3310,7078641297664\n- Na 35 jaar: 1000(1,04)^35 = 3411,9675557602176\n- Na 36 jaar: 1000(1,04)^36 = 3515,2942554917632\n- Na 37 jaar: 1000(1,04)^37 = 3620,6905557407104\n- Na 38 jaar: 1000(1,04)^38 = 3728,1599645093696\n- Na 39 jaar: 1000(1,04)^39 = 3837,7050624974848\n- Na 40 jaar: 1000(1,04)^40 = 3949,3294517373696\n- Na 41 jaar: 1000(1,04)^41 = 4063,0267254094976\n- Na 42 jaar: 1000(1,04)^42 = 4178,8105554322176\n- Na 43 jaar: 1000(1,04)^43 = 4296,6845559647104\n- Na 44 jaar: 1000(1,04)^44 = 4416,6543330795392\n- Na 45 jaar: 1000(1,04)^45 = 4538,7255558244864\n- Na 46 jaar: 1000(1,04)^46 = 4662,9118444295296\n- Na 47 jaar: 1000(1,04)^47 = 4789,2168701128704\n- Na 48 jaar: 1000(1,04)^48 = 4917,6454090566912\n- Na 49 jaar: 1000(1,04)^49 = 5048,2021553706752\n- Na 50 jaar: 1000(1,04)^50 = 5181,9017999647104\n- Na 51 jaar: 1000(1,04)^51 = 5317,7579648804864\n- Na 52 jaar: 1000(1,04)^52 = 5455,7743573194944\n- Na 53 jaar: 1000(1,04)^53 = 5595,9556765093696\n- Na 54 jaar: 1000(1,04)^54 = 5738,315630860416\n- Na 55 jaar: 1000(1,04)^55 = 5882,8590237602176\n- Na 56 jaar: 1000(1,04)^56 = 6029,6006544403204\n- Na 57 jaar: 1000(1,04)^57 = 6178,5553237602176\n- Na 58 jaar: 1000(1,04)^58 = 6329,7278444403204\n- Na 59 jaar: 1000(1,04)^59 = 6483,1231077602176\n- Na 60 jaar: 1000(1,04)^60 = 6638,7550044403204\n- Na 61 jaar: 1000(1,04)^61 = 6796,7375557602176\n- Na 62 jaar: 1000(1,04)^62 = 6956,9857517602176\n- Na 63 jaar: 1000(1,04)^63 = 7119,5256844403204\n- Na 64 jaar: 1000(1,04)^64 = 7284,2834544403204\n- Na 65 jaar: 1000(1,04)^65 = 7451,2759644403204\n- Na 66 jaar: 1000(1,04)^66 = 7620,5273144403204\n- Na 67 jaar: 1000(1,04)^67 = 7791,9605044403204\n- Na 68 jaar: 1000(1,04)^68 = 7965,6095444403204\n- Na 69 jaar: 1000(1,04)^69 = 8141,419414440320",
+    "predicted_answer": "",
+    "expected_answer": "18 jaar",
+    "correct": false,
+    "wall_seconds": 128.69,
+    "completion_tokens": 2000
+  },
+  "valstrik_schapen": {
+    "question": "Een boer heeft 17 schapen. Op 1 na sterven ze allemaal. Hoeveel schapen heeft hij nog? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "De boer had 17 schapen. Op 1 na stierven ze allemaal, dus dat betekent dat er nog 1 schaap over is. \nEINDANTWOORD: 1",
+    "predicted_answer": "1",
+    "expected_answer": "1 schaap",
+    "correct": true,
+    "wall_seconds": 3.85,
+    "completion_tokens": 48
+  },
+  "valstrik_caesar": {
+    "question": "Julius Caesar werd geboren in juli 100 v.Chr. en stierf op 15 maart 44 v.Chr. Hoe oud was hij toen hij stierf? Let goed op of zijn verjaardag dat jaar al was geweest. Toon je redenering en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> jaar'.",
+    "answer": "Om de leeftijd van Julius Caesar te berekenen op het moment van zijn dood, moeten we zijn geboortedatum en overlijdensdatum vergelijken.\n\nJulius Caesar werd geboren in juli 100 v.Chr. en stierf op 15 maart 44 v.Chr. Aangezien zijn verjaardag in juli valt en hij stierf in maart, betekent dit dat zijn verjaardag dat jaar nog niet was geweest.\n\nDus, als we het verschil in jaren berekenen tussen zijn geboortejaar (100 v.Chr.) en het jaar van zijn dood (44 v.Chr.), zien we dat 100 - 44 = 56 jaar zijn voorbijgegaan.\n\nAangezien zijn verjaardag nog niet was geweest, was hij nog steeds 55 jaar oud op het moment van zijn dood.\n\nEINDANTWOORD: 55 jaar",
+    "predicted_answer": "55 jaar",
+    "expected_answer": "55 jaar",
+    "correct": true,
+    "wall_seconds": 13.79,
+    "completion_tokens": 207
+  },
+  "_summary": {
+    "n_correct": 8,
+    "n_total": 10
+  }
+}

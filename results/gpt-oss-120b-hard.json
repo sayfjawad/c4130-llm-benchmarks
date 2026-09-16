@@ -1,0 +1,66 @@
+{
+  "hard_reasoning": {
+    "content": "EINDANTWOORD: 2195",
+    "wall_seconds": 4.7,
+    "usage": {
+      "completion_tokens": 407,
+      "prompt_tokens": 265,
+      "total_tokens": 672,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 103.69321519458056,
+    "correct": true,
+    "score_note": "expected 2195, got 2195"
+  },
+  "hard_coding": {
+    "content": "```python\nclass LRUCache:\n    class _Node:\n        __slots__ = (\"key\", \"value\", \"prev\", \"next\")\n        def __init__(self, key: int, value: int):\n            self.key = key\n            self.value = value\n            self.prev = None\n            self.next = None\n\n    def __init__(self, capacity: int):\n        self.capacity = capacity\n        self.cache = {}                     # key -> _Node\n        # dummy head and tail for easy insert/remove\n        self.head = self._Node(0, 0)\n        self.tail = self._Node(0, 0)\n        self.head.next = self.tail\n        self.tail.prev = self.head\n\n    def _remove(self, node: _Node) -> None:\n        \"\"\"Detach node from linked list.\"\"\"\n        prev_node, next_node = node.prev, node.next\n        prev_node.next = next_node\n        next_node.prev = prev_node\n\n    def _add_to_front(self, node: _Node) -> None:\n        \"\"\"Insert node right after head (most recent).\"\"\"\n        node.prev = self.head\n        node.next = self.head.next\n        self.head.next.prev = node\n        self.head.next = node\n\n    def get(self, key: int) -> int:\n        node = self.cache.get(key)\n        if not node:\n            return -1\n        # move accessed node to front (most recent)\n        self._remove(node)\n        self._add_to_front(node)\n        return node.value\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            node = self.cache[key]\n            node.value = value\n            self._remove(node)\n            self._add_to_front(node)\n        else:\n            if len(self.cache) >= self.capacity:\n                # evict least recently used (node before tail)\n                lru = self.tail.prev\n                self._remove(lru)\n                del self.cache[lru.key]\n            new_node = self._Node(key, value)\n            self.cache[key] = new_node\n            self._add_to_front(new_node)\n```",
+    "wall_seconds": 5.09,
+    "usage": {
+      "completion_tokens": 492,
+      "prompt_tokens": 218,
+      "total_tokens": 710,
+      "prompt_tokens_details": {
+        "cached_tokens": 60
+      }
+    },
+    "predicted_per_second": 103.6041149613204,
+    "correct": true,
+    "score_note": "has LRUCache=True, OrderedDict=False, get/put=True/True"
+  },
+  "scribr_notulen": {
+    "content": "**## Besluiten**\n- Het voorstel van raadslid Verhoeven (200 000 € nu uit de algemene reserve, de resterende 140 000 € pas na uitslag subsidie in juni) wordt aangenomen, met de voorwaarde van raadslid El Amrani dat bij afwijzing van de subsidie een nieuw raadsvoorstel moet komen. 6 stemmen voor, 1 tegen (Dijkstra).  \n- Er wordt geen besluit genomen over het bestemmingsplan Noorderpark; de raad stelt uit tot een onafhankelijke verkeerstoets is uitgevoerd.  \n- De raad besluit dat wethouder Smit een onafhankelijke verkeerstoets laat uitvoeren en de resultaten in de raadsvergadering van mei presenteert.  \n\n**## Actiepunten (met wie verantwoordelijk is)**\n- **Wethouder Bakker**: zorgt dat het raadsvoorstel voor de resterende €140 000 uiterlijk in de raadsvergadering van juli op de agenda staat, ongeacht de subsidie‑uitslag.  \n- **Wethouder Smit**: laat een onafhankelijke verkeerstoets uitvoeren voor het bestemmingsplan Noorderpark en rapporteert de resultaten in de vergadering van mei.  \n- **Burgemeester De Groot**: vraagt de projectleider naar de actuele status van de fietsbrug bij het station en geeft een terugkoppeling in de volgende raadsvergadering.  \n- **Wethouder Handhaving** (via secretaris): ontvangt de klacht over geluidsoverlast van het lokale bedrijf en neemt handhavend actie.  \n\n**## Openstaande vragen**\n- Hoe wordt de parkeerdruk opgevangen als het deelauto‑concept niet voldoende blijkt?  \n- Wat is de definitieve status van de fietsbrug bij het station (wacht op terugkoppeling van de projectleider)?  ",
+    "wall_seconds": 9.78,
+    "usage": {
+      "completion_tokens": 868,
+      "prompt_tokens": 991,
+      "total_tokens": 1859,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 102.67049875125674,
+    "correct": true,
+    "score_note": "headers present: ## Besluiten, ## Actiepunten, ## Openstaande vragen"
+  },
+  "strict_instructions": {
+    "content": "{\"samenvatting\":\"Temperatuurafwijking van 8 °C gedurende 45 min leidde tot 12 afgekeurde eenheden; defecte sensor vervangen, batch niet verzonden.\",\"kernwoorden\":[\"temperatuur\",\"sensor\",\"afgekeurd\",\"batch\",\"escalatie\"],\"risico_score\":0.22,\"vereist_escalatie\":false}",
+    "wall_seconds": 4.36,
+    "usage": {
+      "completion_tokens": 410,
+      "prompt_tokens": 259,
+      "total_tokens": 669,
+      "prompt_tokens_details": {
+        "cached_tokens": 60
+      }
+    },
+    "predicted_per_second": 103.79496206154559,
+    "correct": true,
+    "score_note": "valid JSON, keys=True, word_limit=True"
+  },
+  "_summary": {
+    "n_correct": 4,
+    "n_total": 4
+  }
+}

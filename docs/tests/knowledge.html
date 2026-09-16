@@ -53,17 +53,17 @@ code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-
   <section id="winner">
     <h2 data-i18n="winnerTitle">🏆 Winnaars</h2>
     <div class="winner-card"><span class="trophy">🏆</span><div>
-      <h3 data-i18n="winnerHeading">GPT-OSS-120B en Gemma 4 31B scoren 14/14</h3>
-      <p class="detail" data-i18n="winnerDetail1">Beide modellen hebben perfecte feitelijke kennis over 12 domeinen. De meeste andere modellen scoren 11-13/14 — de combo-vragen zijn de grootste uitdaging.</p>
-      <p class="detail" data-i18n-html="winnerDetail2"><strong>Gemma 4:</strong> 12/14 zonder thinking. Met thinking AAN voor alleen de 2 combo-vragen stijgt de score naar 14/14 — het denken helpt specifiek bij het combineren van twee feiten (bijv. leeftijd berekenen uit geboortejaar en datum).</p>
+      <h3 data-i18n="winnerHeading">GPT-OSS-120B scoort 14/14</h3>
+      <p class="detail" data-i18n="winnerDetail1">GPT-OSS-120B is het enige model met een perfecte score over alle 14 vragen. Nemotron-3-Super volgt op 13/14, en de rest zit tussen 10 en 12/14.</p>
+      <p class="detail" data-i18n-html="winnerDetail2"><strong>Nemotron-3-Super:</strong> 13/14 — het mist slechts één van de twee combo-vragen. Die combo-vragen (kennis + redeneren) vereisen thinking AAN én een ruimer tokenbudget.</p>
     </div></div>
   </section>
   <section id="reveals">
     <h2 data-i18n="revealsTitle">Wat onthult deze test?</h2>
     <h3 data-i18n="revealsComboTitle">Combo-vragen discrimineren het sterkst</h3>
-    <p data-i18n="revealsComboText">De twee combo-vragen (Franse koning in 1789 + aantal regeerjaren; leeftijd Napoleon bij Waterloo) zijn de grootste filters. Modellen weten beide losse feiten vaak wel, maar het combineren ervan vereist een extra redeneerstap die zonder thinking vaak mislukt.</p>
+    <p data-i18n="revealsComboText">De 2 combo-vragen (kennis + redeneren) vereisen thinking AAN én een ruimer tokenbudget. Met het standaard 800-tokenbudget geeft Nemotron-3.5-Lightning een leeg antwoord op combo_2 — het denkproces eet het budget op vóór er een antwoord komt.</p>
     <h3 data-i18n="revealsDomainTitle">Kennis is breed maar niet uniform</h3>
-    <p data-i18n="revealsDomainText">Modellen scoren het best op scheikunde, geschiedenis, en astronomie. Literatuur en muziek zijn de zwakste domeinen — meerdere modellen missen de auteur van "De ontdekking van de hemel" en het aantal delen van Beethovens 9e.</p>
+    <p data-i18n="revealsDomainText">De harde feitelijke vragen waar meerdere modellen over struikelen: de diepte van de Calypsotrog (5267m) en het publicatiejaar van "De ontdekking van de hemel" (1992).</p>
   </section>
   <section id="all-models">
     <h2 data-i18n="resultsTitle">Alle modellen</h2>
@@ -88,14 +88,14 @@ const I18N = {
     breadcrumb: "← Dashboard", navOverview: "📊 Overzicht", navSpeed: "⚡ Snelheid", navHard: "🧩 Zware taken", navLongctx: "📄 Long-context", navReliability: "🔁 Betrouwbaarheid", navTools: "🔧 Tools", navKnowledge: "📚 Kennis", navMath: "🧮 Rekenen",
     whatTitle: "Wat test dit?", whatText1: "12 pure kennisvragen uit 12 verschillende domeinen plus 2 \"combo\"-vragen die kennis combineren met redeneren. Dit test de breedte en accuraatheid van de in het model opgeslagen kennis.",
     infoQuestions: "Vragen", infoDomain: "Domeinen", infoTemp: "Temperature", infoThinking: "Thinking", infoThinkingVal: "UIT (12) / AAN (2)",
-    winnerTitle: "🏆 Winnaars", winnerHeading: "GPT-OSS-120B en Gemma 4 31B scoren 14/14",
-    winnerDetail1: "Beide modellen hebben perfecte feitelijke kennis over 12 domeinen. De meeste andere modellen scoren 11-13/14 — de combo-vragen zijn de grootste uitdaging.",
-    winnerDetail2: "<strong>Gemma 4:</strong> 12/14 zonder thinking. Met thinking AAN voor alleen de 2 combo-vragen stijgt de score naar 14/14 — het denken helpt specifiek bij het combineren van twee feiten (bijv. leeftijd berekenen uit geboortejaar en datum).",
+    winnerTitle: "🏆 Winnaars", winnerHeading: "GPT-OSS-120B scoort 14/14",
+    winnerDetail1: "GPT-OSS-120B is het enige model met een perfecte score over alle 14 vragen. Nemotron-3-Super volgt op 13/14, en de rest zit tussen 10 en 12/14.",
+    winnerDetail2: "<strong>Nemotron-3-Super:</strong> 13/14 — het mist slechts één van de twee combo-vragen. Die combo-vragen (kennis + redeneren) vereisen thinking AAN én een ruimer tokenbudget.",
     revealsTitle: "Wat onthult deze test?",
     revealsComboTitle: "Combo-vragen discrimineren het sterkst",
-    revealsComboText: "De twee combo-vragen (Franse koning in 1789 + aantal regeerjaren; leeftijd Napoleon bij Waterloo) zijn de grootste filters. Modellen weten beide losse feiten vaak wel, maar het combineren ervan vereist een extra redeneerstap die zonder thinking vaak mislukt.",
+    revealsComboText: "De 2 combo-vragen (kennis + redeneren) vereisen thinking AAN én een ruimer tokenbudget. Met het standaard 800-tokenbudget geeft Nemotron-3.5-Lightning een leeg antwoord op combo_2 — het denkproces eet het budget op vóór er een antwoord komt.",
     revealsDomainTitle: "Kennis is breed maar niet uniform",
-    revealsDomainText: "Modellen scoren het best op scheikunde, geschiedenis, en astronomie. Literatuur en muziek zijn de zwakste domeinen — meerdere modellen missen de auteur van \"De ontdekking van de hemel\" en het aantal delen van Beethovens 9e.",
+    revealsDomainText: "De harde feitelijke vragen waar meerdere modellen over struikelen: de diepte van de Calypsotrog (5267m) en het publicatiejaar van \"De ontdekking van de hemel\" (1992).",
     resultsTitle: "Alle modellen", thModel: "Model", thScore: "Score", thDetails: "Details",
     methTitle: "Methodologie",
     methText1: "14 vragen in één sessie. Scoring via keyword-matching (case-insensitive). Combo-vragen accepteren alternatieve antwoorden (45/46 voor Napoleon).",
@@ -109,14 +109,14 @@ const I18N = {
     breadcrumb: "← Dashboard", navOverview: "📊 Overview", navSpeed: "⚡ Speed", navHard: "🧩 Hard Tasks", navLongctx: "📄 Long-Context", navReliability: "🔁 Reliability", navTools: "🔧 Tools", navKnowledge: "📚 Knowledge", navMath: "🧮 Math",
     whatTitle: "What Does This Test?", whatText1: "12 pure factual questions from 12 different domains plus 2 \"combo\" questions that combine knowledge with reasoning. This tests the breadth and accuracy of the model's stored knowledge.",
     infoQuestions: "Questions", infoDomain: "Domains", infoTemp: "Temperature", infoThinking: "Thinking", infoThinkingVal: "OFF (12) / ON (2)",
-    winnerTitle: "🏆 Winners", winnerHeading: "GPT-OSS-120B and Gemma 4 31B score 14/14",
-    winnerDetail1: "Both models have perfect factual knowledge across 12 domains. Most other models score 11-13/14 — the combo questions are the biggest challenge.",
-    winnerDetail2: "<strong>Gemma 4:</strong> 12/14 without thinking. With thinking ON for only the 2 combo questions, the score rises to 14/14 — thinking helps specifically with combining two facts (e.g., calculating age from birth year and date).",
+    winnerTitle: "🏆 Winners", winnerHeading: "GPT-OSS-120B scores 14/14",
+    winnerDetail1: "GPT-OSS-120B is the only model with a perfect score across all 14 questions. Nemotron-3-Super follows at 13/14, and the rest sit between 10 and 12/14.",
+    winnerDetail2: "<strong>Nemotron-3-Super:</strong> 13/14 — it missed only one of the two combo questions. Those combo questions (knowledge + reasoning) require thinking ON and a larger token budget.",
     revealsTitle: "What This Test Reveals",
     revealsComboTitle: "Combo Questions Discriminate Most Strongly",
-    revealsComboText: "The two combo questions (French king in 1789 + years of reign; Napoleon's age at Waterloo) are the biggest filters. Models often know both individual facts, but combining them requires an extra reasoning step that often fails without thinking.",
+    revealsComboText: "The 2 combo questions (knowledge + reasoning) require thinking ON and a larger token budget. With the standard 800-token budget, Nemotron-3.5-Lightning returns an empty answer on combo_2 — the reasoning process consumes the budget before any answer appears.",
     revealsDomainTitle: "Knowledge Is Broad but Not Uniform",
-    revealsDomainText: "Models score best on chemistry, history, and astronomy. Literature and music are the weakest domains — multiple models miss the author of \"The Discovery of Heaven\" and the number of movements in Beethoven's 9th.",
+    revealsDomainText: "The hard factual questions that trip several models: the depth of the Calypso Trench (5267m) and the publication year of \"The Discovery of Heaven\" (1992).",
     resultsTitle: "All Models", thModel: "Model", thScore: "Score", thDetails: "Details",
     methTitle: "Methodology",
     methText1: "14 questions in one session. Scoring via keyword matching (case-insensitive). Combo questions accept alternative answers (45/46 for Napoleon).",

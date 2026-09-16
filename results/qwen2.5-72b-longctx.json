@@ -1,0 +1,25 @@
+{
+  "content": "ANTWOORD 1: Het toegekende budget voor het ERP-project (referentie PRJ-2247) is 487.300 euro. Dit budget dekt licenties, implementatiekosten en training van circa 180 medewerkers, maar dekt uitdrukkelijk geen maatwerk-koppelingen met externe klantsystemen.\n\nANTWOORD 2: Per 1 september wordt Fatima El Ouazzani de nieuwe hoofd Inkoop, en Robert Dijkhuis is de vertrekkende voorganger.\n\nANTWOORD 3: De deadline voor de CRM-migratie is 15 november, en de korting van 12 procent op de licentiekosten vervalt als deze deadline niet wordt gehaald.\n\nANTWOORD 4: Het ziekteverzuim is sinds de invoering van het hybride werkbeleid gedaald van 6,8 procent naar 4,3 procent, wat een daling van 2,5 procentpunt is.\n\nANTWOORD 5: Het voorstel voor de nieuwe kantoorlocatie Utrecht is aangenomen met 9 stemmen voor en 3 tegen, met de voorwaarde dat de huurovereenkomst niet langer dan 5 jaar mag lopen.\n\nANTWOORD 6: Bas Kremer is actiehouder voor de juridische toets van het huurcontract, en de deadline is 20 december.\n\nTOTAALSAMENVATTING:\n- Het ERP-project (PRJ-2247) heeft een budget van 487.300 euro, exclusief maatwerk-koppelingen.\n- Fatima El Ouazzani neemt per 1 september de rol van hoofd Inkoop over van Robert Dijkhuis.\n- De CRM-migratie moet voor 15 november afgerond zijn om een korting van 12 procent te behouden.\n- Het ziekteverzuim is sinds het hybride werkbeleid gedaald van 6,8% naar 4,3%.\n- De nieuwe kantoorlocatie in Utrecht is goedgekeurd met 9 stemmen voor en 3 tegen, met een huurovereenkomst van maximaal 5 jaar.",
+  "usage": {
+    "completion_tokens": 515,
+    "prompt_tokens": 11171,
+    "total_tokens": 11686,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 11171,
+    "prompt_ms": 16216.645,
+    "prompt_per_token_ms": 1.4516735296750516,
+    "prompt_per_second": 688.8601187236941,
+    "predicted_n": 515,
+    "predicted_ms": 36564.032,
+    "predicted_per_token_ms": 71.13624902723735,
+    "predicted_per_second": 14.057530635571045
+  },
+  "wall_seconds": 52.98,
+  "score": 6,
+  "n_needles": 6
+}

@@ -62,17 +62,17 @@ code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-
   <section id="winner">
     <h2 data-i18n="winnerTitle">🏆 Winnaars</h2>
     <div class="winner-card"><span class="trophy">🏆</span><div>
-      <h3 data-i18n="winnerHeading">8 modellen scoren 4/4</h3>
-      <p class="detail" data-i18n-html="winnerDetail1">GPT-OSS-120B, Gemma 4 31B, Qwen3-30B-A3B, Nemotron-3-Super, Nemotron-Nano, DeepSeek-V3, Qwen3.6-35B, en Kimi-K2. Alle acht voltooien alle vier de taken foutloos.</p>
-      <p class="detail" data-i18n-html="winnerDetail2"><strong>Uniek:</strong> Gemma 4 31B loste de rekenvraag correct op <strong>zonder thinking</strong> — het enige model dat dit lukte. Alle andere 4/4-modellen vereisen thinking AAN voor de rekenvraag.</p>
+      <h3 data-i18n="winnerHeading">Alle 7 modellen scoren 4/4</h3>
+      <p class="detail" data-i18n-html="winnerDetail1">Alle 7 C4130-modellen voltooien alle vier de taken foutloos.</p>
+      <p class="detail" data-i18n-html="winnerDetail2"><strong>Uniek:</strong> de reasoning-modellen (Nemotron, Qwen) vereisen thinking UIT voor de formaat-taken — met de default thinking-modus AAN produceren ze lege output omdat het denkproces het volledige 3000-tokenbudget opslokt. De zware rekenvraag (antwoord 2195) lukt juist alléén mét thinking aan.</p>
     </div></div>
   </section>
   <section id="reveals">
     <h2 data-i18n="revealsTitle">Wat onthult deze test?</h2>
     <h3 data-i18n="revealsThinkingTitle">Thinking: zegen en vloek</h3>
-    <p data-i18n="revealsThinkingText">De harde taken onthullen de dualiteit van thinking-modus: voor rekenen is het essentieel, voor formaat-taken (notulen, JSON) is het contraproductief. Modellen die thinking forceren bij formaat-taken produceren vaak te lange, over-gestructureerde output die de JSON-validatie niet haalt.</p>
-    <h3 data-i18n="revealsFormatTitle">Formaat-discipline is zeldzaam</h3>
-    <p data-i18n="revealsFormatText">De JSON-taak is verrassend moeilijk: veel modellen produceren geldige JSON maar schenden de constraints (te veel woorden, verkeerd aantal kernwoorden, ontbrekende velden). Dit test niet intelligentie maar <strong>instructie-volgend vermogen</strong> — een cruciale eigenschap voor productie-gebruik.</p>
+    <p data-i18n="revealsThinkingText">De harde taken onthullen de dualiteit van thinking-modus. Met de default thinking-modus AAN keerden de reasoning-modellen (Nemotron, Qwen) lege content op de formaat-taken (notulen-structurering en strikte JSON) — het denkproces at het volledige 3000-tokenbudget op vóór er een antwoord kwam. De zware rekenvraag (antwoord 2195) lukt daarentegen alléén mét thinking aan.</p>
+    <h3 data-i18n="revealsFormatTitle">De fix: thinking uit voor formaat-taken</h3>
+    <p data-i18n="revealsFormatText">Door chat_template_kwargs: {enable_thinking: false} alléén voor de formaat-taken in te stellen, ging Nemotron-3.5-Lightning van 1/4 naar 4/4. Dit bevestigt dat thinking-modus bij gestructureerde output (notulen, JSON) contraproductief is: het denkproces concurreert met het antwoord om hetzelfde tokenbudget.</p>
   </section>
   <section id="all-models">
     <h2 data-i18n="resultsTitle">Alle modellen</h2>
@@ -102,14 +102,14 @@ const I18N = {
     whatTask2: "<strong>LRU-cache implementatie:</strong> Schrijf een Python klasse met O(1) get/put operaties",
     whatTask3: "<strong>Notulen-structurering:</strong> Transformeer een raadsvergaderingstranscript naar gestructureerde notulen",
     whatTask4: "<strong>Strikte JSON-instructies:</strong> Produceer exact gespecificeerde JSON met woordlimiet, veldvalidatie",
-    winnerTitle: "🏆 Winnaars", winnerHeading: "8 modellen scoren 4/4",
-    winnerDetail1: "GPT-OSS-120B, Gemma 4 31B, Qwen3-30B-A3B, Nemotron-3-Super, Nemotron-Nano, DeepSeek-V3, Qwen3.6-35B, en Kimi-K2. Alle acht voltooien alle vier de taken foutloos.",
-    winnerDetail2: "<strong>Uniek:</strong> Gemma 4 31B loste de rekenvraag correct op <strong>zonder thinking</strong> — het enige model dat dit lukte. Alle andere 4/4-modellen vereisen thinking AAN voor de rekenvraag.",
+    winnerTitle: "🏆 Winnaars", winnerHeading: "Alle 7 modellen scoren 4/4",
+    winnerDetail1: "Alle 7 C4130-modellen voltooien alle vier de taken foutloos.",
+    winnerDetail2: "<strong>Uniek:</strong> de reasoning-modellen (Nemotron, Qwen) vereisen thinking UIT voor de formaat-taken — met de default thinking-modus AAN produceren ze lege output omdat het denkproces het volledige 3000-tokenbudget opslokt. De zware rekenvraag (antwoord 2195) lukt juist alléén mét thinking aan.",
     revealsTitle: "Wat onthult deze test?",
     revealsThinkingTitle: "Thinking: zegen en vloek",
-    revealsThinkingText: "De harde taken onthullen de dualiteit van thinking-modus: voor rekenen is het essentieel, voor formaat-taken (notulen, JSON) is het contraproductief. Modellen die thinking forceren bij formaat-taken produceren vaak te lange, over-gestructureerde output die de JSON-validatie niet haalt.",
-    revealsFormatTitle: "Formaat-discipline is zeldzaam",
-    revealsFormatText: "De JSON-taak is verrassend moeilijk: veel modellen produceren geldige JSON maar schenden de constraints (te veel woorden, verkeerd aantal kernwoorden, ontbrekende velden). Dit test niet intelligentie maar <strong>instructie-volgend vermogen</strong> — een cruciale eigenschap voor productie-gebruik.",
+    revealsThinkingText: "De harde taken onthullen de dualiteit van thinking-modus. Met de default thinking-modus AAN keerden de reasoning-modellen (Nemotron, Qwen) lege content op de formaat-taken (notulen-structurering en strikte JSON) — het denkproces at het volledige 3000-tokenbudget op vóór er een antwoord kwam. De zware rekenvraag (antwoord 2195) lukt daarentegen alléén mét thinking aan.",
+    revealsFormatTitle: "De fix: thinking uit voor formaat-taken",
+    revealsFormatText: "Door chat_template_kwargs: {enable_thinking: false} alléén voor de formaat-taken in te stellen, ging Nemotron-3.5-Lightning van 1/4 naar 4/4. Dit bevestigt dat thinking-modus bij gestructureerde output (notulen, JSON) contraproductief is: het denkproces concurreert met het antwoord om hetzelfde tokenbudget.",
     resultsTitle: "Alle modellen", thModel: "Model", thScore: "Score", thDetails: "Details",
     methTitle: "Methodologie",
     methText1: "Elk model krijgt dezelfde 4 taken in dezelfde volgorde. Scoring: rekenen (correct eindantwoord), code (aanwezigheid LRUCache + OrderedDict), notulen (alle 3 headers), JSON (valide JSON + alle constraints).",
@@ -128,14 +128,14 @@ const I18N = {
     whatTask2: "<strong>LRU Cache Implementation:</strong> Write a Python class with O(1) get/put operations",
     whatTask3: "<strong>Minutes Structuring:</strong> Transform a council meeting transcript into structured minutes",
     whatTask4: "<strong>Strict JSON Instructions:</strong> Produce exactly specified JSON with word limits and field validation",
-    winnerTitle: "🏆 Winners", winnerHeading: "8 models score 4/4",
-    winnerDetail1: "GPT-OSS-120B, Gemma 4 31B, Qwen3-30B-A3B, Nemotron-3-Super, Nemotron-Nano, DeepSeek-V3, Qwen3.6-35B, and Kimi-K2. All eight complete all four tasks flawlessly.",
-    winnerDetail2: "<strong>Unique:</strong> Gemma 4 31B solved the math question correctly <strong>without thinking</strong> — the only model to do so. All other 4/4 models require thinking ON for the math question.",
+    winnerTitle: "🏆 Winners", winnerHeading: "All 7 models score 4/4",
+    winnerDetail1: "All 7 C4130 models complete all four tasks flawlessly.",
+    winnerDetail2: "<strong>Unique:</strong> the reasoning models (Nemotron, Qwen) require thinking OFF for the format tasks — with the default thinking mode ON they produce empty output because the reasoning process consumes the entire 3000-token budget. The heavy math question (answer 2195), on the other hand, only succeeds with thinking on.",
     revealsTitle: "What This Test Reveals",
     revealsThinkingTitle: "Thinking: Blessing and Curse",
-    revealsThinkingText: "The hard tasks reveal the duality of thinking mode: essential for math, counterproductive for formatting tasks (minutes, JSON). Models that force thinking on formatting tasks often produce overly long, over-structured output that fails JSON validation.",
-    revealsFormatTitle: "Format Discipline Is Rare",
-    revealsFormatText: "The JSON task is surprisingly difficult: many models produce valid JSON but violate constraints (too many words, wrong number of keywords, missing fields). This tests not intelligence but <strong>instruction-following ability</strong> — a crucial trait for production use.",
+    revealsThinkingText: "The hard tasks reveal the duality of thinking mode. With their default thinking mode ON, the reasoning models (Nemotron, Qwen) returned empty content on the format tasks (minutes structuring and strict JSON) — the reasoning process consumed the entire 3000-token budget before any answer appeared. The heavy math question (answer 2195), by contrast, only succeeds with thinking on.",
+    revealsFormatTitle: "The Fix: Thinking Off for Format Tasks",
+    revealsFormatText: "By setting chat_template_kwargs: {enable_thinking: false} for the format tasks only, Nemotron-3.5-Lightning went from 1/4 to 4/4. This confirms that thinking mode is counterproductive for structured output (minutes, JSON): the reasoning process competes with the answer for the same token budget.",
     resultsTitle: "All Models", thModel: "Model", thScore: "Score", thDetails: "Details",
     methTitle: "Methodology",
     methText1: "Each model receives the same 4 tasks in the same order. Scoring: math (correct final answer), code (presence of LRUCache + OrderedDict), minutes (all 3 headers present), JSON (valid JSON + all constraints met).",

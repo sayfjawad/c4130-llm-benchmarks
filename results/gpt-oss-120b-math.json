@@ -1,0 +1,96 @@
+{
+  "stap_korting": {
+    "question": "Een winkel past na elkaar drie kortingen toe op een product van 250 euro: eerst 20% korting, dan nog eens 10% korting op het resterende bedrag, en tot slot een vaste korting van 15 euro. Wat is de einprijs? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <bedrag>'.",
+    "answer": "Beginprijs: € 250  \n\n1. **Eerste korting (20 %)**  \n\\(250 \\times (1 - 0.20) = 250 \\times 0.80 = €\\,200\\)\n\n2. **Tweede korting (10 %) op het resterende bedrag**  \n\\(200 \\times (1 - 0.10) = 200 \\times 0.90 = €\\,180\\)\n\n3. **Vaste korting van € 15**  \n\\(180 - 15 = €\\,165\\)\n\n**Eindprijs:** € 165  \n\nEINDANTWOORD: 165",
+    "predicted_answer": "165",
+    "expected_answer": "165 euro",
+    "correct": true,
+    "wall_seconds": 4.1,
+    "completion_tokens": 384
+  },
+  "logica_ridders": {
+    "question": "Op een eiland zijn er Ridders (spreken altijd de waarheid) en Schurken (liegen altijd). Je ontmoet A en B. A zegt: 'B is een schurk.' B zegt: 'A en ik zijn beiden ridders.' Wat zijn A en B? Redeneer stap voor stap en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: A=..., B=...'.",
+    "answer": "**Stap‑voor‑stap redenering**\n\n1. **Definities**  \n   * Een *ridder* (R) spreekt altijd de waarheid.  \n   * Een *schurk* (S) liegt altijd.\n\n2. **Uitspraken**  \n   * A zegt: “B is een schurk.”  \n     → Formeel:  \\(A: \\; B = S\\)  \n   * B zegt: “A en ik zijn beiden ridders.”  \n     → Formeel:  \\(B: \\; (A = R) \\land (B = R)\\)\n\n3. **Case‑analyse**  \n\n   **Case 1: A is een ridder (A = R)**  \n   * Omdat A de waarheid spreekt, moet zijn uitspraak waar zijn.  \n     → \\(B = S\\) (B is een schurk).  \n   * Controleer B’s uitspraak. B is nu een schurk, dus hij moet liegen.  \n     Zijn uitspraak is “A en B zijn beide ridders”.  \n     - A is een ridder, maar B is geen ridder → de conjunctie \\((A = R) \\land (B = R)\\) is **onwaar**.  \n     - Een leugen (onwaar) is precies wat een schurk moet zeggen.  \n   * Consistentie: ja.  \n   → **Resultaat van case 1:** A = ridder, B = schurk.\n\n   **Case 2: A is een schurk (A = S)**  \n   * Omdat A liegt, is zijn uitspraak onwaar.  \n     → “B is een schurk” is onwaar → **B = ridder**.  \n   * Controleer B’s uitspraak. B is nu een ridder, dus hij moet de waarheid spreken.  \n     Zijn uitspraak is “A en B zijn beide ridders”.  \n     - Voor deze uitspraak waar te zijn moeten zowel A als B ridders zijn.  \n     - Maar we hebben A = schurk, dus de uitspraak is **onwaar**.  \n   * Een ridder kan geen onwaarheid zeggen → **inconsistent**.  \n\n   → **Case 2** is uitgesloten.\n\n4. **Conclusie**  \n   De enige mogelijke combinatie die beide uitspraken consistent maakt, is:\n\n   * A is een ridder (vertelt de waarheid).  \n   * B is een schurk (legt een leugen).\n\n---\n\n**EINDANTWOORD: A=ridder, B=schurk**",
+    "predicted_answer": "a=ridder, b=schurk**",
+    "expected_answer": "A=ridder, B=schurk",
+    "correct": true,
+    "wall_seconds": 8.92,
+    "completion_tokens": 860
+  },
+  "kans_dobbelsteen": {
+    "question": "Je gooit twee eerlijke dobbelstenen. Wat is de kans dat de som van de ogen precies 7 is? Geef het antwoord als breuk EN als percentage, op de laatste regel als 'EINDANTWOORD: <breuk> = <percentage>%'.",
+    "answer": "De mogelijke uitkomsten bij twee eerlijke dobbelstenen zijn \\(6 \\times 6 = 36\\).\n\nDe combinaties die een som van 7 geven zijn:\n\\[\n(1,6),\\;(2,5),\\;(3,4),\\;(4,3),\\;(5,2),\\;(6,1)\n\\]\nDat zijn **6** gunstige uitkomsten.\n\n\\[\n\\text{Kans} = \\frac{6}{36} = \\frac{1}{6}\n\\]\n\nAls percentage:\n\\[\n\\frac{1}{6} \\times 100\\% = 16.666\\ldots\\% \\approx 16.67\\%\n\\]\n\n**EINDANTWOORD: 1/6 = 16.6667%**",
+    "predicted_answer": "1/6 = 16.6667%**",
+    "expected_answer": "1/6",
+    "correct": true,
+    "wall_seconds": 5.32,
+    "completion_tokens": 495
+  },
+  "combinatoriek": {
+    "question": "Op hoeveel manieren kunnen 5 verschillende boeken worden verdeeld over 3 verschillende personen, als elke persoon minstens 1 boek moet krijgen? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "**Berekening**\n\nWe zoeken het aantal manieren om 5 verschillende boeken te verdelen over 3 verschillende personen zó dat iedereen minstens één boek krijgt.  \nDit is gelijk aan het aantal *surjectieve* (op‑) functies van een 5‑elementen‑verzameling (de boeken) naar een 3‑elementen‑verzameling (de personen).\n\nMet de inclusie‑exclusie‑formule voor onto‑functies:\n\n\\[\n\\begin{aligned}\n\\text{Aantal} &= 3^{5}\n               - \\binom{3}{1}\\,2^{5}\n               + \\binom{3}{2}\\,1^{5} \\\\[4pt]\n              &= 243\n               - 3\\cdot 32\n               + 3\\cdot 1 \\\\[4pt]\n              &= 243 - 96 + 3 \\\\[4pt]\n              &= 150 .\n\\end{aligned}\n\\]\n\nEen alternatieve manier is via de Stirling‑getallen van de tweede soort:\n\n\\[\nS(5,3)=25 \\quad\\text{(partities van 5 verschillende objecten in 3 niet‑lege, niet‑gelabelde groepen)},\n\\]\nen daarna de groepen labelen met de 3 personen:\n\n\\[\n25 \\times 3! = 25 \\times 6 = 150 .\n\\]\n\nBeide methoden geven hetzelfde resultaat.\n\n**EINDANTWOORD: 150**",
+    "predicted_answer": "150**",
+    "expected_answer": "150",
+    "correct": true,
+    "wall_seconds": 7.77,
+    "completion_tokens": 735
+  },
+  "algebra": {
+    "question": "Twee getallen hebben een som van 47 en een verschil van 13. Wat zijn de twee getallen? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <groot getal> en <klein getal>'.",
+    "answer": "We hebben twee onbekende getallen, laten we ze \\(x\\) (het grotere) en \\(y\\) (het kleinere) noemen.\n\nDe gegevens geven ons twee vergelijkingen:\n\n\\[\n\\begin{cases}\nx + y = 47 \\quad\\text{(som)}\\\\[4pt]\nx - y = 13 \\quad\\text{(verschil)}\n\\end{cases}\n\\]\n\n**Stap 1: beide vergelijkingen optellen**  \n\n\\[\n(x + y) + (x - y) = 47 + 13 \\\\\n2x = 60 \\\\\nx = \\frac{60}{2} = 30\n\\]\n\n**Stap 2: de waarde van \\(y\\) vinden**  \n\nGebruik de somvergelijking:\n\n\\[\n30 + y = 47 \\\\\ny = 47 - 30 = 17\n\\]\n\nDus de twee getallen zijn 30 (groter) en 17 (kleiner).\n\nEINDANTWOORD: 30 en 17",
+    "predicted_answer": "30 en 17",
+    "expected_answer": "30 en 17",
+    "correct": true,
+    "wall_seconds": 4.33,
+    "completion_tokens": 385
+  },
+  "getaltheorie": {
+    "question": "Wat is de kleinste positieve gehele n waarvoor n! (n faculteit) deelbaar is door 1000? Toon je redenering en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "Om te bepalen voor welk kleinste positieve gehele getal \\(n\\) het getal \\(n!\\) deelbaar is door \\(1000\\), schrijven we eerst de priemfactorisatie van \\(1000\\):\n\n\\[\n1000 = 10^{3}= (2\\cdot 5)^{3}=2^{3}\\cdot 5^{3}.\n\\]\n\nDaarom moet \\(n!\\) ten minste drie factoren 2 en drie factoren 5 bevatten.\n\n---\n\n### 1. Aantal factoren 5 in \\(n!\\)\n\nHet aantal keer dat een priemgetal \\(p\\) in \\(n!\\) voorkomt, wordt gegeven door Legendre’s formule  \n\n\\[\nv_p(n!)=\\sum_{k\\ge 1}\\left\\lfloor\\frac{n}{p^{k}}\\right\\rfloor .\n\\]\n\nVoor \\(p=5\\) zoeken we het kleinste \\(n\\) zodat \\(v_5(n!)\\ge 3\\).\n\n\\[\n\\begin{aligned}\nn=10 &: \\left\\lfloor\\frac{10}{5}\\right\\rfloor = 2 \\quad (<3)\\\\\nn=11 &: \\left\\lfloor\\frac{11}{5}\\right\\rfloor = 2 \\quad (<3)\\\\\nn=12 &: \\left\\lfloor\\frac{12}{5}\\right\\rfloor = 2 \\quad (<3)\\\\\nn=13 &: \\left\\lfloor\\frac{13}{5}\\right\\rfloor = 2 \\quad (<3)\\\\\nn=14 &: \\left\\lfloor\\frac{14}{5}\\right\\rfloor = 2 \\quad (<3)\\\\\nn=15 &: \\left\\lfloor\\frac{15}{5}\\right\\rfloor = 3 \\quad (\\ge 3).\n\\end{aligned}\n\\]\n\nDus al bij \\(n=15\\) hebben we precies drie factoren 5 (en meer voor grotere \\(n\\)).\n\n---\n\n### 2. Aantal factoren 2 in \\(n!\\)\n\nVoor \\(p=2\\) moet \\(v_2(n!)\\ge 3\\). Bij \\(n=15\\) is\n\n\\[\n\\begin{aligned}\nv_2(15!) &= \\left\\lfloor\\frac{15}{2}\\right\\rfloor\n          +\\left\\lfloor\\frac{15}{4}\\right\\rfloor\n          +\\left\\lfloor\\frac{15}{8}\\right\\rfloor\n          +\\left\\lfloor\\frac{15}{16}\\right\\rfloor \\\\\n        &= 7 + 3 + 1 + 0 = 11 \\ge 3 .\n\\end{aligned}\n\\]\n\nAl bij \\(n=4\\) is \\(v_2(4!) = 3\\), dus de beperking komt duidelijk van de factoren 5, niet van de 2‑factoren.\n\n---\n\n### 3. Controle van kleinere \\(n\\)\n\nVoor elk \\(n<15\\) is \\(v_5(n!)\\le 2\\), waardoor \\(n!\\) niet door \\(5^{3}\\) (en dus niet door 1000) deelbaar is. Daarom is \\(n=15\\) het eerste getal dat aan beide eisen voldoet.\n\n---\n\n**Conclusie:** Het kleinste positieve gehele getal \\(n\\) waarvoor \\(n!\\) deelbaar is door \\(1000\\) is  \n\n\\[\n\\boxed{15}.\n\\]\n\nEINDANTWOORD: 15",
+    "predicted_answer": "15",
+    "expected_answer": "15",
+    "correct": true,
+    "wall_seconds": 11.39,
+    "completion_tokens": 1047
+  },
+  "meetkunde": {
+    "question": "Een rechthoekige driehoek heeft een hypotenusa van 13 cm en een rechthoekszijde van 5 cm. Wat is de oppervlakte van de driehoek? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> cm2'.",
+    "answer": "De gegeven rechthoekige driehoek heeft:\n\n- hypotenusa \\(c = 13\\) cm  \n- één rechthoekszijde \\(a = 5\\) cm  \n\nOm de andere rechthoekszijde \\(b\\) te vinden gebruiken we de stelling van Pythagoras:\n\n\\[\na^{2}+b^{2}=c^{2}\n\\]\n\n\\[\n5^{2}+b^{2}=13^{2}\n\\]\n\n\\[\n25+b^{2}=169 \\;\\Longrightarrow\\; b^{2}=169-25=144\n\\]\n\n\\[\nb=\\sqrt{144}=12\\ \\text{cm}\n\\]\n\nNu de oppervlakte \\(A\\) van een rechthoekige driehoek:\n\n\\[\nA=\\frac{1}{2}\\,a\\,b=\\frac{1}{2}\\times5\\times12=30\\ \\text{cm}^2\n\\]\n\n**EINDANTWOORD: 30 cm2**",
+    "predicted_answer": "30 cm2**",
+    "expected_answer": "30 cm2",
+    "correct": true,
+    "wall_seconds": 3.85,
+    "completion_tokens": 344
+  },
+  "rente": {
+    "question": "Je zet 1000 euro op een spaarrekening met 4% samengestelde rente per jaar. Na hoeveel volle jaren is het bedrag meer dan verdubbeld? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> jaar'.",
+    "answer": "De beginsom is  \n\n\\[\nP_0 = €1000\n\\]\n\nDe jaarlijkse samengestelde rente is 4 %, dus na \\(n\\) volledige jaren is het saldo  \n\n\\[\nP_n = P_0\\,(1+0.04)^n = 1000\\,(1.04)^n .\n\\]\n\nWe zoeken het kleinste gehele \\(n\\) waarvoor  \n\n\\[\nP_n > 2\\cdot P_0 = €2000 .\n\\]\n\n\\[\n\\begin{aligned}\n1000\\,(1.04)^n &> 2000 \\\\\n(1.04)^n &> 2 \\\\\nn &> \\frac{\\log 2}{\\log 1.04}.\n\\end{aligned}\n\\]\n\nBerekening:\n\n\\[\n\\log 2 \\approx 0.30103,\\qquad \\log 1.04 \\approx 0.017033\n\\]\n\n\\[\n\\frac{0.30103}{0.017033} \\approx 17.68.\n\\]\n\nDus \\(n\\) moet groter zijn dan 17,68. Het eerste gehele aantal jaren dat hieraan voldoet is  \n\n\\[\nn = 18.\n\\]\n\nControle:\n\n\\[\n1000\\,(1.04)^{18} \\approx 1000 \\times 2.025 \\approx €2025 > €2000.\n\\]\n\nNa 17 jaar is het nog net onder de dubbele waarde:\n\n\\[\n1000\\,(1.04)^{17} \\approx 1000 \\times 1.947 \\approx €1947 < €2000.\n\\]\n\n**EINDANTWOORD: 18 jaar**",
+    "predicted_answer": "18 jaar**",
+    "expected_answer": "18 jaar",
+    "correct": true,
+    "wall_seconds": 5.16,
+    "completion_tokens": 488
+  },
+  "valstrik_schapen": {
+    "question": "Een boer heeft 17 schapen. Op 1 na sterven ze allemaal. Hoeveel schapen heeft hij nog? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "De boer heeft 17 schapen. “Op 1 na sterven ze allemaal” betekent dat alle schapen behalve één sterven.  \nDus blijft er nog **1** schaap over.\n\n**EINDANTWOORD: 1**",
+    "predicted_answer": "1**",
+    "expected_answer": "1 schaap",
+    "correct": true,
+    "wall_seconds": 2.62,
+    "completion_tokens": 230
+  },
+  "valstrik_caesar": {
+    "question": "Julius Caesar werd geboren in juli 100 v.Chr. en stierf op 15 maart 44 v.Chr. Hoe oud was hij toen hij stierf? Let goed op of zijn verjaardag dat jaar al was geweest. Toon je redenering en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> jaar'.",
+    "answer": "**Redenering**\n\n1. **Jaartallen in de jaartelling vóór Christus**  \n   - Het jaartal wordt kleiner naarmate de tijd vordert: 100 v.Chr. → 99 v.Chr. → … → 44 v.Chr.\n\n2. **Volledige jaren tussen de geboortedatum en dezelfde datum in het sterftejaar**  \n   - Van **juli 100 v.Chr.** tot **juli 44 v.Chr.** is  \n     \\(100 - 44 = 56\\) volledige jaren.\n\n3. **Is de verjaardag in het sterftejaar al geweest?**  \n   - Caesar stierf op **15 maart 44 v.Chr.**  \n   - Zijn verjaardag (juli) in 44 v.Chr. zou pas **juli 44 v.Chr.** zijn, dus **nog niet** geweest.\n\n4. **Correctie voor de nog niet gevierde verjaardag**  \n   - Omdat de verjaardag van dat jaar nog niet plaatsvond, moet één jaar van de 56 jaar worden afgetrokken.  \n\n5. **Leeftijd bij overlijden**  \n   - \\(56 - 1 = 55\\) volledige jaren.  \n   - Hij was dus 55 jaar oud (ongeveer 55 jaar en 8 maanden).\n\n**EINDANTWOORD: 55 jaar**",
+    "predicted_answer": "55 jaar**",
+    "expected_answer": "55 jaar",
+    "correct": true,
+    "wall_seconds": 4.93,
+    "completion_tokens": 468
+  },
+  "_summary": {
+    "n_correct": 10,
+    "n_total": 10
+  }
+}

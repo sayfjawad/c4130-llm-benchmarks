@@ -1,0 +1,181 @@
+{
+  "scheikunde_1": {
+    "question": "Wat is de scheikundige brutoformule van cafeïne?",
+    "answer": "C8H10N4O2",
+    "expected_keywords": [
+      "c8h10n4o2"
+    ],
+    "matched_keywords": [
+      "c8h10n4o2"
+    ],
+    "correct": true,
+    "wall_seconds": 1.06
+  },
+  "geschiedenis_1": {
+    "question": "In welk jaar werd het Verdrag van Utrecht getekend dat de Spaanse Successieoorlog beëindigde?",
+    "answer": "1713",
+    "expected_keywords": [
+      "1713"
+    ],
+    "matched_keywords": [
+      "1713"
+    ],
+    "correct": true,
+    "wall_seconds": 0.56
+  },
+  "geografie_1": {
+    "question": "Wat is de diepste plek in de Middellandse Zee en hoe diep is die ongeveer?",
+    "answer": "De diepste plek in de Middellandse Zee is de Ionische Zee, met een diepte van ongeveer 5.267 meter.",
+    "expected_keywords": [
+      "calypso",
+      "5267"
+    ],
+    "matched_keywords": [
+      "calypso"
+    ],
+    "correct": false,
+    "wall_seconds": 2.85
+  },
+  "biologie_1": {
+    "question": "Welk enzym zet zetmeel om in maltose, al in de mond via speeksel?",
+    "answer": "Het enzym is amylase.",
+    "expected_keywords": [
+      "amylase"
+    ],
+    "matched_keywords": [
+      "amylase"
+    ],
+    "correct": true,
+    "wall_seconds": 0.77
+  },
+  "wiskunde_1": {
+    "question": "Wat is de Euler-Mascheroniconstante, tot 4 decimalen?",
+    "answer": "De Euler-Mascheroniconstante, tot 4 decimalen, is 0.5772.",
+    "expected_keywords": [
+      "0.5772"
+    ],
+    "matched_keywords": [
+      "0.5772"
+    ],
+    "correct": true,
+    "wall_seconds": 1.9
+  },
+  "technologie_1": {
+    "question": "Op welke datum werd TCP/IP officieel de standaard voor ARPANET?",
+    "answer": "1 januari 1983",
+    "expected_keywords": [
+      "1983",
+      "1 januari"
+    ],
+    "matched_keywords": [
+      "1983",
+      "1 januari"
+    ],
+    "correct": true,
+    "wall_seconds": 0.86
+  },
+  "literatuur_1": {
+    "question": "Wie schreef 'De ontdekking van de hemel' en in welk jaar verscheen het?",
+    "answer": "'De ontdekking van de hemel' werd geschreven door Cees Nooteboom en verscheen in 1994.",
+    "expected_keywords": [
+      "mulisch",
+      "1992"
+    ],
+    "matched_keywords": [],
+    "correct": false,
+    "wall_seconds": 2.32
+  },
+  "astronomie_1": {
+    "question": "Wat is de omlooptijd van Pluto rond de zon, in aardse jaren?",
+    "answer": "248 aardse jaren.",
+    "expected_keywords": [
+      "248"
+    ],
+    "matched_keywords": [
+      "248"
+    ],
+    "correct": true,
+    "wall_seconds": 0.87
+  },
+  "economie_1": {
+    "question": "In welk jaar werd de eerste effectenbeurs ter wereld opgericht in Amsterdam, en welk bedrijf was de directe aanleiding?",
+    "answer": "De eerste effectenbeurs ter wereld werd in 1602 opgericht in Amsterdam, en de directe aanleiding was de Verenigde Oostindische Compagnie (VOC).",
+    "expected_keywords": [
+      "1602",
+      "voc"
+    ],
+    "matched_keywords": [
+      "1602",
+      "voc"
+    ],
+    "correct": true,
+    "wall_seconds": 3.24
+  },
+  "scheikunde_2": {
+    "question": "Wat is het smeltpunt van wolfraam in graden Celsius (het metaal met het hoogste smeltpunt)?",
+    "answer": "Het smeltpunt van wolfraam is 3422 graden Celsius.",
+    "expected_keywords": [
+      "3422"
+    ],
+    "matched_keywords": [
+      "3422"
+    ],
+    "correct": true,
+    "wall_seconds": 1.56
+  },
+  "muziek_1": {
+    "question": "Uit hoeveel delen (bewegingen) bestaat Beethovens 9e symfonie?",
+    "answer": "Beethovens 9e symfonie bestaat uit vier delen (bewegingen).",
+    "expected_keywords": [
+      "4",
+      "vier"
+    ],
+    "matched_keywords": [
+      "vier"
+    ],
+    "correct": true,
+    "wall_seconds": 1.67
+  },
+  "natuurkunde_1": {
+    "question": "Wat is de dichtheid van kwik bij kamertemperatuur, in g/cm3?",
+    "answer": "13.534 g/cm³",
+    "expected_keywords": [
+      "13.5"
+    ],
+    "matched_keywords": [
+      "13.5-13.6 range"
+    ],
+    "correct": true,
+    "wall_seconds": 0.87
+  },
+  "combo_1": {
+    "question": "Wie was de Franse koning tijdens de bestorming van de Bastille in 1789, en hoeveel jaar had hij op dat moment geregeerd sinds zijn troonsbestijging?",
+    "answer": "De Franse koning tijdens de bestorming van de Bastille in 1789 was Lodewijk XVI. Hij had toen 10 jaar geregeerd, sinds zijn troonsbestijging in 1774.",
+    "expected_keywords": [
+      "lodewijk",
+      "15"
+    ],
+    "matched_keywords": [
+      "lodewijk"
+    ],
+    "correct": false,
+    "wall_seconds": 3.83
+  },
+  "combo_2": {
+    "question": "De Slag bij Waterloo vond plaats in 1815. Napoleon werd geboren in 1769. Hoe oud was hij tijdens die slag (juni 1815)?",
+    "answer": "Napoleon was 46 jaar oud tijdens de Slag bij Waterloo in juni 1815.",
+    "expected_keywords": [
+      "45",
+      "46"
+    ],
+    "matched_keywords": [
+      "46"
+    ],
+    "correct": true,
+    "wall_seconds": 1.98
+  },
+  "_summary": {
+    "n_correct": 11,
+    "n_total": 14
+  }
+}

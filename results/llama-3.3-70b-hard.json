@@ -1,0 +1,66 @@
+{
+  "hard_reasoning": {
+    "content": "Stap 1: Bepaal de totale verwerkingstijd voor elke ploeg. \n- Ploeg 1 werkt van 08:00 tot 16:00, dus 8 uur.\n- Ploeg 2 werkt van 08:00 tot 16:00, maar heeft een pauze van 45 minuten, dus werkt het effectief 7 uur en 15 minuten = 7,25 uur.\n- Ploeg 3 werkt van 10:00 tot 16:00, dus 6 uur.\n\nStap 2: Bereken de totale pakketten verwerkt door Ploeg 1.\n- Eerste 3 uur: 120 pakketten/uur * 3 uur = 360 pakketten.\n- Resterende tijd (8 uur - 3 uur = 5 uur): 90 pakketten/uur * 5 uur = 450 pakketten.\n- Totaal Ploeg 1: 360 + 450 = 810 pakketten.\n\nStap 3: Bereken de totale pakketten verwerkt door Ploeg 2.\n- Ploeg 2 werkt effectief 7 uur en 15 minuten, maar omdat het een constante snelheid heeft, berekenen we het totaal op basis van de effectieve werktijd in uren, inclusief de pauze in de berekening: 5 uur volledige werktijd + 2 uur en 15 minuten (na pauze) = 7 uur en 15 minuten. \n- Eerste 5 uur: 100 pakketten/uur * 5 uur = 500 pakketten.\n- Na pauze (2 uur en 15 minuten = 2,25 uur): 100 pakketten/uur * 2,25 uur = 225 pakketten.\n- Totaal Ploeg 2: 500 + 225 = 725 pakketten.\n\nStap 4: Bereken de totale pakketten verwerkt door Ploeg 3.\n- Ploeg 3 werkt 6 uur tegen 110 pakketten/uur: 110 pakketten/uur * 6 uur = 660 pakketten.\n\nStap 5: Tel alle pakketten van de drie ploegen samen.\n- Totaal = Ploeg 1 + Ploeg 2 + Ploeg 3 = 810 + 725 + 660 = 2195 pakketten.\n\nEINDANTWOORD: 2195",
+    "wall_seconds": 35.65,
+    "usage": {
+      "completion_tokens": 559,
+      "prompt_tokens": 276,
+      "total_tokens": 835,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 16.256010608940542,
+    "correct": true,
+    "score_note": "expected 2195, got 2195"
+  },
+  "hard_coding": {
+    "content": "```python\nfrom collections import OrderedDict\n\nclass LRUCache:\n    def __init__(self, capacity: int):\n        self.capacity = capacity\n        self.cache = OrderedDict()\n\n    def get(self, key: int) -> int:\n        if key in self.cache:\n            value = self.cache.pop(key)\n            self.cache[key] = value\n            return value\n        return -1\n\n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self.cache.pop(key)\n        elif len(self.cache) == self.capacity:\n            self.cache.popitem(last=False)\n        self.cache[key] = value\n```",
+    "wall_seconds": 9.58,
+    "usage": {
+      "completion_tokens": 137,
+      "prompt_tokens": 208,
+      "total_tokens": 345,
+      "prompt_tokens_details": {
+        "cached_tokens": 30
+      }
+    },
+    "predicted_per_second": 16.21717274580106,
+    "correct": true,
+    "score_note": "has LRUCache=True, OrderedDict=True, get/put=True/True"
+  },
+  "scribr_notulen": {
+    "content": "## Besluiten\n* Het voorstel van raadslid Verhoeven om 200.000 euro vrij te maken uit de algemene reserve voor de renovatie van het zwembad, met de voorwaarde dat de resterende 140.000 euro pas wordt besloten na de subsidie-uitslag in juni, wordt aangenomen met 6 stemmen voor en 1 tegen.\n* Er wordt geen besluit genomen over het bestemmingsplan Noorderpark tot de resultaten van de onafhankelijke verkeerstoets bekend zijn.\n\n## Actiepunten (met wie verantwoordelijk is)\n* Wethouder Bakker zorgt dat het raadsvoorstel voor de resterende 140.000 euro uiterlijk in de raadsvergadering van juli wordt geagendeerd, ongeacht de uitkomst van de subsidie.\n* Wethouder Smit laat een onafhankelijke verkeerstoets uitvoeren voor het bestemmingsplan Noorderpark en koppelt de resultaten terug in de vergadering van mei.\n* Burgemeester De Groot vraagt de status van de fietsbrug bij het station na bij de projectleider en koppelt terug in de volgende vergadering.\n* De klacht over geluidsoverlast van een lokaal bedrijf wordt doorgezet naar de wethouder Handhaving.\n\n## Openstaande vragen\n* Hoe wordt de parkeerdruk opgevangen als het deelauto-concept in het bestemmingsplan Noorderpark niet voldoende blijkt.\n* Wat is de huidige status van de fietsbrug bij het station en wanneer wordt deze voltooid.",
+    "wall_seconds": 27.17,
+    "usage": {
+      "completion_tokens": 386,
+      "prompt_tokens": 1254,
+      "total_tokens": 1640,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "predicted_per_second": 16.15524409084182,
+    "correct": true,
+    "score_note": "headers present: ## Besluiten, ## Actiepunten, ## Openstaande vragen"
+  },
+  "strict_instructions": {
+    "content": "{\n  \"samenvatting\": \"Temperatuurafwijking van 8 graden gedurende 45 minuten\",\n  \"kernwoorden\": [\"temperatuur\", \"afwijking\", \"kwaliteit\", \"controle\", \"sensor\"],\n  \"risico_score\": 0.42,\n  \"vereist_escalatie\": false\n}",
+    "wall_seconds": 6.46,
+    "usage": {
+      "completion_tokens": 82,
+      "prompt_tokens": 271,
+      "total_tokens": 353,
+      "prompt_tokens_details": {
+        "cached_tokens": 30
+      }
+    },
+    "predicted_per_second": 16.13306391780503,
+    "correct": true,
+    "score_note": "valid JSON, keys=True, word_limit=True"
+  },
+  "_summary": {
+    "n_correct": 4,
+    "n_total": 4
+  }
+}

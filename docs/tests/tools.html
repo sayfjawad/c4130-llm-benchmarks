@@ -52,9 +52,9 @@ code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-
   <section id="winner">
     <h2 data-i18n="winnerTitle">🏆 Winnaars</h2>
     <div class="winner-card"><span class="trophy">🏆</span><div>
-      <h3 data-i18n="winnerHeading">4 modellen scoren 4/4</h3>
-      <p class="detail" data-i18n="winnerDetail1">GPT-OSS-120B, Nemotron-3.5-Lightning, Qwen3.6-35B, en Gemma 4 31B voltooien alle vier scenario's correct.</p>
-      <p class="detail" data-i18n-html="winnerDetail2"><strong>Vereist:</strong> Server moet gestart zijn met <code>--jinja</code> flag voor correcte chat-template verwerking van tool-calls. Zonder jinja werkt tool-calling niet bij de meeste modellen.</p>
+      <h3 data-i18n="winnerHeading">5 modellen scoren 4/4</h3>
+      <p class="detail" data-i18n="winnerDetail1">GPT-OSS-120B, Nemotron-3-Super, Nemotron-3.5-Lightning en beide Qwen3.8-27B-varianten voltooien alle vier scenario's correct.</p>
+      <p class="detail" data-i18n-html="winnerDetail2"><strong>Belangrijkste bevinding:</strong> llama.cpp's tool-parser wijst de tool-output van Llama-3.3 af met een HTTP 500 ("does not match the expected peg-native format"). Dit is een build/harness-beperking, niet per se een tekortkoming van het model.</p>
     </div></div>
   </section>
   <section id="reveals">
@@ -86,9 +86,9 @@ const I18N = {
     breadcrumb: "← Dashboard", navOverview: "📊 Overzicht", navSpeed: "⚡ Snelheid", navHard: "🧩 Zware taken", navLongctx: "📄 Long-context", navReliability: "🔁 Betrouwbaarheid", navTools: "🔧 Tools", navKnowledge: "📚 Kennis", navMath: "🧮 Rekenen",
     whatTitle: "Wat test dit?", whatText1: "Vier scenario's die oplopen in complexiteit, met 3 mock-tools: <code>get_weather</code>, <code>calculate</code>, en <code>search_klantendatabase</code>. Het model moet tools correct selecteren, parametriseren, en in de juiste volgorde aanroepen.",
     infoScenarios: "Scenario's", infoTools: "Mock tools", infoTemp: "Temperature", infoThinking: "Thinking", infoThinkingVal: "UIT vereist",
-    winnerTitle: "🏆 Winnaars", winnerHeading: "4 modellen scoren 4/4",
-    winnerDetail1: "GPT-OSS-120B, Nemotron-3.5-Lightning, Qwen3.6-35B, en Gemma 4 31B voltooien alle vier scenario's correct.",
-    winnerDetail2: "<strong>Vereist:</strong> Server moet gestart zijn met <code>--jinja</code> flag voor correcte chat-template verwerking van tool-calls. Zonder jinja werkt tool-calling niet bij de meeste modellen.",
+    winnerTitle: "🏆 Winnaars", winnerHeading: "5 modellen scoren 4/4",
+    winnerDetail1: "GPT-OSS-120B, Nemotron-3-Super, Nemotron-3.5-Lightning en beide Qwen3.8-27B-varianten voltooien alle vier scenario's correct.",
+    winnerDetail2: "<strong>Belangrijkste bevinding:</strong> llama.cpp's tool-parser wijst de tool-output van Llama-3.3 af met een HTTP 500 (\"does not match the expected peg-native format\"). Dit is een build/harness-beperking, niet per se een tekortkoming van het model.",
     revealsTitle: "Wat onthult deze test?",
     revealsJinjaTitle: "--jinja is geen optie, het is verplicht",
     revealsJinjaText: "Zonder de <code>--jinja</code> server-flag faalt tool-calling bij vrijwel alle modellen. Dit is een veelvoorkomende valkuil in productie: tool-calling werkt perfect in de documentatie, maar in de praktijk ontbreekt de flag en faalt alles zonder duidelijke foutmelding.",
@@ -107,9 +107,9 @@ const I18N = {
     breadcrumb: "← Dashboard", navOverview: "📊 Overview", navSpeed: "⚡ Speed", navHard: "🧩 Hard Tasks", navLongctx: "📄 Long-Context", navReliability: "🔁 Reliability", navTools: "🔧 Tools", navKnowledge: "📚 Knowledge", navMath: "🧮 Math",
     whatTitle: "What Does This Test?", whatText1: "Four scenarios of increasing complexity, with 3 mock tools: <code>get_weather</code>, <code>calculate</code>, and <code>search_klantendatabase</code>. The model must correctly select, parameterize, and sequence tool calls.",
     infoScenarios: "Scenarios", infoTools: "Mock Tools", infoTemp: "Temperature", infoThinking: "Thinking", infoThinkingVal: "OFF required",
-    winnerTitle: "🏆 Winners", winnerHeading: "4 models score 4/4",
-    winnerDetail1: "GPT-OSS-120B, Nemotron-3.5-Lightning, Qwen3.6-35B, and Gemma 4 31B complete all four scenarios correctly.",
-    winnerDetail2: "<strong>Required:</strong> Server must be started with <code>--jinja</code> flag for correct chat template processing of tool calls. Without jinja, tool-calling fails for most models.",
+    winnerTitle: "🏆 Winners", winnerHeading: "5 models score 4/4",
+    winnerDetail1: "GPT-OSS-120B, Nemotron-3-Super, Nemotron-3.5-Lightning and both Qwen3.8-27B variants complete all four scenarios correctly.",
+    winnerDetail2: "<strong>Key finding:</strong> llama.cpp's tool parser rejects Llama-3.3's tool output with an HTTP 500 (\"does not match the expected peg-native format\"). This is a build/harness limitation, not necessarily a model deficiency.",
     revealsTitle: "What This Test Reveals",
     revealsJinjaTitle: "--jinja Is Not Optional, It's Mandatory",
     revealsJinjaText: "Without the <code>--jinja</code> server flag, tool-calling fails for virtually all models. This is a common production pitfall: tool-calling works perfectly in the docs, but in practice the flag is missing and everything fails without a clear error message.",

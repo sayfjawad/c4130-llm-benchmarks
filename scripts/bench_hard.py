@@ -28,6 +28,11 @@ GROUND_TRUTH = {
 }
 NOTULEN_HEADERS = ["## Besluiten", "## Actiepunten", "## Openstaande vragen"]
 
+# Formaat-taken (notulen + strikte JSON) vereisen thinking UIT bij reasoning-modellen
+# (Nemotron/Qwen), omdat hun denkproces anders het hele tokenbudget opsoupeert. Dense
+# modellen negeren enable_thinking, dus dit is veilig. hard_reasoning blijft thinking AAN.
+FORMAT_TASKS = {"scribr_notulen", "strict_instructions"}
+
 TRANSCRIPT = """Notulen gemeenteraadsvergadering - fictief, 14 maart
 
 Aanwezig: Burgemeester De Groot (voorzitter), wethouder Bakker (Financien), wethouder Smit (Ruimtelijke Ordening), raadsleden Jansen, Verhoeven, El Amrani, Dijkstra, Pietersen.
@@ -118,7 +123,7 @@ def main():
             "max_tokens": 3000,
             "temperature": 0.3,
         }
-        if NO_THINK:
+        if NO_THINK or key in FORMAT_TASKS:
             body["chat_template_kwargs"] = {"enable_thinking": False}
         payload = json.dumps(body).encode()
         req = urllib.request.Request(URL, data=payload, headers={"Content-Type": "application/json"})

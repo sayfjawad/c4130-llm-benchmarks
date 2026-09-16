@@ -1,0 +1,84 @@
+{
+  "single_tool_call": {
+    "trace": [
+      {
+        "tool": "get_weather",
+        "args": {
+          "city": "Utrecht"
+        },
+        "result": {
+          "city": "Utrecht",
+          "temperature_c": 9
+        }
+      }
+    ],
+    "final_content": "De huidige temperatuur in Utrecht is 9 graden Celsius.",
+    "wall_seconds": 6.41,
+    "correct": true
+  },
+  "chained_tool_calls": {
+    "trace": [
+      {
+        "tool": "get_weather",
+        "args": {
+          "city": "Utrecht"
+        },
+        "result": {
+          "city": "Utrecht",
+          "temperature_c": 9
+        }
+      },
+      {
+        "tool": "calculate",
+        "args": {
+          "expression": "(9 + 15) * 2"
+        },
+        "result": {
+          "result": 48
+        }
+      }
+    ],
+    "final_content": "48",
+    "wall_seconds": 6.29,
+    "correct": true
+  },
+  "irrelevant_tool_avoidance": {
+    "trace": [],
+    "final_content": "De hoofdstad van Frankrijk is **Parijs**.",
+    "wall_seconds": 1.71,
+    "correct": true
+  },
+  "multi_entity_tool_use": {
+    "trace": [
+      {
+        "tool": "search_klantendatabase",
+        "args": {
+          "naam": "Jansen BV"
+        },
+        "result": {
+          "naam": "Jansen BV",
+          "klant_id": "KL-48213",
+          "status": "actief",
+          "openstaand_bedrag": 0
+        }
+      },
+      {
+        "tool": "get_weather",
+        "args": {
+          "city": "Rotterdam"
+        },
+        "result": {
+          "city": "Rotterdam",
+          "temperature_c": 8
+        }
+      }
+    ],
+    "final_content": "Klant Jansen BV (KL-48213) is actief met een openstaand bedrag van 0. De actuele temperatuur in Rotterdam is 8°C.",
+    "wall_seconds": 10.2,
+    "correct": true
+  },
+  "_summary": {
+    "n_correct": 4,
+    "n_total": 4
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "content": "ANTWOORD 1: Het budget voor het ERP-project (PRJ-2247) bedraagt 487.300 euro, wat uitdrukkelijk geen maatwerk-koppelingen met externe klantsystemen dekt.\nANTWOORD 2: Fatima El Ouazzani wordt per 1 september de nieuwe hoofd Inkoop, en de vertrekkende voorganger is Robert Dijkhuis.\nANTWOORD 3: De deadline voor de CRM-migratie is 15 november, en als deze niet wordt gehaald, vervalt een korting van 12 procent op de licentiekosten volledig.\nANTWOORD 4: Het ziekteverzuim is met 2,5 procentpunt gedaald, van 6,8 procent naar 4,3 procent.\nANTWOORD 5: Het voorstel is aangenomen met 9 stemmen voor en 3 tegen, onder de voorwaarde dat de huurovereenkomst niet langer dan 5 jaar mag lopen.\nANTWOORD 6: Bas Kremer is actiehouder voor de juridische toets van het huurcontract, met een deadline van 20 december.\n\nTOTAALSAMENVATTING\n- Het ERP-project (PRJ-2247) heeft een budget van 487.300 euro, exclusief externe koppelingen, en de CRM-migratie moet vóór 15 november klaar zijn om een korting van 12% te behouden.\n- Fatima El Ouazzani volgt Robert Dijkhuis op als hoofd Inkoop per 1 september, na een overdrachtsperiode van zes weken.\n- De nieuwe kantoorlocatie in Utrecht (Overste den Oudenlaan) is goedgekeurd met een maximale huurloop van 5 jaar; de juridische toets moet vóór 20 december afgerond zijn.\n- Het hybride werkbeleid heeft het ziekteverzuim met 2,5 procentpunt verlaagd (van 6,8% naar 4,3%) en wordt uitgebreid naar planners.\n- De eerste fase van de wagenparkverduurzaming (elektrificatie voor korte ritten) is goedgekeurd, waarbij de tweede fase afhangt van de RVO-subsidie-uitslag.",
+  "usage": {
+    "completion_tokens": 506,
+    "prompt_tokens": 10002,
+    "total_tokens": 10508,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 10002,
+    "prompt_ms": 19379.082,
+    "prompt_per_token_ms": 1.9375206958608278,
+    "prompt_per_second": 516.1235191636014,
+    "predicted_n": 506,
+    "predicted_ms": 35101.915,
+    "predicted_per_token_ms": 69.50874257425743,
+    "predicted_per_second": 14.386679473185437
+  },
+  "wall_seconds": 55.03,
+  "score": 6,
+  "n_needles": 6
+}

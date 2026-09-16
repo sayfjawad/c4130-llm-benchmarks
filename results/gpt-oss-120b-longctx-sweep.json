@@ -1,0 +1,235 @@
+{
+  "model": "gpt-oss-120b",
+  "sizes": [
+    {
+      "ctx_requested": 8192,
+      "prompt_tokens": 8197,
+      "completion_tokens": 467,
+      "content": "ANTWOORD 1: Het nieuwe ERP‑project heeft de projectreferentie **PRJ‑2247** en een toegekend budget van **€ 487.300**.  \nANTWOORD 2: De controleaanduiding voor kwaliteitsregistratie op positie 25 % is **RK‑93810‑214**.  \nANTWOORD 3: De controleaanduiding voor kwaliteitsregistratie op positie 50 % is **RK‑13278‑859**.  \nANTWOORD 4: De controleaanduiding voor kwaliteitsregistratie op positie 75 % is **RK‑46048‑350**.  \nANTWOORD 5: De controleaanduiding voor kwaliteitsregistratie op positie 100 % is **RK‑39256‑242**.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 13.75,
+      "prefill_tps": 921.18,
+      "decode_tps": 99.04,
+      "peak_vram_mb": [
+        18814,
+        16908,
+        17162,
+        15846
+      ]
+    },
+    {
+      "ctx_requested": 32768,
+      "prompt_tokens": 30044,
+      "completion_tokens": 429,
+      "content": "ANTWOORD 1: Het nieuwe ERP‑project heeft de projectreferentie **PRJ‑2247** en een toegekend budget van **€ 487.300**.  \nANTWOORD 2: De controleaanduiding voor kwaliteitsregistratie op positie 25 % is **RK‑93810‑214**.  \nANTWOORD 3: De controleaanduiding voor kwaliteitsregistratie op positie 50 % is **RK‑13278‑859**.  \nANTWOORD 4: De controleaanduiding voor kwaliteitsregistratie op positie 75 % is **RK‑46048‑350**.  \nANTWOORD 5: De controleaanduiding voor kwaliteitsregistratie op positie 100 % is **RK‑39256‑242**.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 38.77,
+      "prefill_tps": 898.35,
+      "decode_tps": 86.19,
+      "peak_vram_mb": [
+        18814,
+        16908,
+        17162,
+        15846
+      ]
+    },
+    {
+      "ctx_requested": 65536,
+      "prompt_tokens": 59110,
+      "completion_tokens": 390,
+      "content": "ANTWOORD 1: Het nieuwe ERP‑project heeft de projectreferentie **PRJ‑2247** en een toegekend budget van **487.300 euro**.  \nANTWOORD 2: De controleaanduiding voor kwaliteitsregistratie op positie 25 % is **RK‑93810‑214**.  \nANTWOORD 3: De controleaanduiding voor kwaliteitsregistratie op positie 50 % is **RK‑13278‑859**.  \nANTWOORD 4: De controleaanduiding voor kwaliteitsregistratie op positie 75 % is **RK‑46048‑350**.  \nANTWOORD 5: De controleaanduiding voor kwaliteitsregistratie op positie 100 % is **RK‑39256‑242**.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 79.92,
+      "prefill_tps": 799.92,
+      "decode_tps": 77.32,
+      "peak_vram_mb": [
+        18814,
+        16908,
+        17162,
+        15846
+      ]
+    },
+    {
+      "ctx_requested": 131072,
+      "prompt_tokens": 117239,
+      "completion_tokens": 431,
+      "content": "ANTWOORD 1: Het nieuwe ERP‑project heeft de projectreferentie **PRJ‑2247** en een toegekend budget van **487.300 euro**.  \nANTWOORD 2: De controleaanduiding voor kwaliteitsregistratie op positie 25 % is **RK‑93810‑214**.  \nANTWOORD 3: De controleaanduiding voor kwaliteitsregistratie op positie 50 % is **RK‑13278‑859**.  \nANTWOORD 4: De controleaanduiding voor kwaliteitsregistratie op positie 75 % is **RK‑46048‑350**.  \nANTWOORD 5: De controleaanduiding voor kwaliteitsregistratie op positie 100 % is **RK‑39256‑242**.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 188.02,
+      "prefill_tps": 654.79,
+      "decode_tps": 63.37,
+      "peak_vram_mb": [
+        18814,
+        16908,
+        17162,
+        15846
+      ]
+    },
+    {
+      "ctx_requested": 200000,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (178565 tokens) exceeds the available context size (131072 tokens), try increasing it\",\"type\":\"exceed_context_size_error\",\"n_prompt_tokens\":178565,\"n_ctx\":131072}}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 3.83,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        18814,
+        16908,
+        17162,
+        15846
+      ]
+    }
+  ]
+}

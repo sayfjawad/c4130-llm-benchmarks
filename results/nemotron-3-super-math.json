@@ -1,0 +1,96 @@
+{
+  "stap_korting": {
+    "question": "Een winkel past na elkaar drie kortingen toe op een product van 250 euro: eerst 20% korting, dan nog eens 10% korting op het resterende bedrag, en tot slot een vaste korting van 15 euro. Wat is de einprijs? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <bedrag>'.",
+    "answer": "Eerste korting:  \n\\(250 \\times (1 - 0,20) = 250 \\times 0,80 = 200\\) euro  \n\nTweede korting:  \n\\(200 \\times (1 - 0,10) = 200 \\times 0,90 = 180\\) euro  \n\nVaste korting:  \n\\(180 - 15 = 165\\) euro  \n\nEINDANTWOORD: 165",
+    "predicted_answer": "165",
+    "expected_answer": "165 euro",
+    "correct": true,
+    "wall_seconds": 7.86,
+    "completion_tokens": 300
+  },
+  "logica_ridders": {
+    "question": "Op een eiland zijn er Ridders (spreken altijd de waarheid) en Schurken (liegen altijd). Je ontmoet A en B. A zegt: 'B is een schurk.' B zegt: 'A en ik zijn beiden ridders.' Wat zijn A en B? Redeneer stap voor stap en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: A=..., B=...'.",
+    "answer": "**Stap‑voor‑stap redenering**\n\n1. **Notatie**  \n   - Ridder = altijd waarheid spreken.  \n   - Schurk = altijd liegen.  \n   - Laat A = type van A (Ridder of Schurk), hetzelfde voor B.\n\n2. **Uitspraak van A**: “B is een schurk.”  \n   - Als A een **ridder** is, is zijn uitspraak waar → B is een schurk.  \n   - Als A een **schurk** is, is zijn uitspraak onwaar → B is **geen** schurk → B is een ridder.  \n   Dus:  \n   - A = Ridder ⇒ B = Schurk  \n   - A = Schurk ⇒ B = Ridder  \n\n3. **Uitspraak van B**: “A en ik zijn beiden ridders.”  \n   - Deze uitspraak is waar **alleen als** zowel A als B ridders zijn.  \n   - Als B een **ridder** is, moet zijn uitspraak waar zijn → A en B beide ridders.  \n   - Als B een **schurk** is, moet zijn uitspraak onwaar zijn → het is **niet** het geval dat zowel A als B ridders zijn (minstens één is een schurk).\n\n4. **Test de twee mogelijkheden uit stap 2**\n\n   - **Geval 1:** A = Ridder → uit stap 2: B = Schurk.  \n     Controleer B’s uitspraak: B is een schurk, dus moet liegen.  \n     De uitspraak “A en ik zijn beiden ridders” is onwaar (want B is geen ridder).  \n     → Een schurk liegt zoals vereist. **Consistent.**\n\n   - **Geval 2:** A = Schurk → uit stap 2: B = Ridder.  \n     Controleer B’s uitspraak: B is een ridder, dus moet de waarheid spreken.  \n     Zijn uitspraak zou dan vereisen dat zowel A als B ridders zijn, maar A is een schurk.  \n     → Contradictie. **Onmogelijk.**\n\n5. Alleen **Geval 1** voldoet aan beide uitspraken.\n\n**EINDANTWOORD: A=Ridder, B=Schurk**",
+    "predicted_answer": "a=ridder, b=schurk**",
+    "expected_answer": "A=ridder, B=schurk",
+    "correct": true,
+    "wall_seconds": 28.15,
+    "completion_tokens": 1238
+  },
+  "kans_dobbelsteen": {
+    "question": "Je gooit twee eerlijke dobbelstenen. Wat is de kans dat de som van de ogen precies 7 is? Geef het antwoord als breuk EN als percentage, op de laatste regel als 'EINDANTWOORD: <breuk> = <percentage>%'.",
+    "answer": "Bij het gooien van twee eerlijke dobbelstenen zijn er \\(6 \\times 6 = 36\\) gelijkwaardige uitkomsten. De som is 7 voor de paren \\((1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\\) – 6 gunstige uitkomsten.\n\n\\[\n\\text{Kans} = \\frac{6}{36} = \\frac{1}{6}\n\\]\n\nAls percentage:\n\n\\[\n\\frac{1}{6} \\times 100\\% = 16.\\overline{6}\\%\n\\]\n\nEINDANTWOORD: 1/6 = 16.666...%",
+    "predicted_answer": "1/6 = 16.666...%",
+    "expected_answer": "1/6",
+    "correct": true,
+    "wall_seconds": 13.6,
+    "completion_tokens": 575
+  },
+  "combinatoriek": {
+    "question": "Op hoeveel manieren kunnen 5 verschillende boeken worden verdeeld over 3 verschillende personen, als elke persoon minstens 1 boek moet krijgen? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "Om de 5 verschillende boeken over 3 verschillende personen te verdelen zodat iedereen minstens één boek krijgt, tellen we het aantal surjectieve (onto) functies van een 5‑elementen verzameling (boeken) naar een 3‑elementen verzameling (personen).\n\n**Methode 1 – Inclusie‑exclusie**\n\n- Totale verdelingen zonder beperking: \\(3^5 = 243\\).\n- Trek de gevallen af waarin een bepaalde persoon geen boek krijgt: voor een vaste persoon zijn er \\(2^5 = 32\\) mogelijkheden. Er zijn 3 personen, dus aftrekken \\(3 \\times 32 = 96\\).\n- Tel terug de gevallen waarin twee bepaalde personen geen boek krijgen (alle boeken gaan naar de derde persoon): \\(1^5 = 1\\) mogelijkheid per paar, en er zijn \\(\\binom{3}{2}=3\\) zulke paren, dus \\(+3 \\times 1 = +3\\).\n- Het geval waarin alle drie personen geen boek krijgen is onmogelijk (0).\n\n\\[\n\\text{Aantal geldige verdelingen}= 243 - 96 + 3 = 150.\n\\]\n\n**Methode 2 – Stirling‑getallen**\n\nHet aantal surjectieve functies van een \\(n\\)-elementen verzameling naar een \\(k\\)-elementen verzameling is \\(k! \\, S(n,k)\\), waarbij \\(S(n,k)\\) het Stirling‑getal van de tweede soort is.\n\nVoor \\(n=5, k=3\\):\n\\[\nS(5,3)=\\frac{1}{3!}\\sum_{i=0}^{3}(-1)^i\\binom{3}{i}(3-i)^5\n      =\\frac{1}{6}\\bigl[3^5-3\\cdot2^5+3\\cdot1^5-0\\bigr]\n      =\\frac{1}{6}(243-96+3)=25.\n\\]\nDaarom:\n\\[\n3! \\times S(5,3)=6 \\times 25 = 150.\n\\]\n\nBeide methoden geven hetzelfde resultaat.\n\nEINDANTWOORD: 150",
+    "predicted_answer": "150",
+    "expected_answer": "150",
+    "correct": true,
+    "wall_seconds": 23.06,
+    "completion_tokens": 1001
+  },
+  "algebra": {
+    "question": "Twee getallen hebben een som van 47 en een verschil van 13. Wat zijn de twee getallen? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <groot getal> en <klein getal>'.",
+    "answer": "EINDANTWOORD: 30 en 17",
+    "predicted_answer": "30 en 17",
+    "expected_answer": "30 en 17",
+    "correct": true,
+    "wall_seconds": 3.98,
+    "completion_tokens": 129
+  },
+  "getaltheorie": {
+    "question": "Wat is de kleinste positieve gehele n waarvoor n! (n faculteit) deelbaar is door 1000? Toon je redenering en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "EINDANTWOORD: 15",
+    "predicted_answer": "15",
+    "expected_answer": "15",
+    "correct": true,
+    "wall_seconds": 7.65,
+    "completion_tokens": 306
+  },
+  "meetkunde": {
+    "question": "Een rechthoekige driehoek heeft een hypotenusa van 13 cm en een rechthoekszijde van 5 cm. Wat is de oppervlakte van de driehoek? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> cm2'.",
+    "answer": "EINDANTWOORD: 30 cm2",
+    "predicted_answer": "30 cm2",
+    "expected_answer": "30 cm2",
+    "correct": true,
+    "wall_seconds": 4.63,
+    "completion_tokens": 163
+  },
+  "rente": {
+    "question": "Je zet 1000 euro op een spaarrekening met 4% samengestelde rente per jaar. Na hoeveel volle jaren is het bedrag meer dan verdubbeld? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> jaar'.",
+    "answer": "We beginnen met de formule voor samengestelde rente:\n\n\\[\nA = P\\,(1+r)^n\n\\]\n\nwaarbij  \n- \\(P = 1000\\) € (beginbedrag)  \n- \\(r = 0.04\\) (4 % per jaar)  \n- \\(n\\) = aantal volle jaren  \n- \\(A\\) = bedrag na \\(n\\) jaren.\n\nWe willen het kleinste gehele \\(n\\) waarvoor \\(A > 2P = 2000\\) €:\n\n\\[\n1000\\,(1,04)^n > 2000 \\;\\Longrightarrow\\; (1,04)^n > 2.\n\\]\n\nNeem de natuurlijke logaritme van beide zijden:\n\n\\[\n\\ln\\big((1,04)^n\\big) > \\ln 2\n\\quad\\Longrightarrow\\quad\nn\\,\\ln(1,04) > \\ln 2.\n\\]\n\nLos op voor \\(n\\):\n\n\\[\nn > \\frac{\\ln 2}{\\ln(1,04)}.\n\\]\n\nBereken de waarden:\n\n\\[\n\\ln 2 \\approx 0,693147,\\qquad\n\\ln(1,04) \\approx 0,0392207.\n\\]\n\n\\[\n\\frac{0,693147}{0,0392207} \\approx 17,67.\n\\]\n\nAangezien \\(n\\) een geheel aantal volle jaren moet zijn en groter dan 17,67 moet zijn, nemen we het volgende gehele getal:\n\n\\[\nn = 18.\n\\]\n\nControle:\n\\[\n(1,04)^{18} \\approx 2,0258 \\;\\Longrightarrow\\; 1000 \\times 2,0258 \\approx 2025,80 > 2000.\n\\]\n\nNa 17 jaren is het bedrag nog onder het dubbele:\n\\[\n(1,04)^{17} \\approx 1,9479 \\;\\Longrightarrow\\; 1000 \\times 1,9479 \\approx 1947,90 < 2000.\n\\]\n\nDus na **18 volle jaren** is het bedrag meer dan verdubbeld.\n\nEINDANTWOORD: 18 jaar",
+    "predicted_answer": "18 jaar",
+    "expected_answer": "18 jaar",
+    "correct": true,
+    "wall_seconds": 16.91,
+    "completion_tokens": 718
+  },
+  "valstrik_schapen": {
+    "question": "Een boer heeft 17 schapen. Op 1 na sterven ze allemaal. Hoeveel schapen heeft hij nog? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "De boer heeft nog één schap over, omdat alle schapen behalve één zijn gestorven.\n\nEINDANTWOORD: 1",
+    "predicted_answer": "1",
+    "expected_answer": "1 schaap",
+    "correct": true,
+    "wall_seconds": 5.77,
+    "completion_tokens": 212
+  },
+  "valstrik_caesar": {
+    "question": "Julius Caesar werd geboren in juli 100 v.Chr. en stierf op 15 maart 44 v.Chr. Hoe oud was hij toen hij stierf? Let goed op of zijn verjaardag dat jaar al was geweest. Toon je redenering en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> jaar'.",
+    "answer": "Julius Caesar werd geboren in juli 100 v.Chr.  \nHij stierf op 15 maart 44 v.Chr.\n\n- Het verschil tussen de jaren is: 100 − 44 = 56 jaar.  \n- Dit zou zijn leeftijd zijn als zijn verjaardag (juli) al was gepasseerd in het jaar van zijn overlijden.  \n- Omdat hij in maart stierf, vóór zijn juli‑verjaardag, had hij zijn 56e verjaardag nog niet bereikt.  \n- Daarom moet één jaar worden afgetrokken: 56 − 1 = 55 jaar.\n\nEINDANTWOORD: 55 jaar",
+    "predicted_answer": "55 jaar",
+    "expected_answer": "55 jaar",
+    "correct": true,
+    "wall_seconds": 15.25,
+    "completion_tokens": 659
+  },
+  "_summary": {
+    "n_correct": 10,
+    "n_total": 10
+  }
+}

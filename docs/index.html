@@ -69,16 +69,15 @@
 
   <section id="winner">
     <h2><span class="num">01</span><span data-i18n="winnerTitle">De winnaar</span></h2>
-    <p class="subtitle" data-i18n="winnerSubtitle">Perfecte score op elke testcategorie, en 3× sneller dan de enige gelijkwaardige concurrent.</p>
+    <p class="subtitle" data-i18n="winnerSubtitle">Voor 200k context is er maar één antwoord. Op 128k is GPT-OSS-120B sneller met dezelfde kwaliteit.</p>
     <div class="winner-card">
       <div class="medal">🥇</div>
       <div>
-        <h3>GPT-OSS-120B <span style="color:var(--text-muted); font-weight:400;">— OpenAI, Apache 2.0</span></h3>
-        <p>117B totaal / 5,1B actief · MoE · 59GB (UD-Q4_K_XL) · 53,4 t/s generatie</p>
+        <h3>Nemotron-3-Super-120B-A12B <span style="color:var(--text-muted); font-weight:400;">— NVIDIA, 82.5GB</span></h3>
+        <p>Hybride Mamba-MoE · 120B totaal / 12B actief · 48 t/s · <strong>243k tokens context</strong></p>
         <div class="pill-row">
-          <span class="pill">✅ zware taken 4/4</span> <span class="pill">✅ long-context 6/6</span>
-          <span class="pill">✅ betrouwbaarheid 5/5</span> <span class="pill">✅ tool-gebruik 4/4</span>
-          <span class="pill">✅ kennis 14/14</span> <span class="pill">✅ rekenen 10/10</span>
+          <span class="pill">✅ 200k context gehaald (243k)</span> <span class="pill">✅ batterij 42/43</span>
+          <span class="pill">✅ rekenen 10/10</span> <span class="pill">✅ tools 4/4</span>
         </div>
       </div>
     </div>
@@ -117,7 +116,7 @@
       <table id="matrixTable">
         <thead><tr>
           <th data-i18n="thModel">Model</th><th data-i18n="thPublisher">Uitgever</th><th data-i18n="thArch">Architectuur</th><th data-i18n="thDisk">Schijf</th>
-          <th data-i18n="thSpeed">Snelheid</th><th data-i18n="thHard">Zware taken</th><th data-i18n="thLongctx">Long-ctx</th>
+          <th data-i18n="thSpeed">Snelheid</th><th data-i18n="thContext">Context</th><th data-i18n="thHard">Zware taken</th><th data-i18n="thLongctx">Long-ctx</th>
           <th data-i18n="thReliability">Betrouwbaar</th><th data-i18n="thTools">Tools</th><th data-i18n="thKnowledge">Kennis</th><th data-i18n="thMath">Rekenen</th>
         </tr></thead>
         <tbody id="matrixBody"></tbody>
@@ -126,38 +125,34 @@
   </section>
 
   <section id="story">
-    <h2><span class="num">04</span><span data-i18n="storyTitle">Het verhaal: zes testrondes</span></h2>
-    <p class="subtitle" data-i18n="storySubtitle">Waarom dit zes rondes duurde, en wat elke ronde ons leerde.</p>
-    <div class="story-block"><h3><span class="emoji-marker">1️⃣</span><span data-i18n="story1Title">De eerste kandidaat, en een harde geheugen-les</span></h3>
-      <p data-i18n-html="story1Text">GPT-OSS-120B was de voor de hand liggende eerste keuze — native ontworpen voor precies dit soort hardware. Daarna probeerden we Qwen3-235B-A22B op de grootste quant die "net" leek te passen (134GB) — en dat ging mis: llama.cpp offloadde een deel naar de CPU en de snelheid stortte in van tientallen tokens/sec naar <strong>2 tokens/sec</strong>. Les: reken een marge van 15-20GB voor context/overhead, quantiseer niet tot de rand.</p>
+    <h2><span class="num">04</span><span data-i18n="storyTitle">Het verhaal</span></h2>
+    <p class="subtitle" data-i18n="storySubtitle">Van "kan dit?" naar een duidelijke KV-les en een harde sweep-uitslag.</p>
+    <div class="story-block"><h3><span class="emoji-marker">1️⃣</span><span data-i18n="story1Title">De opdracht: Opus-klasse op een 2017-machine</span></h3>
+      <p data-i18n-html="story1Text">De machine was al verkocht en stond op afhaling, maar de vraag was te mooi om te laten liggen: kan deze 4× V100-opstelling (128GB VRAM, sm_70) een Opus-klasse LLM serveren met 64k–200k context? Het eerder gebouwde gx10-project had de <em>kwaliteits</em>-methodologie al; dit project voegt de <strong>context-sweep</strong> toe die nog niemand had gedaan voor tweedehands Volta-hardware.</p>
     </div>
-    <div class="story-block"><h3><span class="emoji-marker">2️⃣</span><span data-i18n="story2Title">De Chinese labs, en een architecturale ontdekking</span></h3>
-      <p data-i18n-html="story2Text">GLM-4.5-Air maakte een rekenfout ondanks een lange interne denkstap. MiniMax-M2 liep vast in een <strong>letterlijke herhalingslus</strong> op een notulen-taak. Maar de belangrijkste ontdekking kwam van DeepSeek-R1-Distill-Llama-70B: als <strong>dense</strong> model (alle parameters actief per token) kelderde de snelheid naar 2,9 t/s. Op deze bandbreedte-gelimiteerde hardware is <strong>MoE-architectuur belangrijker dan merk, leverancier of modelgrootte</strong>.</p>
+    <div class="story-block"><h3><span class="emoji-marker">2️⃣</span><span data-i18n="story2Title">De architectuur-drempel: Volta limiteert alles</span></h3>
+      <p data-i18n-html="story2Text">Vóór de eerste benchmark bleek dat bijna de hele moderne inference-stack afvalt op sm_70: geen BF16/FP8-hardware, geen FlashAttention-2, geen Marlin 4-bit kernels. <strong>llama.cpp is de enige runtime</strong> — en dan alleen correct als je specifiek voor sm_70 compileert (<code>CMAKE_CUDA_ARCHITECTURES=70</code>), anders valt FlashAttention stilletjes weg. De bouw zelf kostte drie valkuilen: een glibc↔CUDA <code>math</code>-clash, de eis dat K en V dezelfde quant hebben voor FlashAttention, en het vermijden van BF16-KV op Volta.</p>
     </div>
-    <div class="story-block"><h3><span class="emoji-marker">3️⃣</span><span data-i18n="story3Title">Zwaardere testen, gelijke lat</span></h3>
-      <p data-i18n="story3Text">De testset discrimineerde niet meer scherp genoeg — bijna alles scoorde 4/4. We voegden een long-context test toe (feiten verspreid door een 8k-token document) en een 5x-herhalingstest, specifiek om het soort loop-bug van MiniMax-M2 systematisch te vangen. Alle overlevende kandidaten scoorden foutloos.</p>
+    <div class="story-block"><h3><span class="emoji-marker">3️⃣</span><span data-i18n="story3Title">De KV-les: waarom alleen hybride modellen 200k halen</span></h3>
+      <p data-i18n-html="story3Text">De doorslaggevende ontdekking. Dense 70B/72B-modellen zijn per token even duur in KV-cache als in gewichten (<strong>~320 KiB/token</strong>), waardoor 128k context al ~43GB aan KV vergt. De hybride Nemotron-familie draait het om: maar 6–8 van hun ~52–88 lagen zijn attention (de rest is Mamba, met een context-onafhankelijke toestand), dus een token kost er <strong>6–8 KiB</strong>. Het gevolg is binair: Nemotron-3-Super serveerde 243k tokens (5/5 retrieval) in 87GB VRAM; een dense 70B zou bij 200k ~68GB aan KV alleen al nodig hebben.</p>
     </div>
-    <div class="story-block"><h3><span class="emoji-marker">4️⃣</span><span data-i18n="story4Title">Nieuwe generatie modellen, en de reken-bottleneck</span></h3>
-      <p data-i18n-html="story4Text">Tegen een zwaardere reken-/redeneertest (logica, kansrekening, combinatoriek, met opzettelijke datum-valstrikken) bleek het échte onderscheid: GPT-OSS-120B en Nemotron-3-Super-120B-A12B losten alles efficiënt op. De hele Qwen3.x-lijn liep bij <strong>40-50% van de vragen leeg</strong> binnen een redelijk tokenbudget — bij één vraag had het model het juiste antwoord intern al twee keer gevalideerd, en bleef het daarna eindeloos twijfelen over de presentatie tot het budget op was.</p>
+    <div class="story-block"><h3><span class="emoji-marker">4️⃣</span><span data-i18n="story4Title">De sweep: hoe elk model faalt op 200k</span></h3>
+      <p data-i18n-html="story4Text">Elk model werd doorgemeten op 8k/32k/64k/128k en daarna opzettelijk op 200k gezet om de faalmodus te vangen. <strong>Nemotron-3-Super en -3.5-Lightning</strong> haalden 5/5 tot en met 243k tokens — de enige twee die 200k echt halen. <strong>GPT-OSS-120B</strong> stopte op 117k (128k hard cap), <strong>Llama-3.3-70B</strong> op 79k, <strong>Qwen3.8-27B</strong> op 76k (open bug: stille EOS boven ~130k), en <strong>Qwen2.5-72B</strong> clamt al bij 32k native.</p>
     </div>
-    <div class="story-block"><h3><span class="emoji-marker">5️⃣</span><span data-i18n="story5Title">Dag-1 test: Nemotron 3.5 Lightning (12 aug 2026)</span></h3>
-      <p data-i18n-html="story5Text">Eén dag na release door dezelfde batterij: NVIDIA's Nemotron-3.5-Lightning-30B-A3B (3.5B actief, hybride Mamba2-MoE). Vereiste een llama.cpp-upgrade naar b10380, en de standaard-thinking-modus at in de eerste run het complete tokenbudget op (long-context 0/6, notulen 0/5). Met <strong>per taaktype de juiste thinking-modus</strong> — uit voor formaat-taken, aan voor rekenwerk — scoorde het 10/10 rekenen, 13/14 kennis, 6/6 long-context, 5/5 betrouwbaarheid en 4/4 tools, bij 58 t/s op maar 35GB. De snelste prompt-verwerking van alle 7 modellen (1978 t/s) en de nieuwe <strong>runner-up</strong> achter GPT-OSS-120B.</p>
-    </div>
-    <div class="story-block"><h3><span class="emoji-marker">6️⃣</span><span data-i18n="story6Title">Dense perfectie: Google Gemma 4 31B (12 aug 2026)</span></h3>
-      <p data-i18n-html="story6Text1">Direct na Nemotron volgde <strong>Google DeepMind's Gemma 4 31B</strong> — het eerste <strong>dense</strong> model (30.7B, alle parameters actief per token) dat de volledige batterij doorliep, en meteen het eerste dense model met een <strong>perfecte score (43/43)</strong>. De thinking-aanpak is anders dan bij Nemotron: Gemma 4 gebruikt <code>&lt;think&gt;</code>-tags, bestuurbaar via llama.cpp's <code>--reasoning off/on</code> en <code>--reasoning-budget N</code>. Hybride strategie: <code>--reasoning off</code> voor format/long-context/betrouwbaarheid/tools, <code>--reasoning on --reasoning-budget 800</code> voor rekenen.</p>
-      <p data-i18n-html="story6Text2">De scores: 4/4 zware taken (uniek: rekenvraag <strong>correct zónder thinking</strong> — 2195 — wat geen enkel ander model lukte), 6/6 long-context, 5/5 betrouwbaarheid, 4/4 tools, 14/14 kennis (2 combo-vragen correct mét thinking), 10/10 rekenen. Het Mulisch-publicatiejaar had Gemma 4 wél correct (1992), in tegenstelling tot Nemotron-3.5. De keerzijde: <strong>6.4 t/s generatiesnelheid</strong> — 9× trager dan Nemotron-3.5-Lightning (58 t/s) en 8× trager dan GPT-OSS-120B (53 t/s). Dit bevestigt opnieuw de dense-vs-MoE-les: bij gelijke kwaliteit kost dense 8-9× meer tijd per token op bandbreedte-gelimiteerde hardware. Perfect voor batch-verwerking of kwaliteit-boven-snelheid; ongeschikt voor interactief gebruik.</p>
+    <div class="story-block"><h3><span class="emoji-marker">5️⃣</span><span data-i18n="story5Title">De kwaliteits-batterij: waar de modellen zich onderscheiden</span></h3>
+      <p data-i18n-html="story5Text">Op de 43/43-batterij staan <strong>GPT-OSS-120B</strong> en <strong>Nemotron-3-Super</strong> bovenaan (42/43); GPT-OSS is 2.3× sneller (110 vs 48 t/s) maar capped op 128k. <strong>Nemotron-3.5-Lightning</strong> is de snelste van allemaal (142 t/s) op 25.5GB, maar loopt op één kansreken-vraag leeg (thinking-runaway). <strong>Llama-3.3-70B</strong> faalt op tool-calling (2/4) door een llama.cpp parser-limiet, en <strong>Qwen2.5-72B</strong> zakt op rekenen (7/10) én context (32k).</p>
     </div>
   </section>
 
   <section id="lessons">
     <h2><span class="num">05</span><span data-i18n="lessonsTitle">Belangrijkste lessen</span></h2>
     <div class="lessons">
-      <div class="lesson-card"><div class="n">🏗️</div><h4 data-i18n="lesson1Title">MoE &gt; dense, punt</h4><p data-i18n="lesson1Text">Op bandbreedte-gelimiteerde hardware kan een dense 70B-model 15-20x trager zijn dan een MoE-model van vergelijkbare grootte. Check dit vóór je downloadt.</p></div>
-      <div class="lesson-card"><div class="n">📏</div><h4 data-i18n="lesson2Title">Quantiseer niet tot de rand</h4><p data-i18n="lesson2Text">Reken 15-20GB marge boven de modelgrootte voor context/KV-cache, anders forceer je CPU-offload en wordt het model onbruikbaar traag.</p></div>
-      <div class="lesson-card"><div class="n">🧠</div><h4 data-i18n="lesson3Title">Reasoning kan zijn eigen budget opeten</h4><p data-i18n-html="lesson3Text">Zonder ruim <code>max_tokens</code> (2000+) en zonder te checken op <code>reasoning_content</code> naast <code>content</code> lijkt een goed model plots "leeg" te antwoorden.</p></div>
-      <div class="lesson-card"><div class="n">🔀</div><h4 data-i18n="lesson4Title">Ken de thinking-toggle</h4><p data-i18n-html="lesson4Text">Qwen3.x: <code>enable_thinking: false</code>. NVIDIA Nemotron: <code>"detailed thinking off"</code>. Zet dit alléén uit voor pure formaat-taken — voor rekenwerk kost het correctheid.</p></div>
-      <div class="lesson-card"><div class="n">🔁</div><h4 data-i18n="lesson5Title">Snel en correct ≠ betrouwbaar</h4><p data-i18n="lesson5Text">Meerdere modellen kwamen intern tot het juiste antwoord maar faalden om het te leveren. Alleen herhalingstests vangen dit systematisch.</p></div>
-      <div class="lesson-card"><div class="n">🔍</div><h4 data-i18n="lesson6Title">Verifieer modelclaims altijd zelf</h4><p data-i18n="lesson6Text">Publieke "beste LLM"-lijsten bevatten vaak plausibele maar onbetrouwbare informatie. De officiële Hugging Face API was onze enige vertrouwde bron.</p></div>
+      <div class="lesson-card"><div class="n">📐</div><h4 data-i18n="lesson1Title">KV-geometrie bepaalt je context</h4><p data-i18n-html="lesson1Text">Dense 70B/72B = <strong>~320 KiB/token</strong> KV (128k ≈ 43GB). Hybride Mamba = <strong>6–8 KiB/token</strong>. Wil je 200k? Kies op het aantal attention-lagen, niet op de gewichten.</p></div>
+      <div class="lesson-card"><div class="n">🧱</div><h4 data-i18n="lesson2Title">Bouw voor sm_70, of verlies FlashAttention</h4><p data-i18n-html="lesson2Text">Alleen <code>CMAKE_CUDA_ARCHITECTURES=70</code> activeert de Volta-FA-pad; een multi-arch build valt stilletjes terug. En: geen BF16/FP8/Marlin op V100.</p></div>
+      <div class="lesson-card"><div class="n">🌀</div><h4 data-i18n="lesson3Title">MoE/hybride &gt; dense</h4><p data-i18n="lesson3Text">Dense Llama-3.3-70B (16 t/s) vs hybride Nemotron-3.5 (142 t/s) ≈ 9× sneller. Op bandbreedte-gelimiteerde hardware wint de architectuur, niet de grootte.</p></div>
+      <div class="lesson-card"><div class="n">🧭</div><h4 data-i18n="lesson4Title">Sweep tot de faalmodus</h4><p data-i18n="lesson4Text">Test niet alleen de max, zet het model er opzettelijk overheen. Elk gecapped model faalde op zijn eigen manier: hard cap, stille EOS of native 32k.</p></div>
+      <div class="lesson-card"><div class="n">🧠</div><h4 data-i18n="lesson5Title">Reasoning eet zijn eigen budget</h4><p data-i18n-html="lesson5Text">Zonder ruim <code>max_tokens</code> (2000+) en <code>enable_thinking:false</code> voor formaat-taken lijkt een goed model plots "leeg" te antwoorden.</p></div>
+      <div class="lesson-card"><div class="n">🔍</div><h4 data-i18n="lesson6Title">Verifieer zelf — tot de bestandsgrootte</h4><p data-i18n="lesson6Text">De HF-API is de enige betrouwbare bron. Let op de content-vs-name-trap: unsloth's "UD-Q4_K_M" voor Nemotron-3-Super is écht ~5.5 bpw — vandaar 82.5GB, niet 68.</p></div>
     </div>
   </section>
 
@@ -167,11 +162,18 @@
 <pre>git clone https://github.com/sayfjawad/c4130-llm-benchmarks.git
 cd c4130-llm-benchmarks
 
-pip install -U "huggingface_hub[cli]"
-hf download unsloth/gpt-oss-120b-GGUF --include "UD-Q4_K_XL/*" --local-dir ~/models/gpt-oss-120b
+# 1. Bouw llama.cpp alléén voor sm_70 (anders valt FlashAttention stilletjes weg)
+cmake -B build -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=70 && cmake --build build -j
 
-llama-server --model ~/models/gpt-oss-120b/UD-Q4_K_XL/gpt-oss-120b-UD-Q4_K_XL-00001-of-00002.gguf \
-  --alias gpt-oss-120b --host 127.0.0.1 --port 8081 --n-gpu-layers 999 --cont-batching
+# 2. Download één model (GPT-OSS-120B, 63GB, native MXFP4)
+pip install -U "huggingface_hub[cli]"
+hf download ggml-org/gpt-oss-120b-GGUF --include "*MXFP4*.gguf" --local-dir ~/models/gpt-oss-120b
+
+# 3. Start de server: 4 GPUs laag-gewijs, expliciete context + 1 slot
+./build/bin/llama-server --model ~/models/gpt-oss-120b/gpt-oss-120b-MXFP4.gguf \
+  --alias gpt-oss-120b --host 127.0.0.1 --port 8081 \
+  --n-gpu-layers 999 --split-mode layer --tensor-split 8,8,8,8 \
+  -c 131072 -np 1 -fa on --kv-unified -ctk q8_0 -ctv q8_0
 
 python3 scripts/bench_hard.py 8081 gpt-oss-120b</pre>
     <p data-i18n-html="reproNote">💾 <strong>Schijfruimte:</strong> reken ~50GB voor kleine kandidaten (30-40GB klasse), ~130GB voor grote (~100GB klasse). Sequentieel testen (download → test → opruimen → volgende) houdt 150GB vrije ruimte ruim voldoende, ongeacht hoeveel modellen je wilt vergelijken.</p>
@@ -193,35 +195,33 @@ const I18N = {
     heroLead: "Welk lokaal LLM is écht het snelst én slimst op een Dell C4130 met 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM)? 7 modellen zelf gedownload, zelf gedraaid, zelf getest — inclusief de modellen die faalden en waarom.",
     badgeHW: "🖥️ 4× Tesla V100-SXM2-32GB · 128GB VRAM", badgeModels: "📦 7 modellen getest", badgeCats: "🔬 7 testcategorieën", badgeVerified: "✅ alles zelf geverifieerd, geen blog-cijfers",
     navHome: "📊 C4130 Benchmarks", navSpeed: "⚡ Snelheid", navHard: "🧩 Zware taken", navLongctx: "📄 Long-context", navReliability: "🔁 Betrouwbaarheid", navTools: "🔧 Tools", navKnowledge: "📚 Kennis", navMath: "🧮 Rekenen",
-    winnerTitle: "De winnaar", winnerSubtitle: "Perfecte score op elke testcategorie, en 3× sneller dan de enige gelijkwaardige concurrent.",
+    winnerTitle: "De winnaar", winnerSubtitle: "Voor 200k context is er maar één antwoord. Op 128k is GPT-OSS-120B sneller met dezelfde kwaliteit.",
     chartsTitle: "Resultaten in grafieken", chartsSubtitle: "Live gegenereerd uit <code>docs/data/results.json</code> — nieuwe modeltests verschijnen hier automatisch na een push.",
     speedChartTitle: "⚡ Generatiesnelheid (tokens/sec)", speedChartNote: "Gemeten met <code>llama-bench</code> / server-timings. Hoger = sneller.",
     mathChartTitle: "🧮 Score op de zware reken-/redeneertest (van 10)", mathChartNote: "Alleen modellen die deze specifieke testronde doorliepen. Dit is waar de meeste modellen zich daadwerkelijk van elkaar onderscheiden.",
     scatterChartTitle: "💾 Omvang op schijf vs. snelheid", scatterChartNote: "Grotere bubbel = meer totale parameters. Rechtsonder is de ideale hoek: klein én snel.",
     matrixTitle: "Volledige scorematrix", matrixSubtitle: "Alle 7 geteste modellen, alle categorieën. Niet elk model doorliep elke test (zie toelichting per rij in het README).",
     legendPass: "geslaagd", legendWarn: "gedeeltelijk / met kanttekening", legendFail: "gefaald", legendNa: "niet getest",
-    thModel: "Model", thPublisher: "Uitgever", thArch: "Architectuur", thDisk: "Schijf", thSpeed: "Snelheid",
+    thModel: "Model", thPublisher: "Uitgever", thArch: "Architectuur", thDisk: "Schijf", thSpeed: "Snelheid", thContext: "Context",
     thHard: "Zware taken", thLongctx: "Long-ctx", thReliability: "Betrouwbaar", thTools: "Tools", thKnowledge: "Kennis", thMath: "Rekenen",
-    storyTitle: "Het verhaal: zes testrondes", storySubtitle: "Waarom dit zes rondes duurde, en wat elke ronde ons leerde.",
-    story1Title: "De eerste kandidaat, en een harde geheugen-les",
-    story1Text: "GPT-OSS-120B was de voor de hand liggende eerste keuze — native ontworpen voor precies dit soort hardware. Daarna probeerden we Qwen3-235B-A22B op de grootste quant die \"net\" leek te passen (134GB) — en dat ging mis: llama.cpp offloadde een deel naar de CPU en de snelheid stortte in van tientallen tokens/sec naar <strong>2 tokens/sec</strong>. Les: reken een marge van 15-20GB voor context/overhead, quantiseer niet tot de rand.",
-    story2Title: "De Chinese labs, en een architecturale ontdekking",
-    story2Text: "GLM-4.5-Air maakte een rekenfout ondanks een lange interne denkstap. MiniMax-M2 liep vast in een <strong>letterlijke herhalingslus</strong> op een notulen-taak. Maar de belangrijkste ontdekking kwam van DeepSeek-R1-Distill-Llama-70B: als <strong>dense</strong> model (alle parameters actief per token) kelderde de snelheid naar 2,9 t/s. Op deze bandbreedte-gelimiteerde hardware is <strong>MoE-architectuur belangrijker dan merk, leverancier of modelgrootte</strong>.",
-    story3Title: "Zwaardere testen, gelijke lat", story3Text: "De testset discrimineerde niet meer scherp genoeg — bijna alles scoorde 4/4. We voegden een long-context test toe (feiten verspreid door een 8k-token document) en een 5x-herhalingstest, specifiek om het soort loop-bug van MiniMax-M2 systematisch te vangen. Alle overlevende kandidaten scoorden foutloos.",
-    story4Title: "Nieuwe generatie modellen, en de reken-bottleneck",
-    story4Text: "Tegen een zwaardere reken-/redeneertest (logica, kansrekening, combinatoriek, met opzettelijke datum-valstrikken) bleek het échte onderscheid: GPT-OSS-120B en Nemotron-3-Super-120B-A12B losten alles efficiënt op. De hele Qwen3.x-lijn liep bij <strong>40-50% van de vragen leeg</strong> binnen een redelijk tokenbudget — bij één vraag had het model het juiste antwoord intern al twee keer gevalideerd, en bleef het daarna eindeloos twijfelen over de presentatie tot het budget op was.",
-    story5Title: "Dag-1 test: Nemotron 3.5 Lightning (12 aug 2026)",
-    story5Text: "Eén dag na release door dezelfde batterij: NVIDIA's Nemotron-3.5-Lightning-30B-A3B (3.5B actief, hybride Mamba2-MoE). Vereiste een llama.cpp-upgrade naar b10380, en de standaard-thinking-modus at in de eerste run het complete tokenbudget op (long-context 0/6, notulen 0/5). Met <strong>per taaktype de juiste thinking-modus</strong> — uit voor formaat-taken, aan voor rekenwerk — scoorde het 10/10 rekenen, 13/14 kennis, 6/6 long-context, 5/5 betrouwbaarheid en 4/4 tools, bij 58 t/s op maar 35GB. De snelste prompt-verwerking van alle 7 modellen (1978 t/s) en de nieuwe <strong>runner-up</strong> achter GPT-OSS-120B.",
-    story6Title: "Dense perfectie: Google Gemma 4 31B (12 aug 2026)",
-    story6Text1: "Direct na Nemotron volgde <strong>Google DeepMind's Gemma 4 31B</strong> — het eerste <strong>dense</strong> model (30.7B, alle parameters actief per token) dat de volledige batterij doorliep, en meteen het eerste dense model met een <strong>perfecte score (43/43)</strong>. De thinking-aanpak is anders dan bij Nemotron: Gemma 4 gebruikt <code>&lt;think&gt;</code>-tags, bestuurbaar via llama.cpp's <code>--reasoning off/on</code> en <code>--reasoning-budget N</code>. Hybride strategie: <code>--reasoning off</code> voor format/long-context/betrouwbaarheid/tools, <code>--reasoning on --reasoning-budget 800</code> voor rekenen.",
-    story6Text2: "De scores: 4/4 zware taken (uniek: rekenvraag <strong>correct zónder thinking</strong> — 2195 — wat geen enkel ander model lukte), 6/6 long-context, 5/5 betrouwbaarheid, 4/4 tools, 14/14 kennis (2 combo-vragen correct mét thinking), 10/10 rekenen. Het Mulisch-publicatiejaar had Gemma 4 wél correct (1992), in tegenstelling tot Nemotron-3.5. De keerzijde: <strong>6.4 t/s generatiesnelheid</strong> — 9× trager dan Nemotron-3.5-Lightning (58 t/s) en 8× trager dan GPT-OSS-120B (53 t/s). Dit bevestigt opnieuw de dense-vs-MoE-les: bij gelijke kwaliteit kost dense 8-9× meer tijd per token op bandbreedte-gelimiteerde hardware. Perfect voor batch-verwerking of kwaliteit-boven-snelheid; ongeschikt voor interactief gebruik.",
+    storyTitle: "Het verhaal", storySubtitle: "Van \"kan dit?\" naar een duidelijke KV-les en een harde sweep-uitslag.",
+    story1Title: "De opdracht: Opus-klasse op een 2017-machine",
+    story1Text: "De machine was al verkocht en stond op afhaling, maar de vraag was te mooi om te laten liggen: kan deze 4× V100-opstelling (128GB VRAM, sm_70) een Opus-klasse LLM serveren met 64k–200k context? Het eerder gebouwde gx10-project had de <em>kwaliteits</em>-methodologie al; dit project voegt de <strong>context-sweep</strong> toe die nog niemand had gedaan voor tweedehands Volta-hardware.",
+    story2Title: "De architectuur-drempel: Volta limiteert alles",
+    story2Text: "Vóór de eerste benchmark bleek dat bijna de hele moderne inference-stack afvalt op sm_70: geen BF16/FP8-hardware, geen FlashAttention-2, geen Marlin 4-bit kernels. <strong>llama.cpp is de enige runtime</strong> — en dan alleen correct als je specifiek voor sm_70 compileert (<code>CMAKE_CUDA_ARCHITECTURES=70</code>), anders valt FlashAttention stilletjes weg. De bouw zelf kostte drie valkuilen: een glibc↔CUDA <code>math</code>-clash, de eis dat K en V dezelfde quant hebben voor FlashAttention, en het vermijden van BF16-KV op Volta.",
+    story3Title: "De KV-les: waarom alleen hybride modellen 200k halen",
+    story3Text: "De doorslaggevende ontdekking. Dense 70B/72B-modellen zijn per token even duur in KV-cache als in gewichten (<strong>~320 KiB/token</strong>), waardoor 128k context al ~43GB aan KV vergt. De hybride Nemotron-familie draait het om: maar 6–8 van hun ~52–88 lagen zijn attention (de rest is Mamba, met een context-onafhankelijke toestand), dus een token kost er <strong>6–8 KiB</strong>. Het gevolg is binair: Nemotron-3-Super serveerde 243k tokens (5/5 retrieval) in 87GB VRAM; een dense 70B zou bij 200k ~68GB aan KV alleen al nodig hebben.",
+    story4Title: "De sweep: hoe elk model faalt op 200k",
+    story4Text: "Elk model werd doorgemeten op 8k/32k/64k/128k en daarna opzettelijk op 200k gezet om de faalmodus te vangen. <strong>Nemotron-3-Super en -3.5-Lightning</strong> haalden 5/5 tot en met 243k tokens — de enige twee die 200k echt halen. <strong>GPT-OSS-120B</strong> stopte op 117k (128k hard cap), <strong>Llama-3.3-70B</strong> op 79k, <strong>Qwen3.8-27B</strong> op 76k (open bug: stille EOS boven ~130k), en <strong>Qwen2.5-72B</strong> clamt al bij 32k native.",
+    story5Title: "De kwaliteits-batterij: waar de modellen zich onderscheiden",
+    story5Text: "Op de 43/43-batterij staan <strong>GPT-OSS-120B</strong> en <strong>Nemotron-3-Super</strong> bovenaan (42/43); GPT-OSS is 2.3× sneller (110 vs 48 t/s) maar capped op 128k. <strong>Nemotron-3.5-Lightning</strong> is de snelste van allemaal (142 t/s) op 25.5GB, maar loopt op één kansreken-vraag leeg (thinking-runaway). <strong>Llama-3.3-70B</strong> faalt op tool-calling (2/4) door een llama.cpp parser-limiet, en <strong>Qwen2.5-72B</strong> zakt op rekenen (7/10) én context (32k).",
     lessonsTitle: "Belangrijkste lessen",
-    lesson1Title: "MoE > dense, punt", lesson1Text: "Op bandbreedte-gelimiteerde hardware kan een dense 70B-model 15-20x trager zijn dan een MoE-model van vergelijkbare grootte. Check dit vóór je downloadt.",
-    lesson2Title: "Quantiseer niet tot de rand", lesson2Text: "Reken 15-20GB marge boven de modelgrootte voor context/KV-cache, anders forceer je CPU-offload en wordt het model onbruikbaar traag.",
-    lesson3Title: "Reasoning kan zijn eigen budget opeten", lesson3Text: "Zonder ruim <code>max_tokens</code> (2000+) en zonder te checken op <code>reasoning_content</code> naast <code>content</code> lijkt een goed model plots \"leeg\" te antwoorden.",
-    lesson4Title: "Ken de thinking-toggle", lesson4Text: "Qwen3.x: <code>enable_thinking: false</code>. NVIDIA Nemotron: <code>\"detailed thinking off\"</code>. Zet dit alléén uit voor pure formaat-taken — voor rekenwerk kost het correctheid.",
-    lesson5Title: "Snel en correct ≠ betrouwbaar", lesson5Text: "Meerdere modellen kwamen intern tot het juiste antwoord maar faalden om het te leveren. Alleen herhalingstests vangen dit systematisch.",
-    lesson6Title: "Verifieer modelclaims altijd zelf", lesson6Text: "Publieke \"beste LLM\"-lijsten bevatten vaak plausibele maar onbetrouwbare informatie. De officiële Hugging Face API was onze enige vertrouwde bron.",
+    lesson1Title: "KV-geometrie bepaalt je context", lesson1Text: "Dense 70B/72B = <strong>~320 KiB/token</strong> KV (128k ≈ 43GB). Hybride Mamba = <strong>6–8 KiB/token</strong>. Wil je 200k? Kies op het aantal attention-lagen, niet op de gewichten.",
+    lesson2Title: "Bouw voor sm_70, of verlies FlashAttention", lesson2Text: "Alleen <code>CMAKE_CUDA_ARCHITECTURES=70</code> activeert de Volta-FA-pad; een multi-arch build valt stilletjes terug. En: geen BF16/FP8/Marlin op V100.",
+    lesson3Title: "MoE/hybride > dense", lesson3Text: "Dense Llama-3.3-70B (16 t/s) vs hybride Nemotron-3.5 (142 t/s) ≈ 9× sneller. Op bandbreedte-gelimiteerde hardware wint de architectuur, niet de grootte.",
+    lesson4Title: "Sweep tot de faalmodus", lesson4Text: "Test niet alleen de max, zet het model er opzettelijk overheen. Elk gecapped model faalde op zijn eigen manier: hard cap, stille EOS of native 32k.",
+    lesson5Title: "Reasoning eet zijn eigen budget", lesson5Text: "Zonder ruim <code>max_tokens</code> (2000+) en <code>enable_thinking:false</code> voor formaat-taken lijkt een goed model plots \"leeg\" te antwoorden.",
+    lesson6Title: "Verifieer zelf — tot de bestandsgrootte", lesson6Text: "De HF-API is de enige betrouwbare bron. Let op de content-vs-name-trap: unsloth's \"UD-Q4_K_M\" voor Nemotron-3-Super is écht ~5.5 bpw — vandaar 82.5GB, niet 68.",
     reproTitle: "Zelf reproduceren", reproSubtitle: "Alle scripts zijn pure Python (stdlib) en praten met een lokale <code>llama-server</code>. Volledige uitleg: <a href=\"https://github.com/sayfjawad/c4130-llm-benchmarks/blob/main/scripts/README.md\">scripts/README.md</a>.",
     reproNote: "💾 <strong>Schijfruimte:</strong> reken ~50GB voor kleine kandidaten (30-40GB klasse), ~130GB voor grote (~100GB klasse). Sequentieel testen (download → test → opruimen → volgende) houdt 150GB vrije ruimte ruim voldoende, ongeacht hoeveel modellen je wilt vergelijken.",
     footerSources: "📚 Bronnen: <a href=\"https://huggingface.co\">Hugging Face</a> (modelgewichten, met name <a href=\"https://huggingface.co/unsloth\">unsloth</a>-GGUF-conversies) · <a href=\"https://github.com/ggml-org/llama.cpp\">llama.cpp</a> (inference) · officiële Hugging Face API voor modelverificatie.",
@@ -239,35 +239,33 @@ const I18N = {
     heroLead: "Which local LLM is truly the fastest and smartest on an Dell C4130 with 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM)? 7 models downloaded, run, and tested ourselves — including the models that failed and why.",
     badgeHW: "🖥️ 4× Tesla V100-SXM2-32GB · 128GB VRAM", badgeModels: "📦 7 models tested", badgeCats: "🔬 7 test categories", badgeVerified: "✅ all self-verified, no blog stats",
     navHome: "📊 C4130 Benchmarks", navSpeed: "⚡ Speed", navHard: "🧩 Hard Tasks", navLongctx: "📄 Long-Context", navReliability: "🔁 Reliability", navTools: "🔧 Tools", navKnowledge: "📚 Knowledge", navMath: "🧮 Math",
-    winnerTitle: "The Winner", winnerSubtitle: "Perfect score on every test category, and 3× faster than the only comparable competitor.",
+    winnerTitle: "The Winner", winnerSubtitle: "For 200k context there is only one answer. At 128k, GPT-OSS-120B is faster at the same quality.",
     chartsTitle: "Results in Charts", chartsSubtitle: "Live generated from <code>docs/data/results.json</code> — new model tests appear here automatically after a push.",
     speedChartTitle: "⚡ Generation Speed (tokens/sec)", speedChartNote: "Measured with <code>llama-bench</code> / server timings. Higher = faster.",
     mathChartTitle: "🧮 Hard Math/Reasoning Test Score (out of 10)", mathChartNote: "Only models that completed this specific test round. This is where most models actually distinguish themselves from each other.",
     scatterChartTitle: "💾 Disk Size vs. Speed", scatterChartNote: "Larger bubble = more total parameters. Bottom-right is the ideal corner: small and fast.",
     matrixTitle: "Full Score Matrix", matrixSubtitle: "All 7 tested models, all categories. Not every model completed every test (see per-row notes in the README).",
     legendPass: "passed", legendWarn: "partial / with caveat", legendFail: "failed", legendNa: "not tested",
-    thModel: "Model", thPublisher: "Publisher", thArch: "Architecture", thDisk: "Disk", thSpeed: "Speed",
+    thModel: "Model", thPublisher: "Publisher", thArch: "Architecture", thDisk: "Disk", thSpeed: "Speed", thContext: "Context",
     thHard: "Hard Tasks", thLongctx: "Long-ctx", thReliability: "Reliability", thTools: "Tools", thKnowledge: "Knowledge", thMath: "Math",
-    storyTitle: "The Story: Six Test Rounds", storySubtitle: "Why this took six rounds, and what each round taught us.",
-    story1Title: "The First Candidate, and a Hard Memory Lesson",
-    story1Text: "GPT-OSS-120B was the obvious first choice — natively designed for exactly this kind of hardware. Then we tried Qwen3-235B-A22B at the largest quant that \"just\" seemed to fit (134GB) — and it went wrong: llama.cpp offloaded part to the CPU and speed plummeted from tens of tokens/sec to <strong>2 tokens/sec</strong>. Lesson: budget 15-20GB margin above model size for context/KV-cache; don't quantize to the edge.",
-    story2Title: "The Chinese Labs, and an Architectural Discovery",
-    story2Text: "GLM-4.5-Air made a math error despite a long internal reasoning step. MiniMax-M2 got stuck in a <strong>literal repetition loop</strong> on a minutes task. But the most important discovery came from DeepSeek-R1-Distill-Llama-70B: as a <strong>dense</strong> model (all parameters active per token), speed plummeted to 2.9 t/s. On this bandwidth-limited hardware, <strong>MoE architecture matters more than brand, vendor, or model size</strong>.",
-    story3Title: "Harder Tests, Equal Bar", story3Text: "The test suite no longer discriminated sharply enough — nearly everything scored 4/4. We added a long-context test (facts scattered through an 8k-token document) and a 5× repetition test, specifically to systematically catch the kind of loop bug MiniMax-M2 exhibited. All surviving candidates scored flawlessly.",
-    story4Title: "New Generation Models, and the Math Bottleneck",
-    story4Text: "Against a harder math/reasoning test (logic, probability, combinatorics, with deliberate date traps) the real distinction emerged: GPT-OSS-120B and Nemotron-3-Super-120B-A12B solved everything efficiently. The entire Qwen3.x line ran out of tokens on <strong>40-50% of the questions</strong> within a reasonable token budget — on one question, the model had internally validated the correct answer twice, then kept endlessly second-guessing the presentation until the budget ran out.",
-    story5Title: "Day-1 Test: Nemotron 3.5 Lightning (Aug 12, 2026)",
-    story5Text: "One day after release, through the same battery: NVIDIA's Nemotron-3.5-Lightning-30B-A3B (3.5B active, hybrid Mamba2-MoE). Required a llama.cpp upgrade to b10380, and the default thinking mode ate the entire token budget in the first run (long-context 0/6, minutes 0/5). With <strong>the right thinking mode per task type</strong> — off for formatting tasks, on for math — it scored 10/10 math, 13/14 knowledge, 6/6 long-context, 5/5 reliability, and 4/4 tools, at 58 t/s on just 35GB. Fastest prompt processing of all 7 models (1978 t/s) and the new <strong>runner-up</strong> behind GPT-OSS-120B.",
-    story6Title: "Dense Perfection: Google Gemma 4 31B (Aug 12, 2026)",
-    story6Text1: "Right after Nemotron came <strong>Google DeepMind's Gemma 4 31B</strong> — the first <strong>dense</strong> model (30.7B, all parameters active per token) to complete the full battery, and immediately the first dense model with a <strong>perfect score (43/43)</strong>. The thinking approach differs from Nemotron: Gemma 4 uses <code>&lt;think&gt;</code> tags, controllable via llama.cpp's <code>--reasoning off/on</code> and <code>--reasoning-budget N</code>. Hybrid strategy: <code>--reasoning off</code> for format/long-context/reliability/tools, <code>--reasoning on --reasoning-budget 800</code> for math.",
-    story6Text2: "The scores: 4/4 hard tasks (unique: math question <strong>correct without thinking</strong> — 2195 — which no other model achieved), 6/6 long-context, 5/5 reliability, 4/4 tools, 14/14 knowledge (2 combo questions correct with thinking), 10/10 math. Gemma 4 correctly identified Mulisch's publication year (1992), unlike Nemotron-3.5. The trade-off: <strong>6.4 t/s generation speed</strong> — 9× slower than Nemotron-3.5-Lightning (58 t/s) and 8× slower than GPT-OSS-120B (53 t/s). This reconfirms the dense-vs-MoE lesson: at equal quality, dense costs 8-9× more time per token on bandwidth-limited hardware. Perfect for batch processing or quality-over-speed; unsuitable for interactive use.",
+    storyTitle: "The Story", storySubtitle: "From \"can this work?\" to a clear KV lesson and a hard sweep result.",
+    story1Title: "The Brief: Opus-Class on a 2017 Machine",
+    story1Text: "The machine was already sold and awaiting pickup, but the question was too good to leave unanswered: can this 4× V100 setup (128GB VRAM, sm_70) serve an Opus-class LLM with 64k–200k context? The earlier gx10 project already had the <em>quality</em> methodology; this project adds the <strong>context sweep</strong> nobody had done for second-hand Volta hardware.",
+    story2Title: "The Architecture Barrier: Volta Limits Everything",
+    story2Text: "Before the first benchmark it became clear that almost the entire modern inference stack fails on sm_70: no BF16/FP8 hardware, no FlashAttention-2, no Marlin 4-bit kernels. <strong>llama.cpp is the only runtime</strong> — and only correct when compiled specifically for sm_70 (<code>CMAKE_CUDA_ARCHITECTURES=70</code>), otherwise FlashAttention silently drops off. The build itself cost three pitfalls: a glibc↔CUDA <code>math</code> clash, the requirement that K and V share the same quant for FlashAttention, and avoiding BF16-KV on Volta.",
+    story3Title: "The KV Lesson: Why Only Hybrid Models Reach 200k",
+    story3Text: "The decisive discovery. Dense 70B/72B models are as expensive per token in KV-cache as in weights (<strong>~320 KiB/token</strong>), so 128k context already needs ~43GB of KV. The hybrid Nemotron family turns it around: only 6–8 of their ~52–88 layers are attention (the rest is Mamba, with a context-independent state), so a token costs <strong>6–8 KiB</strong>. The result is binary: Nemotron-3-Super served 243k tokens (5/5 retrieval) in 87GB VRAM; a dense 70B would need ~68GB for KV alone at 200k.",
+    story4Title: "The Sweep: How Each Model Fails at 200k",
+    story4Text: "Each model was measured at 8k/32k/64k/128k, then deliberately pushed to 200k to capture its failure mode. <strong>Nemotron-3-Super and -3.5-Lightning</strong> scored 5/5 up to 243k tokens — the only two that genuinely reach 200k. <strong>GPT-OSS-120B</strong> stopped at 117k (128k hard cap), <strong>Llama-3.3-70B</strong> at 79k, <strong>Qwen3.8-27B</strong> at 76k (open bug: silent EOS above ~130k), and <strong>Qwen2.5-72B</strong> already clamps at 32k native.",
+    story5Title: "The Quality Battery: Where Models Distinguish Themselves",
+    story5Text: "On the 43/43 battery, <strong>GPT-OSS-120B</strong> and <strong>Nemotron-3-Super</strong> lead (42/43); GPT-OSS is 2.3× faster (110 vs 48 t/s) but capped at 128k. <strong>Nemotron-3.5-Lightning</strong> is the fastest of all (142 t/s) at 25.5GB, but runs empty on one probability question (thinking-runaway). <strong>Llama-3.3-70B</strong> fails tool-calling (2/4) due to a llama.cpp parser limit, and <strong>Qwen2.5-72B</strong> drops on math (7/10) and context (32k).",
     lessonsTitle: "Key Lessons",
-    lesson1Title: "MoE > dense, period", lesson1Text: "On bandwidth-limited hardware, a dense 70B model can be 15-20× slower than an MoE model of comparable size. Check this before you download.",
-    lesson2Title: "Don't Quantize to the Edge", lesson2Text: "Budget 15-20GB margin above model size for context/KV-cache, otherwise you force CPU offload and the model becomes unusably slow.",
-    lesson3Title: "Reasoning Can Eat Its Own Budget", lesson3Text: "Without generous <code>max_tokens</code> (2000+) and without checking <code>reasoning_content</code> alongside <code>content</code>, a good model can appear to answer \"empty\".",
-    lesson4Title: "Know the Thinking Toggle", lesson4Text: "Qwen3.x: <code>enable_thinking: false</code>. NVIDIA Nemotron: <code>\"detailed thinking off\"</code>. Only disable this for pure formatting tasks — for math work, it costs correctness.",
-    lesson5Title: "Fast and Correct ≠ Reliable", lesson5Text: "Multiple models internally reached the correct answer but failed to deliver it. Only repetition tests catch this systematically.",
-    lesson6Title: "Always Verify Model Claims Yourself", lesson6Text: "Public \"best LLM\" lists often contain plausible but unreliable information. The official Hugging Face API was our only trusted source.",
+    lesson1Title: "KV Geometry Determines Your Context", lesson1Text: "Dense 70B/72B = <strong>~320 KiB/token</strong> KV (128k ≈ 43GB). Hybrid Mamba = <strong>6–8 KiB/token</strong>. Want 200k? Choose on attention-layer count, not on weights.",
+    lesson2Title: "Build for sm_70, or Lose FlashAttention", lesson2Text: "Only <code>CMAKE_CUDA_ARCHITECTURES=70</code> enables the Volta FA path; a multi-arch build silently falls back. And: no BF16/FP8/Marlin on V100.",
+    lesson3Title: "MoE/Hybrid > Dense", lesson3Text: "Dense Llama-3.3-70B (16 t/s) vs hybrid Nemotron-3.5 (142 t/s) ≈ 9× faster. On bandwidth-limited hardware, architecture beats size.",
+    lesson4Title: "Sweep to the Failure Mode", lesson4Text: "Don't just test the max — deliberately push past it. Each capped model failed in its own way: hard cap, silent EOS, or native 32k.",
+    lesson5Title: "Reasoning Eats Its Own Budget", lesson5Text: "Without generous <code>max_tokens</code> (2000+) and <code>enable_thinking:false</code> for formatting tasks, a good model can appear to answer \"empty\".",
+    lesson6Title: "Verify Yourself — Down to File Size", lesson6Text: "The HF API is the only trusted source. Mind the content-vs-name trap: unsloth's \"UD-Q4_K_M\" for Nemotron-3-Super is really ~5.5 bpw — hence 82.5GB, not 68.",
     reproTitle: "Reproduce It Yourself", reproSubtitle: "All scripts are pure Python (stdlib) and talk to a local <code>llama-server</code>. Full guide: <a href=\"https://github.com/sayfjawad/c4130-llm-benchmarks/blob/main/scripts/README.md\">scripts/README.md</a>.",
     reproNote: "💾 <strong>Disk space:</strong> budget ~50GB for small candidates (30-40GB class), ~130GB for large (~100GB class). Sequential testing (download → test → clean up → next) keeps 150GB free space more than sufficient, regardless of how many models you want to compare.",
     footerSources: "📚 Sources: <a href=\"https://huggingface.co\">Hugging Face</a> (model weights, especially <a href=\"https://huggingface.co/unsloth\">unsloth</a>-GGUF conversions) · <a href=\"https://github.com/ggml-org/llama.cpp\">llama.cpp</a> (inference) · official Hugging Face API for model verification.",
@@ -357,6 +355,7 @@ function renderMatrix() {
       <td>${m.architecture}</td>
       <td>${m.disk_gb ? m.disk_gb + 'GB' : '–'}</td>
       <td>${m.gen_tps ? m.gen_tps + ' t/s' : '–'}</td>
+      <td>${m.max_ctx_tokens ? m.max_ctx_tokens.toLocaleString('nl-NL') : '–'}</td>
       <td>${cellHtml(m.scores && m.scores.hard4)}</td>
       <td>${cellHtml(m.scores && m.scores.longctx)}</td>
       <td>${cellHtml(m.scores && m.scores.reliability)}</td>
@@ -444,7 +443,7 @@ fetch('data/results.json').then(r => r.json()).then(data => {
   renderMatrix();
   renderCharts();
 }).catch(err => {
-  document.getElementById('matrixBody').innerHTML = `<tr><td colspan="11">${t('loadError')}${err}</td></tr>`;
+  document.getElementById('matrixBody').innerHTML = `<tr><td colspan="12">${t('loadError')}${err}</td></tr>`;
 });
 </script>
 </body>

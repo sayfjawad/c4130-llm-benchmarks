@@ -75,10 +75,15 @@ QUESTIONS = [
 results = {}
 n_correct = 0
 for key, q, keywords in QUESTIONS:
+    # Combo-vragen combineren twee feiten en vereisen (bij reasoning-modellen) een
+    # denkstap; geef ze daarom een ruimer budget zodat thinking niet de output weg-eet
+    # (de 800-token budget laat bij Nemotron-3.5 een lege combo_2 achter — zie gx10-note
+    # "1 combo-vraag had een 6000-tokenbudget nodig").
+    max_tok = 2000 if key.startswith("combo_") else 800
     body = {
         "model": MODEL,
         "messages": [{"role": "user", "content": q + " Antwoord kort en direct."}],
-        "max_tokens": 800,
+        "max_tokens": max_tok,
         "temperature": 0.2,
     }
     if NO_THINK:

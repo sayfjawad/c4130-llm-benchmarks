@@ -52,17 +52,17 @@ code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-
   <section id="winner">
     <h2 data-i18n="winnerTitle">🏆 Winnaars</h2>
     <div class="winner-card"><span class="trophy">🏆</span><div>
-      <h3 data-i18n="winnerHeading">10 modellen scoren 6/6</h3>
-      <p class="detail" data-i18n="winnerDetail1">De meeste geteste modellen halen perfecte needle retrieval — long-context is minder discriminerend dan verwacht bij ~8K tokens.</p>
-      <p class="detail" data-i18n-html="winnerDetail2"><strong>Cruciaal inzicht:</strong> Nemotron-3.5 scoort 0/6 mét thinking AAN en 6/6 met thinking UIT. De denkstap eet het context-budget op, waardoor het model de needles niet meer kan vinden.</p>
+      <h3 data-i18n="winnerHeading">6 van de 7 modellen scoren 6/6</h3>
+      <p class="detail" data-i18n="winnerDetail1">Zes van de zeven modellen halen perfecte needle retrieval op de 8k-baseline — alleen GPT-OSS-120B mist er één (5/6).</p>
+      <p class="detail" data-i18n-html="winnerDetail2"><strong>De echte discriminatie zit in de long-context SWEEP:</strong> alleen de hybride Mamba-MoE-modellen (Nemotron-3-Super en Nemotron-3.5-Lightning) serveren 200k+ context — ze halen 243k tokens met 5/5 retrieval.</p>
     </div></div>
   </section>
   <section id="reveals">
     <h2 data-i18n="revealsTitle">Wat onthult deze test?</h2>
-    <h3 data-i18n="revealsThinkingTitle">Thinking is funest voor retrieval</h3>
-    <p data-i18n="revealsThinkingText">Dit is de belangrijkste les van de hele benchmark: zet thinking UIT voor long-context taken. Het denkproces consumeert een groot deel van het context window — bij Nemotron-3.5 ging de score van 0/6 naar 6/6 puur door thinking uit te zetten.</p>
-    <h3 data-i18n="revealsPositionTitle">Positie in de tekst doet ertoe</h3>
-    <p data-i18n="revealsPositionText">De needles aan het einde van het transcript (needle 5: stemverhouding, needle 6: juridische toets) worden het vaakst gemist. Dit is het klassieke "lost in the middle" fenomeen, maar dan aan het einde — modellen hebben moeite met informatie die ver van de query verwijderd is.</p>
+    <h3 data-i18n="revealsThinkingTitle">De long-context SWEEP onthult de echte grenzen</h3>
+    <p data-i18n="revealsThinkingText">Een aparte test (bench_longctx_sweep.py) schaalt de context op tot ver voorbij 8k. Daar vallen de modellen wél uit elkaar: GPT-OSS-120B stopt op 117k (harde cap van 128k), Llama-3.3-70B op 79k, Qwen3.8-27B op 76k, en Qwen2.5-72B clampet al op 32k (native, geen YaRN).</p>
+    <h3 data-i18n="revealsPositionTitle">Waarom alleen de hybrides 200k+ halen</h3>
+    <p data-i18n="revealsPositionText">De reden is KV-cache-geometrie: dense 70B/72B-modellen verbruiken ~320 KiB/token, terwijl de hybride Nemotrons maar 6-8 KiB/token nodig hebben. Die factor ~40-50 is precies waarom de Mamba-MoE-hybrides 243k tokens halen waar dense modellen al veel eerder vastlopen.</p>
   </section>
   <section id="all-models">
     <h2 data-i18n="resultsTitle">Alle modellen</h2>
@@ -87,14 +87,14 @@ const I18N = {
     breadcrumb: "← Dashboard", navOverview: "📊 Overzicht", navSpeed: "⚡ Snelheid", navHard: "🧩 Zware taken", navLongctx: "📄 Long-context", navReliability: "🔁 Betrouwbaarheid", navTools: "🔧 Tools", navKnowledge: "📚 Kennis", navMath: "🧮 Rekenen",
     whatTitle: "Wat test dit?", whatText1: "Een ~8.000-token fictief transcript van een tweedaagse strategieconferentie van \"Meridian Logistics Group\" met 5 appendices. Er zijn 6 specifieke vragen (\"needles\") verspreid door de tekst — van vroeg in het document tot helemaal aan het einde.",
     infoNeedles: "Needles", infoLength: "Transcript", infoTemp: "Temperature", infoThinking: "Thinking", infoThinkingVal: "UIT vereist",
-    winnerTitle: "🏆 Winnaars", winnerHeading: "10 modellen scoren 6/6",
-    winnerDetail1: "De meeste geteste modellen halen perfecte needle retrieval — long-context is minder discriminerend dan verwacht bij ~8K tokens.",
-    winnerDetail2: "<strong>Cruciaal inzicht:</strong> Nemotron-3.5 scoort 0/6 mét thinking AAN en 6/6 met thinking UIT. De denkstap eet het context-budget op, waardoor het model de needles niet meer kan vinden.",
+    winnerTitle: "🏆 Winnaars", winnerHeading: "6 van de 7 modellen scoren 6/6",
+    winnerDetail1: "Zes van de zeven modellen halen perfecte needle retrieval op de 8k-baseline — alleen GPT-OSS-120B mist er één (5/6).",
+    winnerDetail2: "<strong>De echte discriminatie zit in de long-context SWEEP:</strong> alleen de hybride Mamba-MoE-modellen (Nemotron-3-Super en Nemotron-3.5-Lightning) serveren 200k+ context — ze halen 243k tokens met 5/5 retrieval.",
     revealsTitle: "Wat onthult deze test?",
-    revealsThinkingTitle: "Thinking is funest voor retrieval",
-    revealsThinkingText: "Dit is de belangrijkste les van de hele benchmark: zet thinking UIT voor long-context taken. Het denkproces consumeert een groot deel van het context window — bij Nemotron-3.5 ging de score van 0/6 naar 6/6 puur door thinking uit te zetten.",
-    revealsPositionTitle: "Positie in de tekst doet ertoe",
-    revealsPositionText: "De needles aan het einde van het transcript (needle 5: stemverhouding, needle 6: juridische toets) worden het vaakst gemist. Dit is het klassieke \"lost in the middle\" fenomeen, maar dan aan het einde — modellen hebben moeite met informatie die ver van de query verwijderd is.",
+    revealsThinkingTitle: "De long-context SWEEP onthult de echte grenzen",
+    revealsThinkingText: "Een aparte test (bench_longctx_sweep.py) schaalt de context op tot ver voorbij 8k. Daar vallen de modellen wél uit elkaar: GPT-OSS-120B stopt op 117k (harde cap van 128k), Llama-3.3-70B op 79k, Qwen3.8-27B op 76k, en Qwen2.5-72B clampet al op 32k (native, geen YaRN).",
+    revealsPositionTitle: "Waarom alleen de hybrides 200k+ halen",
+    revealsPositionText: "De reden is KV-cache-geometrie: dense 70B/72B-modellen verbruiken ~320 KiB/token, terwijl de hybride Nemotrons maar 6-8 KiB/token nodig hebben. Die factor ~40-50 is precies waarom de Mamba-MoE-hybrides 243k tokens halen waar dense modellen al veel eerder vastlopen.",
     resultsTitle: "Alle modellen", thModel: "Model", thScore: "Score", thNotes: "Notities",
     methTitle: "Methodologie",
     methText1: "Transcript + 6 vragen in één prompt. Scoring via keyword-matching op genormaliseerde antwoorden (case-insensitive, whitespace-genormaliseerd).",
@@ -108,14 +108,14 @@ const I18N = {
     breadcrumb: "← Dashboard", navOverview: "📊 Overview", navSpeed: "⚡ Speed", navHard: "🧩 Hard Tasks", navLongctx: "📄 Long-Context", navReliability: "🔁 Reliability", navTools: "🔧 Tools", navKnowledge: "📚 Knowledge", navMath: "🧮 Math",
     whatTitle: "What Does This Test?", whatText1: "An ~8,000-token fictional transcript of a two-day strategy conference by \"Meridian Logistics Group\" with 5 appendices. There are 6 specific questions (\"needles\") scattered throughout the text — from early in the document to the very end.",
     infoNeedles: "Needles", infoLength: "Transcript", infoTemp: "Temperature", infoThinking: "Thinking", infoThinkingVal: "OFF required",
-    winnerTitle: "🏆 Winners", winnerHeading: "10 models score 6/6",
-    winnerDetail1: "Most tested models achieve perfect needle retrieval — long-context is less discriminating than expected at ~8K tokens.",
-    winnerDetail2: "<strong>Crucial insight:</strong> Nemotron-3.5 scores 0/6 with thinking ON and 6/6 with thinking OFF. The reasoning step consumes the context budget, preventing the model from finding the needles.",
+    winnerTitle: "🏆 Winners", winnerHeading: "6 of 7 models score 6/6",
+    winnerDetail1: "Six of seven models achieve perfect needle retrieval on the 8k baseline — only GPT-OSS-120B misses one (5/6).",
+    winnerDetail2: "<strong>The real discrimination is in the long-context sweep:</strong> only the hybrid Mamba-MoE models (Nemotron-3-Super and Nemotron-3.5-Lightning) serve 200k+ context — they reach 243k tokens at 5/5 retrieval.",
     revealsTitle: "What This Test Reveals",
-    revealsThinkingTitle: "Thinking Is Fatal for Retrieval",
-    revealsThinkingText: "This is the single most important lesson of the entire benchmark: turn thinking OFF for long-context tasks. The reasoning process consumes a large portion of the context window — Nemotron-3.5 went from 0/6 to 6/6 purely by disabling thinking.",
-    revealsPositionTitle: "Position in the Text Matters",
-    revealsPositionText: "Needles at the end of the transcript (needle 5: vote ratio, needle 6: legal review) are missed most often. This is the classic \"lost in the middle\" phenomenon, but at the end — models struggle with information far removed from the query.",
+    revealsThinkingTitle: "The Long-Context Sweep Reveals the Real Limits",
+    revealsThinkingText: "A separate test (bench_longctx_sweep.py) scales the context far beyond 8k. There the models do fall apart: GPT-OSS-120B stops at 117k (hard cap of 128k), Llama-3.3-70B at 79k, Qwen3.8-27B at 76k, and Qwen2.5-72B clamps already at 32k (native, no YaRN).",
+    revealsPositionTitle: "Why Only the Hybrids Reach 200k+",
+    revealsPositionText: "The reason is KV-cache geometry: dense 70B/72B models consume ~320 KiB/token, while the hybrid Nemotrons need only 6-8 KiB/token. That ~40-50× factor is exactly why the Mamba-MoE hybrids reach 243k tokens where dense models stall much earlier.",
     resultsTitle: "All Models", thModel: "Model", thScore: "Score", thNotes: "Notes",
     methTitle: "Methodology",
     methText1: "Transcript + 6 questions in a single prompt. Scoring via keyword matching on normalized answers (case-insensitive, whitespace-normalized).",

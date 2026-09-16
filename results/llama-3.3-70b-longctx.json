@@ -1,0 +1,25 @@
+{
+  "content": "ANTWOORD 1: Het toegekende budget voor het ERP-project (referentie PRJ-2247) is 487.300 euro, en dit budget dekt uitdrukkelijk geen maatwerk-koppelingen met externe klantsystemen.\n\nANTWOORD 2: Per 1 september wordt Fatima El Ouazzani de nieuwe hoofd Inkoop, en zij volgt Robert Dijkhuis op, die met pensioen gaat na 28 jaar dienstverband.\n\nANTWOORD 3: De deadline voor de CRM-migratie is 15 november, en als deze deadline niet wordt gehaald, vervalt de korting van 12 procent op de licentiekosten.\n\nANTWOORD 4: Het ziekteverzuim is gedaald met 2,5 procentpunt, van 6,8 procent naar 4,3 procent, sinds de invoering van het hybride werkbeleid.\n\nANTWOORD 5: Het voorstel voor de nieuwe kantoorlocatie in Utrecht is aangenomen met een stemverhouding van 9 voor en 3 tegen, met als voorwaarde dat de huurovereenkomst niet langer dan 5 jaar mag lopen.\n\nANTWOORD 6: Bas Kremer is de actiehouder voor de juridische toets van het huurcontract, en de deadline hiervoor is 20 december.\n\nTOTAALSAMENVATTING:\n* Het bedrijf heeft een strategieconferentie gehouden om de toekomstplannen te bespreken.\n* Er zijn drie strategische pijlers geïdentificeerd: digitalisering van de planning, verduurzaming van het wagenpark en het aantrekkelijker maken van het bedrijf als werkgever.\n* Het ERP-project heeft een budget van 487.300 euro en moet binnen drie kwartalen worden afgerond.\n* De CRM-migratie moet uiterlijk 15 november zijn afgerond om een korting van 12 procent te behouden.\n* Het ziekteverzuim is gedaald sinds de invoering van het hybride werkbeleid.",
+  "usage": {
+    "completion_tokens": 485,
+    "prompt_tokens": 10804,
+    "total_tokens": 11289,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 10804,
+    "prompt_ms": 26204.457,
+    "prompt_per_token_ms": 2.4254402998889297,
+    "prompt_per_second": 412.296274637555,
+    "predicted_n": 485,
+    "predicted_ms": 32844.265,
+    "predicted_per_token_ms": 67.86005165289257,
+    "predicted_per_second": 14.736210416034579
+  },
+  "wall_seconds": 59.24,
+  "score": 6,
+  "n_needles": 6
+}

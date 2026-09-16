@@ -1,0 +1,25 @@
+{
+  "content": "**ANTWOORD 1:** Het ERP‑project PRJ‑2247 heeft een budget van € 487.300; dit budget dekt licenties, implementatie‑ en trainingskosten, maar **exclusief** maatwerk‑koppelingen met externe klantsystemen.  \n\n**ANTWOORD 2:** Per 1 september wordt **Fatima El Ouazzani** hoofd Inkoop; de vertrekkende voorganger is **Robert Dijkhuis** (pensioen).  \n\n**ANTWOORD 3:** De CRM‑migratie moet uiterlijk **15 november** gereed zijn; otherwise vervalt de **12 % korting** op de licentiekosten.  \n\n**ANTWOORD 4:** Het ziekteverzuim is met **2,5 procentpunt** gedaald, van **6,8 %** naar **4,3 %**.  \n\n**ANTWOORD 5:** Het voorstel voor de kantoorlocatie aan de Overste den Oudenlaan werd aangenomen met **9 stemmen voor en 3 tegen**; de voorwaarde is een **maximale huurperiode van 5 jaar**.  \n\n**ANTWOORD 6:** **Bas Kremer** is actiehouder voor de juridische toets van het huurcontract, met een deadline van **20 december**.  \n\n---\n\n### TOTAALSAMENVATTING\n- ERP‑budget € 487.300, zonder externe maatwerk‑koppelingen.  \n- Nieuwe hoofd Inkoop: Fatima El Ouazzani; vertrekkende: Robert Dijkhuis.  \n- CRM‑migratie deadline 15 nov; 12 % licentiekorting vervalt bij overschrijding.  \n- Ziekteverzuim gedaald van 6,8 % naar 4,3 % (‑2,5 pp) na hybride beleid.  \n- Utrecht‑kantoor: 9‑3 stemming, max. 5‑jaar huur; juridische toets door Bas Kremer (deadline 20‑dec).",
+  "usage": {
+    "completion_tokens": 972,
+    "prompt_tokens": 8520,
+    "total_tokens": 9492,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 8520,
+    "prompt_ms": 8995.611,
+    "prompt_per_token_ms": 1.0558228873239437,
+    "prompt_per_second": 947.1285496893985,
+    "predicted_n": 972,
+    "predicted_ms": 10542.692,
+    "predicted_per_token_ms": 10.857561277033984,
+    "predicted_per_second": 92.10171367995956
+  },
+  "wall_seconds": 19.7,
+  "score": 5,
+  "n_needles": 6
+}

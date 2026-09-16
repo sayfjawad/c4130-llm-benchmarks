@@ -1,0 +1,281 @@
+{
+  "model": "nemotron-3-super",
+  "sizes": [
+    {
+      "ctx_requested": 8192,
+      "prompt_tokens": 10489,
+      "completion_tokens": 627,
+      "content": "ANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget bedraagt 487.300 euro.  \nANTWOORD 2: De controleaanduiding voor kwaliteitsregistratie op positie 25% is RK-93810-214.  \nANTWOORD 3: De controleaanduiding voor kwaliteitsregistratie op positie 50% is RK-13278-859.  \nANTWOORD 4: De controleaanduiding voor kwaliteitsregistratie op positie 75% is RK-46048-350.  \nANTWOORD 5: De controleaanduiding voor kwaliteitsregistratie op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 49.85,
+      "prefill_tps": 291.97,
+      "decode_tps": 45.17,
+      "peak_vram_mb": [
+        21886,
+        21772,
+        21772,
+        22076
+      ]
+    },
+    {
+      "ctx_requested": 32768,
+      "prompt_tokens": 40431,
+      "completion_tokens": 541,
+      "content": "ANTWOORD 1: Het nieuwe ERP-project heeft projectreferentie PRJ-2247 en een toegekend budget van €487.300.  \nANTWOORD 2: De controleaanduiding voor kwaliteitsregistratie op positie 25% is RK-93810-214.  \nANTWOORD 3: De controleaanduiding voor kwaliteitsregistratie op positie 50% is RK-13278-859.  \nANTWOORD 4: De controleaanduiding voor kwaliteitsregistratie op positie 75% is RK-46048-350.  \nANTWOORD 5: De controleaanduiding voor kwaliteitsregistratie op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 137.12,
+      "prefill_tps": 326.12,
+      "decode_tps": 43.4,
+      "peak_vram_mb": [
+        21886,
+        21772,
+        21772,
+        22076
+      ]
+    },
+    {
+      "ctx_requested": 65536,
+      "prompt_tokens": 80204,
+      "completion_tokens": 597,
+      "content": "ANTWOORD 1: Het nieuwe ERP-project heeft projectreferentie PRJ-2247 en een toegekend budget van 487.300 euro.  \nANTWOORD 2: De controleaanduiding voor kwaliteitsregistratie op positie 25% is RK-93810-214.  \nANTWOORD 3: De controleaanduiding voor kwaliteitsregistratie op positie 50% is RK-13278-859.  \nANTWOORD 4: De controleaanduiding voor kwaliteitsregistratie op positie 75% is RK-46048-350.  \nANTWOORD 5: De controleaanduiding voor kwaliteitsregistratie op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 258.43,
+      "prefill_tps": 329.58,
+      "decode_tps": 41.87,
+      "peak_vram_mb": [
+        21886,
+        21772,
+        21772,
+        22076
+      ]
+    },
+    {
+      "ctx_requested": 131072,
+      "prompt_tokens": 159764,
+      "completion_tokens": 604,
+      "content": "ANTWOORD 1: Het nieuwe ERP-project heeft projectreferentie PRJ-2247 en een toegekend budget van 487.300 euro.  \nANTWOORD 2: De controleaanduiding bij kwaliteitsregistratie op positie 25% is RK-93810-214.  \nANTWOORD 3: De controleaanduiding bij kwaliteitsregistratie op positie 50% is RK-13278-859.  \nANTWOORD 4: De controleaanduiding bij kwaliteitsregistratie op positie 75% is RK-46048-350.  \nANTWOORD 5: De controleaanduiding bij kwaliteitsregistratie op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 513.67,
+      "prefill_tps": 321.37,
+      "decode_tps": 39.22,
+      "peak_vram_mb": [
+        21886,
+        21772,
+        21772,
+        22076
+      ]
+    },
+    {
+      "ctx_requested": 200000,
+      "prompt_tokens": 243348,
+      "completion_tokens": 631,
+      "content": "ANTWOORD 1: Het nieuwe ERP-project heeft projectreferentie PRJ-2247 en een toegekend budget van 487.300 euro.  \nANTWOORD 2: De controleaanduiding voor kwaliteitsregistratie op positie 25% is RK-93810-214.  \nANTWOORD 3: De controleaanduiding voor kwaliteitsregistratie op positie 50% is RK-13278-859.  \nANTWOORD 4: De controleaanduiding voor kwaliteitsregistratie op positie 75% is RK-46048-350.  \nANTWOORD 5: De controleaanduiding voor kwaliteitsregistratie op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 814.86,
+      "prefill_tps": 305.72,
+      "decode_tps": 36.71,
+      "peak_vram_mb": [
+        21886,
+        21772,
+        21772,
+        22076
+      ]
+    },
+    {
+      "ctx_requested": 262144,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (318596 tokens) exceeds the available context size (262144 tokens), try increasing it\",\"type\":\"exceed_context_size_error\",\"n_prompt_tokens\":318596,\"n_ctx\":262144}}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 2.27,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        21886,
+        21772,
+        21772,
+        22076
+      ]
+    }
+  ]
+}

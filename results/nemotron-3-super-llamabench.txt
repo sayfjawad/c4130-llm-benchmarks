@@ -1,0 +1,11 @@
+ggml_cuda_init: found 4 CUDA devices (Total VRAM: 129976 MiB):
+  Device 0: Tesla V100-SXM2-32GB, compute capability 7.0, VMM: yes, VRAM: 32494 MiB
+  Device 1: Tesla V100-SXM2-32GB, compute capability 7.0, VMM: yes, VRAM: 32494 MiB
+  Device 2: Tesla V100-SXM2-32GB, compute capability 7.0, VMM: yes, VRAM: 32494 MiB
+  Device 3: Tesla V100-SXM2-32GB, compute capability 7.0, VMM: yes, VRAM: 32494 MiB
+| model                          |       size |     params | backend    | ngl |  fa |            test |                  t/s |
+| ------------------------------ | ---------: | ---------: | ---------- | --: | --: | --------------: | -------------------: |
+| nemotron_h_moe 120B.A12B Q4_K - Medium |  76.87 GiB |   120.67 B | CUDA       | 999 |   1 |           pp512 |        313.41 ± 1.49 |
+| nemotron_h_moe 120B.A12B Q4_K - Medium |  76.87 GiB |   120.67 B | CUDA       | 999 |   1 |           tg128 |         47.99 ± 0.27 |
+
+build: b04d4e567 (1034)

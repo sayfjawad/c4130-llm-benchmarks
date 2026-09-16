@@ -210,9 +210,9 @@
     <div class="winner-card">
       <span class="trophy">🏆</span>
       <div>
-        <h3 data-i18n="winnerHeading">4 modellen scoren 10/10</h3>
-        <p class="detail" data-i18n-html="winnerDetail1">GPT-OSS-120B, Nemotron-3-Super-120B, Nemotron-3.5-Lightning, en <strong>Gemma 4 31B</strong>. Alle vier vereisen thinking AAN voor deze score.</p>
-        <p class="detail" data-i18n-html="winnerDetail2"><strong>Token-efficiëntie:</strong> GPT-OSS gebruikt 250-872 tokens per antwoord. Nemotron-3.5: 571-1959. Gemma 4 met <code>--reasoning-budget 800</code>: 228-1585 tokens. Nemotron-3-Super: 129-917. GPT-OSS en Nemotron-3-Super zijn het efficiëntst.</p>
+        <h3 data-i18n="winnerHeading">3 modellen scoren 10/10</h3>
+        <p class="detail" data-i18n-html="winnerDetail1">GPT-OSS-120B, Nemotron-3-Super en Qwen3.8-27B (BF16). Alle drie vereisen thinking AAN voor deze score.</p>
+        <p class="detail" data-i18n-html="winnerDetail2"><strong>Net eronder:</strong> Nemotron-3.5-Lightning en Qwen3.8-Q8_0 halen 9/10 — beide missen één vraag doordat thinking wegloopt en het tokenbudget opvreet.</p>
       </div>
     </div>
   </section>
@@ -220,20 +220,20 @@
   <section id="reveals">
     <h2 data-i18n="revealsTitle">Wat onthult deze test?</h2>
 
-    <h3 data-i18n="revealsQwenTitle">De Qwen3.x-familie: structureel zwak in rekenen</h3>
+    <h3 data-i18n="revealsQwenTitle">De 'reasoning eet zijn eigen tokenbudget'-failure-mode</h3>
     <div class="highlight-warn">
-      <p data-i18n-html="revealsQwenText">⚠️ <strong>Qwen3.6-35B: 6/10, Qwen3.5-122B: 5/10.</strong> Beide modellen lopen binnen het standaard 2000-tokenbudget leeg — het denkproces is te verbose. Met 6000 tokens haalt Qwen3.6 9/10, maar één vraag blijft <em>structureel</em> falen, zelfs nadat het model intern het correcte antwoord heeft gevonden. Het faalt in de <strong>vertaling van denkstap naar eindantwoord</strong>.</p>
+      <p data-i18n-html="revealsQwenText">⚠️ <strong>Verschillende modellen liepen leeg op individuele vragen</strong> binnen het standaard 2000-tokenbudget: Nemotron-3.5-Lightning (kans_dobbelsteen), Qwen3.8-Q8_0 (valstrik_schapen) en Llama-3.3-70B (rente) keerden een leeg antwoord. Dit is een reproduceerbaarheidsrisico voor productiegebruik.</p>
     </div>
-    <p data-i18n="revealsQwenSummary">Dit is het meest verrassende resultaat van de hele benchmark: de Qwen3.x-lijn is op papier indrukwekkend (30B-235B params, razendsnel, 4/4 op harde taken), maar op rekenwerk presteren ze dramatisch onder hun gewichtsklasse. Het denkproces is kwantitatief veel, maar kwalitatief inefficient — veel tokens die niet tot het juiste antwoord leiden.</p>
+    <p data-i18n="revealsQwenSummary">Het terugkerende patroon: het denkproces concurreert met het eindantwoord om hetzelfde tokenbudget. Een model kan het antwoord intern wél vinden, maar het budget is op vóór de vertaling naar het eindantwoord verschijnt — met een lege output als gevolg.</p>
 
     <h3 data-i18n="revealsThinkingTitle">Thinking verplicht, geen uitzonderingen</h3>
-    <p data-i18n-html="revealsThinkingText">In tegenstelling tot andere tests (waar thinking vaak UIT moet), is rekenen de enige test in de suite waar <strong>thinking AAN verplicht</strong> is voor alle modellen. Zonder denkstap faalt elk model op de meerderheid van de vragen. Dit bevestigt dat wiskundig redeneren fundamenteel anders is dan kennis-retrieval of formaat-taken — het vereist een sequentieel denkproces dat niet in één forward pass past.</p>
+    <p data-i18n-html="revealsThinkingText">In tegenstelling tot andere tests (waar thinking vaak UIT moet), is rekenen de enige test in de suite waar <strong>thinking AAN verplicht</strong> is voor alle modellen. Zonder denkstap faalt elk model op de meerderheid van de vragen. Wiskundig redeneren vereist een sequentieel denkproces dat niet in één forward pass past.</p>
 
-    <h3 data-i18n="revealsEfficiencyTitle">Token-efficiëntie als kwaliteitssignaal</h3>
-    <p data-i18n="revealsEfficiencyText">Niet alle correcte antwoorden zijn gelijk. GPT-OSS-120B lost dezelfde problemen op in 250-872 tokens, terwijl Qwen3.6 er 1220-6000+ voor nodig heeft — en dan nog steeds fout kan zijn. Efficiëntie in denken is een ondergewaardeerde modelkwaliteit: een model dat 3-10× meer tokens nodig heeft voor hetzelfde antwoord, is in productie 3-10× duurder en trager.</p>
+    <h3 data-i18n="revealsEfficiencyTitle">De rest van het veld</h3>
+    <p data-i18n="revealsEfficiencyText">Llama-3.3-70B haalt 8/10 (combinatoriek-fout + rente leeg) en Qwen2.5-72B 7/10. Geen enkel model faalt spectaculair, maar de marges onder de top-3 zijn duidelijk.</p>
 
-    <h3 data-i18n="revealsGemmaTitle">Gemma 4's unieke positie</h3>
-    <p data-i18n-html="revealsGemmaText">Gemma 4 31B is het enige <strong>dense</strong> model dat 10/10 haalt — alle andere 10/10 modellen zijn MoE. Dit is opmerkelijk omdat dense modellen op deze hardware 3-20× trager zijn. Gemma 4 bewijst dat architectuur niet alles zegt: een goed getraind dense model kan net zo accuraat zijn als de beste MoE-modellen, ook op het moeilijkste domein.</p>
+    <h3 data-i18n="revealsQuantTitle">Qwen3.8: kwantisatie doet ertoe</h3>
+    <p data-i18n-html="revealsQuantText">Qwen3.8-27B in BF16 scoort 10/10, maar dezelfde architectuur in Q8_0 blijft op 9/10 steken (valstrik_schapen leeg). Eén kwantisatiestap kan het verschil maken tussen een perfecte score en een lege output op een individuele vraag.</p>
   </section>
 
   <section id="all-models">
@@ -249,7 +249,7 @@
     <h2 data-i18n="methTitle">Methodologie</h2>
     <p data-i18n="methText1">Elk model krijgt dezelfde 10 vragen, in dezelfde volgorde. Scoring is handmatig op correct eindantwoord (tussenliggende denkstappen worden niet beoordeeld, maar het eindantwoord moet exact kloppen). Voor de valstrikvragen telt alleen het antwoord dat de valkuil herkent en vermijdt.</p>
     <pre>python3 scripts/bench_math.py &lt;port&gt; &lt;model_name&gt;</pre>
-    <p data-i18n-html="methText2">Dit script heeft géén <code>nothink</code> optie — rekenen vereist altijd thinking AAN. Voor Gemma 4 werd de server gestart met <code>--reasoning on --reasoning-budget 800</code> om te voorkomen dat het model 1864+ tokens per vraag verbruikte (zonder budget-limiet duurde de volledige test ~2 uur).</p>
+    <p data-i18n-html="methText2">Dit script heeft géén <code>nothink</code> optie — rekenen vereist altijd thinking AAN.</p>
   </section>
 
   <footer>
@@ -283,25 +283,25 @@ const I18N = {
     infoQuestions: "Aantal vragen", infoTokens: "Max tokens", infoTemp: "Temperature",
     infoThinking: "Thinking", infoThinkingVal: "AAN vereist",
     winnerTitle: "🏆 Winnaars",
-    winnerHeading: "4 modellen scoren 10/10",
-    winnerDetail1: "GPT-OSS-120B, Nemotron-3-Super-120B, Nemotron-3.5-Lightning, en <strong>Gemma 4 31B</strong>. Alle vier vereisen thinking AAN voor deze score.",
-    winnerDetail2: "<strong>Token-efficiëntie:</strong> GPT-OSS gebruikt 250-872 tokens per antwoord. Nemotron-3.5: 571-1959. Gemma 4 met <code>--reasoning-budget 800</code>: 228-1585 tokens. Nemotron-3-Super: 129-917. GPT-OSS en Nemotron-3-Super zijn het efficiëntst.",
+    winnerHeading: "3 modellen scoren 10/10",
+    winnerDetail1: "GPT-OSS-120B, Nemotron-3-Super en Qwen3.8-27B (BF16). Alle drie vereisen thinking AAN voor deze score.",
+    winnerDetail2: "<strong>Net eronder:</strong> Nemotron-3.5-Lightning en Qwen3.8-Q8_0 halen 9/10 — beide missen één vraag doordat thinking wegloopt en het tokenbudget opvreet.",
     revealsTitle: "Wat onthult deze test?",
-    revealsQwenTitle: "De Qwen3.x-familie: structureel zwak in rekenen",
-    revealsQwenText: "⚠️ <strong>Qwen3.6-35B: 6/10, Qwen3.5-122B: 5/10.</strong> Beide modellen lopen binnen het standaard 2000-tokenbudget leeg — het denkproces is te verbose. Met 6000 tokens haalt Qwen3.6 9/10, maar één vraag blijft <em>structureel</em> falen, zelfs nadat het model intern het correcte antwoord heeft gevonden. Het faalt in de <strong>vertaling van denkstap naar eindantwoord</strong>.",
-    revealsQwenSummary: "Dit is het meest verrassende resultaat van de hele benchmark: de Qwen3.x-lijn is op papier indrukwekkend (30B-235B params, razendsnel, 4/4 op harde taken), maar op rekenwerk presteren ze dramatisch onder hun gewichtsklasse. Het denkproces is kwantitatief veel, maar kwalitatief inefficient — veel tokens die niet tot het juiste antwoord leiden.",
+    revealsQwenTitle: "De 'reasoning eet zijn eigen tokenbudget'-failure-mode",
+    revealsQwenText: "⚠️ <strong>Verschillende modellen liepen leeg op individuele vragen</strong> binnen het standaard 2000-tokenbudget: Nemotron-3.5-Lightning (kans_dobbelsteen), Qwen3.8-Q8_0 (valstrik_schapen) en Llama-3.3-70B (rente) keerden een leeg antwoord. Dit is een reproduceerbaarheidsrisico voor productiegebruik.",
+    revealsQwenSummary: "Het terugkerende patroon: het denkproces concurreert met het eindantwoord om hetzelfde tokenbudget. Een model kan het antwoord intern wél vinden, maar het budget is op vóór de vertaling naar het eindantwoord verschijnt — met een lege output als gevolg.",
     revealsThinkingTitle: "Thinking verplicht, geen uitzonderingen",
-    revealsThinkingText: "In tegenstelling tot andere tests (waar thinking vaak UIT moet), is rekenen de enige test in de suite waar <strong>thinking AAN verplicht</strong> is voor alle modellen. Zonder denkstap faalt elk model op de meerderheid van de vragen. Dit bevestigt dat wiskundig redeneren fundamenteel anders is dan kennis-retrieval of formaat-taken — het vereist een sequentieel denkproces dat niet in één forward pass past.",
-    revealsEfficiencyTitle: "Token-efficiëntie als kwaliteitssignaal",
-    revealsEfficiencyText: "Niet alle correcte antwoorden zijn gelijk. GPT-OSS-120B lost dezelfde problemen op in 250-872 tokens, terwijl Qwen3.6 er 1220-6000+ voor nodig heeft — en dan nog steeds fout kan zijn. Efficiëntie in denken is een ondergewaardeerde modelkwaliteit: een model dat 3-10× meer tokens nodig heeft voor hetzelfde antwoord, is in productie 3-10× duurder en trager.",
-    revealsGemmaTitle: "Gemma 4's unieke positie",
-    revealsGemmaText: "Gemma 4 31B is het enige <strong>dense</strong> model dat 10/10 haalt — alle andere 10/10 modellen zijn MoE. Dit is opmerkelijk omdat dense modellen op deze hardware 3-20× trager zijn. Gemma 4 bewijst dat architectuur niet alles zegt: een goed getraind dense model kan net zo accuraat zijn als de beste MoE-modellen, ook op het moeilijkste domein.",
+    revealsThinkingText: "In tegenstelling tot andere tests (waar thinking vaak UIT moet), is rekenen de enige test in de suite waar <strong>thinking AAN verplicht</strong> is voor alle modellen. Zonder denkstap faalt elk model op de meerderheid van de vragen. Wiskundig redeneren vereist een sequentieel denkproces dat niet in één forward pass past.",
+    revealsEfficiencyTitle: "De rest van het veld",
+    revealsEfficiencyText: "Llama-3.3-70B haalt 8/10 (combinatoriek-fout + rente leeg) en Qwen2.5-72B 7/10. Geen enkel model faalt spectaculair, maar de marges onder de top-3 zijn duidelijk.",
+    revealsQuantTitle: "Qwen3.8: kwantisatie doet ertoe",
+    revealsQuantText: "Qwen3.8-27B in BF16 scoort 10/10, maar dezelfde architectuur in Q8_0 blijft op 9/10 steken (valstrik_schapen leeg). Eén kwantisatiestap kan het verschil maken tussen een perfecte score en een lege output op een individuele vraag.",
     resultsTitle: "Alle modellen",
     thModel: "Model", thScore: "Score", thEfficiency: "Token-efficiëntie", thDetails: "Details",
     resultsNote: "Alleen modellen die de volledige 10 vragen hebben beantwoord. Token-aantallen zijn het waargenomen bereik per vraag.",
     methTitle: "Methodologie",
     methText1: "Elk model krijgt dezelfde 10 vragen, in dezelfde volgorde. Scoring is handmatig op correct eindantwoord (tussenliggende denkstappen worden niet beoordeeld, maar het eindantwoord moet exact kloppen). Voor de valstrikvragen telt alleen het antwoord dat de valkuil herkent en vermijdt.",
-    methText2: "Dit script heeft géén <code>nothink</code> optie — rekenen vereist altijd thinking AAN. Voor Gemma 4 werd de server gestart met <code>--reasoning on --reasoning-budget 800</code> om te voorkomen dat het model 1864+ tokens per vraag verbruikte (zonder budget-limiet duurde de volledige test ~2 uur).",
+    methText2: "Dit script heeft géén <code>nothink</code> optie — rekenen vereist altijd thinking AAN.",
     footerDashboard: "Dashboard:",
     themeAria: "Wissel donker/licht thema",
     untestedLabel: "niet getest",
@@ -332,25 +332,25 @@ const I18N = {
     infoQuestions: "Questions", infoTokens: "Max Tokens", infoTemp: "Temperature",
     infoThinking: "Thinking", infoThinkingVal: "ON required",
     winnerTitle: "🏆 Winners",
-    winnerHeading: "4 models score 10/10",
-    winnerDetail1: "GPT-OSS-120B, Nemotron-3-Super-120B, Nemotron-3.5-Lightning, and <strong>Gemma 4 31B</strong>. All four require thinking ON for this score.",
-    winnerDetail2: "<strong>Token efficiency:</strong> GPT-OSS uses 250-872 tokens per answer. Nemotron-3.5: 571-1959. Gemma 4 with <code>--reasoning-budget 800</code>: 228-1585 tokens. Nemotron-3-Super: 129-917. GPT-OSS and Nemotron-3-Super are the most efficient.",
+    winnerHeading: "3 models score 10/10",
+    winnerDetail1: "GPT-OSS-120B, Nemotron-3-Super, and Qwen3.8-27B (BF16). All three require thinking ON for this score.",
+    winnerDetail2: "<strong>Just below:</strong> Nemotron-3.5-Lightning and Qwen3.8-Q8_0 reach 9/10 — both miss a single question because thinking runs away and consumes the token budget.",
     revealsTitle: "What This Test Reveals",
-    revealsQwenTitle: "The Qwen3.x Family: Structurally Weak at Math",
-    revealsQwenText: "⚠️ <strong>Qwen3.6-35B: 6/10, Qwen3.5-122B: 5/10.</strong> Both models run out of tokens within the standard 2000-token budget — the thinking process is too verbose. With 6000 tokens, Qwen3.6 scores 9/10, but one question fails <em>structurally</em>, even after the model internally found the correct answer. It fails in the <strong>translation from reasoning step to final answer</strong>.",
-    revealsQwenSummary: "This is the most surprising result of the entire benchmark: the Qwen3.x line looks impressive on paper (30B-235B params, blazing fast, 4/4 on hard tasks), but on math they dramatically underperform their weight class. The thinking process is quantitatively abundant but qualitatively inefficient — many tokens that don't lead to the correct answer.",
+    revealsQwenTitle: "The 'Reasoning Eats Its Own Token Budget' Failure Mode",
+    revealsQwenText: "⚠️ <strong>Several models ran empty on individual questions</strong> within the standard 2000-token budget: Nemotron-3.5-Lightning (kans_dobbelsteen), Qwen3.8-Q8_0 (valstrik_schapen) and Llama-3.3-70B (rente) returned an empty answer. This is a reproducibility risk for production use.",
+    revealsQwenSummary: "The recurring pattern: the reasoning process competes with the final answer for the same token budget. A model can internally find the answer, but the budget runs out before the translation into the final answer appears — resulting in empty output.",
     revealsThinkingTitle: "Thinking Required, No Exceptions",
-    revealsThinkingText: "Unlike other tests (where thinking should usually be OFF), math is the only test in the suite where <strong>thinking ON is mandatory</strong> for all models. Without a reasoning step, every model fails the majority of questions. This confirms that mathematical reasoning is fundamentally different from knowledge retrieval or formatting tasks — it requires a sequential thought process that doesn't fit in a single forward pass.",
-    revealsEfficiencyTitle: "Token Efficiency as a Quality Signal",
-    revealsEfficiencyText: "Not all correct answers are equal. GPT-OSS-120B solves the same problems in 250-872 tokens, while Qwen3.6 needs 1220-6000+ — and can still be wrong. Thinking efficiency is an underrated model quality: a model that needs 3-10× more tokens for the same answer is 3-10× more expensive and slower in production.",
-    revealsGemmaTitle: "Gemma 4's Unique Position",
-    revealsGemmaText: "Gemma 4 31B is the only <strong>dense</strong> model to achieve 10/10 — all other 10/10 models are MoE. This is remarkable because dense models are 3-20× slower on this hardware. Gemma 4 proves that architecture isn't everything: a well-trained dense model can be just as accurate as the best MoE models, even in the hardest domain.",
+    revealsThinkingText: "Unlike other tests (where thinking should usually be OFF), math is the only test in the suite where <strong>thinking ON is mandatory</strong> for all models. Without a reasoning step, every model fails the majority of questions. Mathematical reasoning requires a sequential thought process that doesn't fit in a single forward pass.",
+    revealsEfficiencyTitle: "The Rest of the Field",
+    revealsEfficiencyText: "Llama-3.3-70B reaches 8/10 (combinatorics error + empty rente) and Qwen2.5-72B 7/10. No model fails spectacularly, but the margins below the top 3 are clear.",
+    revealsQuantTitle: "Qwen3.8: Quantization Matters",
+    revealsQuantText: "Qwen3.8-27B in BF16 scores 10/10, but the same architecture in Q8_0 stalls at 9/10 (empty valstrik_schapen). A single quantization step can be the difference between a perfect score and empty output on an individual question.",
     resultsTitle: "All Models",
     thModel: "Model", thScore: "Score", thEfficiency: "Token Efficiency", thDetails: "Details",
     resultsNote: "Only models that answered all 10 questions. Token counts are the observed range per question.",
     methTitle: "Methodology",
     methText1: "Each model receives the same 10 questions, in the same order. Scoring is based on the correct final answer (intermediate reasoning steps are not evaluated, but the final answer must be exactly right). For trick questions, only answers that recognize and avoid the trap are counted.",
-    methText2: "This script has no <code>nothink</code> option — math always requires thinking ON. For Gemma 4, the server was started with <code>--reasoning on --reasoning-budget 800</code> to prevent the model from consuming 1864+ tokens per question (without a budget limit, the full test took ~2 hours).",
+    methText2: "This script has no <code>nothink</code> option — math always requires thinking ON.",
     footerDashboard: "Dashboard:",
     themeAria: "Toggle dark/light theme",
     untestedLabel: "not tested",

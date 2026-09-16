@@ -1,0 +1,25 @@
+{
+  "content": "ANTWOORD 1: Het budget voor ERP-project PRJ-2247 bedraagt 487.300 euro en dekt licenties, implementatiekosten en training voor circa 180 medewerkers, maar dekt uitdrukkelijk NIET maatwerk-koppelingen met externe klantsystemen.\n\nANTWOORD 2: Per 1 september wordt Fatima El Ouazzani nieuwe hoofd Inkoop; de vertrekkende voorganger is Robert Dijkhuis die per 1 september met pensioen gaat na 28 jaar dienstverband.\n\nANTWOORD 3: De deadline voor de CRM-migratie is 15 november; als deze niet wordt gehaald, vervalt de korting van 12 procent op de licentiekosten van de huidige leverancier.\n\nANTWOORD 4: Het ziekteverzuim is gedaald van 6,8 procent naar 4,3 procent, een daling van 2,5 procentpunten sinds de invoering van het hybride werkbeleid.\n\nANTWOORD 5: Het voorstel voor de nieuwe kantoorlocatie Utrecht is aangenomen met 9 stemmen voor en 3 tegen, met de voorwaarde dat de huurovereenkomst niet langer dan 5 jaar mag lopen.\n\nANTWOORD 6: Bas Kremer is de actiehouder voor de juridische toets van het huurcontract, met een deadline van 20 december.\n\nTOTAALSAMENVATTING:\n- ERP-budget van 487.300 euro dekt basisimplementatie, maar niet externe koppelingen.\n- Robert Dijkhuis stapt per 1 september neer, Fatima El Ouazzani neemt over.\n- CRM-migratie moet voor 15 november zijn afgerond om 12% korting te behalen.\n- Ziekteverzuim daalde van 6,8% naar 4,3% door hybride werken.\n- Kantoorlocatie Utrecht (Overste den Oudenlaan) aangenomen met 5-jaar huurvoorwaarde.",
+  "usage": {
+    "completion_tokens": 467,
+    "prompt_tokens": 10054,
+    "total_tokens": 10521,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 10054,
+    "prompt_ms": 6734.147,
+    "prompt_per_token_ms": 0.6697977919236124,
+    "prompt_per_second": 1492.9879018084991,
+    "predicted_n": 467,
+    "predicted_ms": 3652.319,
+    "predicted_per_token_ms": 7.837594420600858,
+    "predicted_per_second": 127.59016942386468
+  },
+  "wall_seconds": 10.63,
+  "score": 6,
+  "n_needles": 6
+}

@@ -3,6 +3,7 @@ import os
 import sys
 import time
 import urllib.request
+import urllib.error
 
 PORT = sys.argv[1] if len(sys.argv) > 1 else "8081"
 MODEL = sys.argv[2] if len(sys.argv) > 2 else "model"
@@ -139,7 +140,15 @@ for key, prompt in CASES.items():
     ok = True
     final_content = ""
     for step in range(4):  # max 4 rondes tool-calling
-        data = call(messages)
+        try:
+            data = call(messages)
+        except urllib.error.HTTPError as e:
+            # Sommige modellen (bv. Llama-3.3-70B) laten llama.cpp een HTTP 500 geven
+            # ("does not match the expected peg-native format") op tool-calls. Dat is een
+            # meetresultaat (model kan tool-calling niet op deze build), geen reden om te crashen.
+            print(f"  !! HTTP {e.code} op tool-call — case afgebroken ({e})")
+            trace.append({"tool": None, "args": {}, "error": f"http_{e.code}"})
+            break
         msg = data["choices"][0]["message"]
         tool_calls = msg.get("tool_calls") or []
         if tool_calls:
