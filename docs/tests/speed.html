@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="pageTitle">⚡ Snelheid — C4130 LLM Benchmarks</title>
+<style>
+:root {
+    color-scheme: light;
+    --surface-0: #ffffff;
+    --surface-1: #fcfcfb;
+    --surface-2: #f3f2ef;
+    --border: #e4e2dc;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #79776f;
+    --series-1: #2a78d6;
+    --series-2: #eb6834;
+    --status-good: #0ca30c;
+    --status-warning: #fab219;
+    --status-critical: #d03b3b;
+    --link: #1c5cab;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --surface-0: #121211;
+      --surface-1: #1a1a19;
+      --surface-2: #232320;
+      --border: #34342f;
+      --text-primary: #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted: #918f84;
+      --series-1: #3987e5;
+      --series-2: #d95926;
+      --status-good: #0ca30c;
+      --status-warning: #fab219;
+      --status-critical: #e66767;
+      --link: #86b6ef;
+    }
+  }
+  [data-theme="dark"] {
+    color-scheme: dark;
+    --surface-0: #121211;
+    --surface-1: #1a1a19;
+    --surface-2: #232320;
+    --border: #34342f;
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted: #918f84;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --status-good: #0ca30c;
+    --status-warning: #fab219;
+    --status-critical: #e66767;
+    --link: #86b6ef;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--surface-0);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  h1 { font-size: 2rem; margin-bottom: 6px; }
+  h2 { font-size: 1.5rem; margin: 36px 0 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.15rem; margin: 20px 0 8px; }
+  p, li { margin-bottom: 10px; color: var(--text-secondary); }
+  header.hero p.lead { font-size: 1.15rem; color: var(--text-secondary); max-width: 680px; margin: 0 0 20px; }
+
+  .fixed-controls {
+    position: fixed; top: 16px; right: 16px; z-index: 10;
+    display: flex; gap: 8px; align-items: center;
+  }
+  .theme-toggle {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text-primary);
+    border-radius: 999px; padding: 8px 14px; cursor: pointer; font-size: 0.85rem;
+  }
+  .lang-toggle-group {
+    display: flex; gap: 2px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 999px; padding: 2px;
+  }
+  .lang-toggle {
+    background: transparent; border: none; color: var(--text-muted);
+    border-radius: 999px; padding: 6px 10px; cursor: pointer;
+    font-size: 0.78rem; font-weight: 600; line-height: 1;
+  }
+  .lang-toggle.active {
+    background: var(--surface-0); color: var(--text-primary);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  header.hero {
+    padding: 56px 0 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  header.hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0 0 12px; }
+
+  .test-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--surface-0); border-bottom: 1px solid var(--border);
+    padding: 10px 0; margin: 0 -20px; overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .test-nav .wrap { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; }
+  .test-nav a { text-decoration: none; color: var(--text-secondary); font-size: 0.82rem; padding: 5px 12px; border-radius: 999px; transition: all 0.15s; border: 1px solid transparent; }
+  .test-nav a:hover { color: var(--text-primary); background: var(--surface-2); border-color: var(--border); }
+  .test-nav a.home { font-weight: 700; color: var(--text-primary); }
+
+  .breadcrumb { margin-bottom: 8px; }
+  .breadcrumb a { color: var(--link); text-decoration: none; font-size: 0.9rem; }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .winner-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 16px 0; display: flex; align-items: center; gap: 16px; }
+  .winner-card .trophy { font-size: 2.2rem; }
+  .winner-card h3 { margin: 0 0 4px; font-size: 1.25rem; }
+  .winner-card .detail { font-size: 0.9rem; color: var(--text-secondary); }
+
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 16px 0; }
+  .info-grid .cell { background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; }
+  .info-grid .cell .label { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .info-grid .cell .value { font-size: 1.15rem; font-weight: 700; }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 28px; font-size: 0.92rem; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { background: var(--surface-1); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-secondary); position: sticky; top: 48px; }
+  th:first-child, td:first-child { position: sticky; left: 0; background: var(--surface-0); z-index: 1; }
+  th:first-child { z-index: 2; background: var(--surface-1); }
+  tr:hover td { background: var(--surface-1); }
+  .num { text-align: center; font-variant-numeric: tabular-nums; }
+  .bar-cell { min-width: 120px; }
+  .bar { height: 8px; border-radius: 4px; background: var(--link); min-width: 2px; }
+  .bar.moe { background: var(--link); }
+  .bar.dense { background: var(--status-warning); }
+
+  .note { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+  .tag { display: inline-block; font-size: 0.75rem; padding: 2px 8px; border-radius: 999px; font-weight: 600; margin-right: 4px; }
+  .tag-perfect { background: color-mix(in oklab, var(--status-good) 18%, transparent); color: var(--status-good); }
+  .tag-good { background: color-mix(in oklab, var(--link) 15%, transparent); color: var(--link); }
+  .tag-warn { background: color-mix(in oklab, var(--status-warning) 18%, transparent); color: var(--status-warning); }
+  .tag-fail { background: color-mix(in oklab, var(--status-critical) 15%, transparent); color: var(--status-critical); }
+
+  code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-size: 0.88em; }
+  pre { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; overflow-x: auto; font-size: 0.85rem; }
+  a { color: var(--link); }
+  footer { padding: 32px 0 60px; color: var(--text-muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<div class="fixed-controls">
+  <div class="lang-toggle-group">
+    <button class="lang-toggle active" id="langNl" aria-label="Nederlands">NL</button>
+    <button class="lang-toggle" id="langEn" aria-label="English">EN</button>
+  </div>
+  <button class="theme-toggle" id="themeToggle" data-i18n-attr="aria-label:themeAria">🌓</button>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="breadcrumb"><a href="../" data-i18n="breadcrumb">← Dashboard</a></div>
+    <h1 data-i18n="pageHeading">⚡ Snelheid</h1>
+    <p class="lead" data-i18n-html="leadText">Hoe snel kan elk model lezen (prompt processing) en schrijven (generatie)? Gemeten met <code>llama-bench</code> op dezelfde hardware.</p>
+  </header>
+
+  <nav class="test-nav">
+    <div class="wrap">
+      <a href="../" class="home" data-i18n="navOverview">📊 Overzicht</a>
+      <span style="width:1px;height:18px;background:var(--border);margin:0 4px;flex-shrink:0"></span>
+      <a href="speed.html" style="background:var(--surface-2);border-color:var(--border)" data-i18n="navSpeed">⚡ Snelheid</a>
+      <a href="hard.html" data-i18n="navHard">🧩 Zware taken</a>
+      <a href="longctx.html" data-i18n="navLongctx">📄 Long-context</a>
+      <a href="reliability.html" data-i18n="navReliability">🔁 Betrouwbaarheid</a>
+      <a href="tools.html" data-i18n="navTools">🔧 Tools</a>
+      <a href="knowledge.html" data-i18n="navKnowledge">📚 Kennis</a>
+      <a href="math.html" data-i18n="navMath">🧮 Rekenen</a>
+    </div>
+  </nav>
+
+  <section id="what">
+    <h2 data-i18n="whatTitle">Wat test dit?</h2>
+    <p data-i18n-html="whatText1">De snelheidstest meet <strong>prompt processing tokens per seconde</strong> (pp512 = hoe snel het model een 512-token prompt verwerkt) en <strong>generatie tokens per seconde</strong> (tg128 = hoe snel het model 128 nieuwe tokens genereert). Dit is een pure hardware+software-throughput test via <code>llama-bench</code> — er komt geen intelligentie of correctheid aan te pas.</p>
+    <p data-i18n-html="whatText2">De test draait lokaal op de C4130 (4× NVIDIA Tesla V100-SXM2-32GB, 128GB dedicated VRAM). Alle modellen draaien volledig op GPU (<code>-ngl 999</code>) met de hoogste kwantisatie die past.</p>
+
+    <div class="info-grid">
+      <div class="cell"><div class="label" data-i18n="infoTool">Tool</div><div class="value">llama-bench</div></div>
+      <div class="cell"><div class="label" data-i18n="infoPrompt">Prompt</div><div class="value">512 tokens</div></div>
+      <div class="cell"><div class="label" data-i18n="infoGen">Generatie</div><div class="value">128 tokens</div></div>
+      <div class="cell"><div class="label" data-i18n="infoMeasured">Gemeten</div><div class="value" data-i18n="infoMeasuredVal">Tokens/seconde</div></div>
+    </div>
+  </section>
+
+  <section id="winner">
+    <h2 data-i18n="winnerTitle">🏆 Winnaar</h2>
+    <div class="winner-card">
+      <span class="trophy">🏆</span>
+      <div>
+        <h3 data-i18n="winnerHeading">Nemotron-3.5-Lightning-30B-A3B — Snelste prompt processing</h3>
+        <p class="detail" data-i18n-html="winnerDetail1">1978 t/s prompt processing — bijna <strong>4× de bandbreedtelimiet</strong> van de hardware. Generatie: 58.1 t/s, slechts 35GB op schijf.</p>
+        <p class="detail" data-i18n-html="winnerDetail2"><strong>Qwen3-30B-A3B</strong> is nipt sneller in generatie (60 t/s, 1958 t/s prompt), maar de Nemotron-3.5 wint overall door de combinatie van bijna-perfecte scores én topsnelheid.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="reveals">
+    <h2 data-i18n="revealsTitle">Wat onthult deze test?</h2>
+    <h3 data-i18n="revealsMoeTitle">MoE vs Dense op bandbreedte-gelimiteerde hardware</h3>
+    <p data-i18n-html="revealsMoeText1">Het meest fundamentele patroon in de hele benchmark-suite: <strong>MoE-modellen zijn 3-20× sneller dan dense modellen</strong> op deze hardwareklasse. De C4130 heeft 273 GB/s bandbreedte — ruim, maar niet oneindig. Een dense model moet álle parameters per token lezen; een MoE-model activeert slechts een fractie.</p>
+    <ul style="margin:0 0 16px 20px;color:var(--text-secondary)">
+      <li data-i18n-html="revealsMoeLi1"><strong>Gemma 4 31B</strong> (dense, 30.7B actief): 6.4 t/s — leest 30.7GB per token</li>
+      <li data-i18n-html="revealsMoeLi2"><strong>Nemotron-3.5</strong> (MoE, 3.5B actief): 58.1 t/s — leest 3.5GB per token</li>
+      <li data-i18n-html="revealsMoeLi3">Dat is <strong>9× sneller</strong> met bijna dezelfde schijfgrootte (31 vs 35GB)</li>
+    </ul>
+    <p data-i18n="revealsMoeText2">Dit is géén kritiek op dense architecturen — het is een harde fysieke realiteit bij 273 GB/s. Op een H100 (3.3 TB/s) zou het verschil veel kleiner zijn.</p>
+
+    <h3 data-i18n="revealsAnomalyTitle">Prompt processing anomalie</h3>
+    <p data-i18n-html="revealsAnomalyText">Nemotron-3.5 en Qwen3-30B halen ~1978 t/s prompt processing — dat is bijna 4× de theoretische bandbreedtelimiet. Dit kán alleen als de prompt niet volledig uit het geheugen gelezen hoeft te worden (bijv. gedeelde embeddings, KV-caching, of batch-efficiëntie in llama.cpp's <code>--cont-batching</code>). In de praktijk is deze anomalie consistent reproduceerbaar — het is een echte prestatie, geen meetfout.</p>
+  </section>
+
+  <section id="all-models">
+    <h2 data-i18n="resultsTitle">Alle modellen</h2>
+    <p class="note" data-i18n="resultsNote">n.v.t. = model past niet in GPU-geheugen; — = niet gemeten (afgevallen vóór snelheidsmeting)</p>
+    <table id="speedTable">
+      <thead><tr><th data-i18n="thModel">Model</th><th class="num" data-i18n="thGen">Gen t/s</th><th class="num" data-i18n="thPrompt">Prompt t/s</th><th class="num" data-i18n="thDisk">Schijf</th><th class="num" data-i18n="thParams">Params</th><th data-i18n="thArch">Architectuur</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <p class="note" data-i18n-html="resultsSortNote">Gesorteerd op generatie-snelheid (hoogste eerst). De <strong>balkjes</strong> zijn relatief t.o.v. de snelste in die kolom.</p>
+  </section>
+
+  <section id="methodology">
+    <h2 data-i18n="methTitle">Methodologie</h2>
+    <pre>llama-bench -m &lt;model&gt;.gguf -ngl 999</pre>
+    <p data-i18n-html="methText1">Dit draait de standaard <code>pp512</code> + <code>tg128</code> benchmark van llama.cpp: verwerk 512 tokens (prompt), genereer er 128 (generatie). De output is het gemiddelde van meerdere runs. Alle lagen op GPU (<code>-ngl 999</code>), geen CPU-offload.</p>
+    <p data-i18n="methText2">Voor modellen die niet in 124.5GB GPU-geheugen passen (Kimi K2, DeepSeek-V3, GLM-4.6) is geen snelheid gemeten — die vallen in de categorie "past niet".</p>
+  </section>
+
+  <footer>
+    <p>C4130 LLM Benchmark Suite — <a href="https://github.com/sayfjawad/c4130-llm-benchmarks">GitHub</a> — <span data-i18n="footerDashboard">Dashboard:</span> <a href="https://c4130.multicode.nl">c4130.multicode.nl</a></p>
+  </footer>
+</div>
+
+<script>
+// ── I18N Dictionary ──────────────────────────────────
+const I18N = {
+  nl: {
+    pageTitle: "⚡ Snelheid — C4130 LLM Benchmarks",
+    pageHeading: "⚡ Snelheid",
+    leadText: "Hoe snel kan elk model lezen (prompt processing) en schrijven (generatie)? Gemeten met <code>llama-bench</code> op dezelfde hardware.",
+    breadcrumb: "← Dashboard",
+    navOverview: "📊 Overzicht", navSpeed: "⚡ Snelheid", navHard: "🧩 Zware taken",
+    navLongctx: "📄 Long-context", navReliability: "🔁 Betrouwbaarheid", navTools: "🔧 Tools",
+    navKnowledge: "📚 Kennis", navMath: "🧮 Rekenen",
+    whatTitle: "Wat test dit?",
+    whatText1: "De snelheidstest meet <strong>prompt processing tokens per seconde</strong> (pp512 = hoe snel het model een 512-token prompt verwerkt) en <strong>generatie tokens per seconde</strong> (tg128 = hoe snel het model 128 nieuwe tokens genereert). Dit is een pure hardware+software-throughput test via <code>llama-bench</code> — er komt geen intelligentie of correctheid aan te pas.",
+    whatText2: "De test draait lokaal op de C4130 (4× NVIDIA Tesla V100-SXM2-32GB, 128GB dedicated VRAM). Alle modellen draaien volledig op GPU (<code>-ngl 999</code>) met de hoogste kwantisatie die past.",
+    infoTool: "Tool", infoPrompt: "Prompt", infoGen: "Generatie", infoMeasured: "Gemeten",
+    infoMeasuredVal: "Tokens/seconde",
+    winnerTitle: "🏆 Winnaar",
+    winnerHeading: "Nemotron-3.5-Lightning-30B-A3B — Snelste prompt processing",
+    winnerDetail1: "1978 t/s prompt processing — bijna <strong>4× de bandbreedtelimiet</strong> van de hardware. Generatie: 58.1 t/s, slechts 35GB op schijf.",
+    winnerDetail2: "<strong>Qwen3-30B-A3B</strong> is nipt sneller in generatie (60 t/s, 1958 t/s prompt), maar de Nemotron-3.5 wint overall door de combinatie van bijna-perfecte scores én topsnelheid.",
+    revealsTitle: "Wat onthult deze test?",
+    revealsMoeTitle: "MoE vs Dense op bandbreedte-gelimiteerde hardware",
+    revealsMoeText1: "Het meest fundamentele patroon in de hele benchmark-suite: <strong>MoE-modellen zijn 3-20× sneller dan dense modellen</strong> op deze hardwareklasse. De C4130 heeft 273 GB/s bandbreedte — ruim, maar niet oneindig. Een dense model moet álle parameters per token lezen; een MoE-model activeert slechts een fractie.",
+    revealsMoeLi1: "<strong>Gemma 4 31B</strong> (dense, 30.7B actief): 6.4 t/s — leest 30.7GB per token",
+    revealsMoeLi2: "<strong>Nemotron-3.5</strong> (MoE, 3.5B actief): 58.1 t/s — leest 3.5GB per token",
+    revealsMoeLi3: "Dat is <strong>9× sneller</strong> met bijna dezelfde schijfgrootte (31 vs 35GB)",
+    revealsMoeText2: "Dit is géén kritiek op dense architecturen — het is een harde fysieke realiteit bij 273 GB/s. Op een H100 (3.3 TB/s) zou het verschil veel kleiner zijn.",
+    revealsAnomalyTitle: "Prompt processing anomalie",
+    revealsAnomalyText: "Nemotron-3.5 en Qwen3-30B halen ~1978 t/s prompt processing — dat is bijna 4× de theoretische bandbreedtelimiet. Dit kán alleen als de prompt niet volledig uit het geheugen gelezen hoeft te worden (bijv. gedeelde embeddings, KV-caching, of batch-efficiëntie in llama.cpp's <code>--cont-batching</code>). In de praktijk is deze anomalie consistent reproduceerbaar — het is een echte prestatie, geen meetfout.",
+    resultsTitle: "Alle modellen",
+    resultsNote: "n.v.t. = model past niet in GPU-geheugen; — = niet gemeten (afgevallen vóór snelheidsmeting)",
+    thModel: "Model", thGen: "Gen t/s", thPrompt: "Prompt t/s", thDisk: "Schijf", thParams: "Params", thArch: "Architectuur",
+    resultsSortNote: "Gesorteerd op generatie-snelheid (hoogste eerst). De <strong>balkjes</strong> zijn relatief t.o.v. de snelste in die kolom.",
+    methTitle: "Methodologie",
+    methText1: "Dit draait de standaard <code>pp512</code> + <code>tg128</code> benchmark van llama.cpp: verwerk 512 tokens (prompt), genereer er 128 (generatie). De output is het gemiddelde van meerdere runs. Alle lagen op GPU (<code>-ngl 999</code>), geen CPU-offload.",
+    methText2: "Voor modellen die niet in 124.5GB GPU-geheugen passen (Kimi K2, DeepSeek-V3, GLM-4.6) is geen snelheid gemeten — die vallen in de categorie \"past niet\".",
+    footerDashboard: "Dashboard:",
+    themeAria: "Wissel donker/licht thema",
+    loadError: "Data laden mislukt: ",
+    paramsFormat: "B totaal",
+    paramsFormatActive: "B actief / ",
+  },
+  en: {
+    pageTitle: "⚡ Speed — C4130 LLM Benchmarks",
+    pageHeading: "⚡ Speed",
+    leadText: "How fast can each model read (prompt processing) and write (generation)? Measured with <code>llama-bench</code> on identical hardware.",
+    breadcrumb: "← Dashboard",
+    navOverview: "📊 Overview", navSpeed: "⚡ Speed", navHard: "🧩 Hard Tasks",
+    navLongctx: "📄 Long-Context", navReliability: "🔁 Reliability", navTools: "🔧 Tools",
+    navKnowledge: "📚 Knowledge", navMath: "🧮 Math",
+    whatTitle: "What Does This Test?",
+    whatText1: "The speed test measures <strong>prompt processing tokens per second</strong> (pp512 = how fast the model processes a 512-token prompt) and <strong>generation tokens per second</strong> (tg128 = how fast the model generates 128 new tokens). This is a pure hardware+software throughput test via <code>llama-bench</code> — no intelligence or correctness involved.",
+    whatText2: "The test runs locally on the C4130 (4× NVIDIA Tesla V100-SXM2-32GB, 128GB dedicated VRAM). All models run fully on GPU (<code>-ngl 999</code>) with the highest quantization that fits.",
+    infoTool: "Tool", infoPrompt: "Prompt", infoGen: "Generation", infoMeasured: "Measured",
+    infoMeasuredVal: "Tokens/second",
+    winnerTitle: "🏆 Winner",
+    winnerHeading: "Nemotron-3.5-Lightning-30B-A3B — Fastest prompt processing",
+    winnerDetail1: "1978 t/s prompt processing — nearly <strong>4× the bandwidth limit</strong> of the hardware. Generation: 58.1 t/s, only 35GB on disk.",
+    winnerDetail2: "<strong>Qwen3-30B-A3B</strong> is slightly faster in generation (60 t/s, 1958 t/s prompt), but the Nemotron-3.5 wins overall through the combination of near-perfect scores and top speed.",
+    revealsTitle: "What This Test Reveals",
+    revealsMoeTitle: "MoE vs Dense on Bandwidth-Limited Hardware",
+    revealsMoeText1: "The most fundamental pattern in the entire benchmark suite: <strong>MoE models are 3-20× faster than dense models</strong> on this hardware class. The C4130 has 273 GB/s bandwidth — ample, but not infinite. A dense model must read all parameters per token; an MoE model activates only a fraction.",
+    revealsMoeLi1: "<strong>Gemma 4 31B</strong> (dense, 30.7B active): 6.4 t/s — reads 30.7GB per token",
+    revealsMoeLi2: "<strong>Nemotron-3.5</strong> (MoE, 3.5B active): 58.1 t/s — reads 3.5GB per token",
+    revealsMoeLi3: "That's <strong>9× faster</strong> with nearly the same disk size (31 vs 35GB)",
+    revealsMoeText2: "This is not a criticism of dense architectures — it's a hard physical reality at 273 GB/s. On an H100 (3.3 TB/s) the difference would be much smaller.",
+    revealsAnomalyTitle: "Prompt Processing Anomaly",
+    revealsAnomalyText: "Nemotron-3.5 and Qwen3-30B achieve ~1978 t/s prompt processing — nearly 4× the theoretical bandwidth limit. This is only possible if the prompt doesn't need to be fully read from memory (e.g., shared embeddings, KV-caching, or batch efficiency in llama.cpp's <code>--cont-batching</code>). In practice, this anomaly is consistently reproducible — it's a real performance, not a measurement error.",
+    resultsTitle: "All Models",
+    resultsNote: "n.v.t. = model doesn't fit in GPU memory; — = not measured (dropped before speed test)",
+    thModel: "Model", thGen: "Gen t/s", thPrompt: "Prompt t/s", thDisk: "Disk", thParams: "Params", thArch: "Architecture",
+    resultsSortNote: "Sorted by generation speed (highest first). The <strong>bars</strong> are relative to the fastest in each column.",
+    methTitle: "Methodology",
+    methText1: "This runs the standard <code>pp512</code> + <code>tg128</code> benchmark from llama.cpp: process 512 tokens (prompt), generate 128 (generation). The output is the average of multiple runs. All layers on GPU (<code>-ngl 999</code>), no CPU offload.",
+    methText2: "For models that don't fit in 124.5GB GPU memory (Kimi K2, DeepSeek-V3, GLM-4.6), no speed was measured — they fall in the \"doesn't fit\" category.",
+    footerDashboard: "Dashboard:",
+    themeAria: "Toggle dark/light theme",
+    loadError: "Data loading failed: ",
+    paramsFormat: "B total",
+    paramsFormatActive: "B active / ",
+  }
+};
+
+// ── i18n Core ────────────────────────────────────────
+let L = 'nl';
+function t(key) { return (I18N[L] && I18N[L][key] != null) ? I18N[L][key] : key; }
+function updateLangButtons() {
+  document.getElementById('langNl').classList.toggle('active', L === 'nl');
+  document.getElementById('langEn').classList.toggle('active', L === 'en');
+}
+function applyLang() {
+  document.documentElement.lang = L;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (I18N[L][k] != null && !el.hasAttribute('data-i18n-html')) el.textContent = I18N[L][k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const k = el.getAttribute('data-i18n-html');
+    if (I18N[L][k] != null) el.innerHTML = I18N[L][k];
+  });
+  document.querySelectorAll('[data-i18n-attr]').forEach(el => {
+    const spec = el.getAttribute('data-i18n-attr');
+    const [attr, key] = spec.split(':');
+    if (I18N[L][key] != null) el.setAttribute(attr, I18N[L][key]);
+  });
+  updateLangButtons();
+  renderTable();
+}
+function setLang(lang) {
+  if (L === lang) return;
+  L = lang;
+  localStorage.setItem('c4130-lang', L);
+  applyLang();
+}
+
+// ── Theme Toggle ─────────────────────────────────────
+const toggleBtn = document.getElementById('themeToggle');
+toggleBtn.addEventListener('click', () => {
+  const root = document.documentElement;
+  const current = root.getAttribute('data-theme');
+  root.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  localStorage.setItem('c4130-theme', root.getAttribute('data-theme'));
+});
+(function initTheme() {
+  const saved = localStorage.getItem('c4130-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+})();
+
+// ── Language Toggle ──────────────────────────────────
+document.getElementById('langNl').addEventListener('click', () => setLang('nl'));
+document.getElementById('langEn').addEventListener('click', () => setLang('en'));
+
+// ── Data + Rendering ─────────────────────────────────
+let cachedData = null;
+
+function renderTable() {
+  if (!cachedData) return;
+  const data = cachedData;
+  const models = data.models.filter(m => m.gen_tps != null);
+  models.sort((a,b) => b.gen_tps - a.gen_tps);
+  const maxGen = Math.max(...models.map(m=>m.gen_tps));
+  const maxPrompt = Math.max(...models.filter(m=>m.prompt_tps).map(m=>m.prompt_tps));
+  const tbody = document.querySelector('#speedTable tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  models.forEach(m => {
+    const genPct = (m.gen_tps / maxGen * 100).toFixed(0);
+    const promptPct = m.prompt_tps ? (m.prompt_tps / maxPrompt * 100).toFixed(0) : 0;
+    const arch = (m.architecture||'').toLowerCase().includes('moe') ? 'MoE' : ((m.architecture||'').toLowerCase().includes('dense') ? 'Dense' : m.architecture||'—');
+    const archTag = arch === 'MoE' ? '<span class="tag tag-good">MoE</span>' : (arch === 'Dense' ? '<span class="tag tag-warn">Dense</span>' : arch);
+    tbody.insertAdjacentHTML('beforeend',
+      '<tr>' +
+      '<td><strong>' + m.name + '</strong><br><span class="note">' + (m.publisher||'') + ' · ' + (m.quant||'') + '</span></td>' +
+      '<td class="num"><strong>' + m.gen_tps.toFixed(1) + '</strong><div class="bar-cell"><div class="bar'+(arch==='Dense'?' dense':' moe')+'" style="width:'+genPct+'%"></div></div></td>' +
+      '<td class="num">' + (m.prompt_tps ? m.prompt_tps.toFixed(1) + '<div class="bar-cell"><div class="bar moe" style="width:'+promptPct+'%"></div></div>' : '—') + '</td>' +
+      '<td class="num">' + (m.disk_gb||'—') + ' GB</td>' +
+      '<td class="num">' + (m.params_active_b != null ? m.params_active_b.toFixed(1) + t('paramsFormatActive') + m.params_total_b.toFixed(1) + ' ' + t('paramsFormat') : m.params_total_b.toFixed(1) + ' ' + t('paramsFormat')) + '</td>' +
+      '<td>' + archTag + '</td>' +
+      '</tr>'
+    );
+  });
+}
+
+fetch('../data/results.json').then(r => r.json()).then(data => {
+  cachedData = data;
+  const savedLang = localStorage.getItem('c4130-lang');
+  if (savedLang && (savedLang === 'nl' || savedLang === 'en')) L = savedLang;
+  applyLang();
+}).catch(err => {
+  document.querySelector('#speedTable tbody').innerHTML = '<tr><td colspan="6">' + t('loadError') + err + '</td></tr>';
+});
+</script>
+</body>
+</html>

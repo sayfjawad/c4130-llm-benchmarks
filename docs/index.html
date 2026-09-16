@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="pageTitle">🧪 C4130 LLM Benchmark Suite</title>
+<meta name="description" data-i18n-attr="content:metaDesc" content="7 lokale LLM's zelf gedownload, gedraaid en getest op een Dell C4130 met 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM).">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  :root { color-scheme: light; --surface-0: #ffffff; --surface-1: #fcfcfb; --surface-2: #f3f2ef; --border: #e4e2dc; --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #79776f; --series-1: #2a78d6; --series-2: #eb6834; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #d03b3b; --link: #1c5cab; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; --surface-0: #121211; --surface-1: #1a1a19; --surface-2: #232320; --border: #34342f; --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #918f84; --series-1: #3987e5; --series-2: #d95926; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #e66767; --link: #86b6ef; } }
+  [data-theme="dark"] { color-scheme: dark; --surface-0: #121211; --surface-1: #1a1a19; --surface-2: #232320; --border: #34342f; --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #918f84; --series-1: #3987e5; --series-2: #d95926; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #e66767; --link: #86b6ef; }
+  * { box-sizing: border-box; } body { margin: 0; background: var(--surface-0); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.55; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  header.hero { padding: 56px 0 40px; border-bottom: 1px solid var(--border); } header.hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0 0 12px; } header.hero p.lead { font-size: 1.15rem; color: var(--text-secondary); max-width: 680px; margin: 0 0 20px; }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; } .badge { display: inline-flex; align-items: center; gap: 6px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-secondary); font-size: 0.8rem; padding: 4px 10px; border-radius: 999px; }
+  .fixed-controls { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 8px; align-items: center; } .theme-toggle { background: var(--surface-2); border: 1px solid var(--border); color: var(--text-primary); border-radius: 999px; padding: 8px 14px; cursor: pointer; font-size: 0.85rem; } .lang-toggle-group { display: flex; gap: 2px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 2px; } .lang-toggle { background: transparent; border: none; color: var(--text-muted); border-radius: 999px; padding: 6px 10px; cursor: pointer; font-size: 0.78rem; font-weight: 600; line-height: 1; } .lang-toggle.active { background: var(--surface-0); color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  section { padding: 44px 0; border-bottom: 1px solid var(--border); } section:last-of-type { border-bottom: none; }
+  h2 { font-size: 1.5rem; margin: 0 0 6px; } h2 .num { color: var(--text-muted); font-weight: 500; margin-right: 8px; } .subtitle { color: var(--text-muted); margin: 0 0 28px; }
+  .winner-card { display: flex; align-items: center; gap: 20px; background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px; padding: 24px 28px; margin: 24px 0; } .winner-card .medal { font-size: 2.6rem; line-height: 1; } .winner-card h3 { margin: 0 0 4px; font-size: 1.3rem; } .winner-card p { margin: 0; color: var(--text-secondary); }
+  .pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; } .pill { font-size: 0.78rem; padding: 3px 10px; border-radius: 999px; background: color-mix(in oklab, var(--status-good) 16%, transparent); color: var(--status-good); border: 1px solid color-mix(in oklab, var(--status-good) 40%, transparent); font-weight: 600; }
+  .test-nav { position: sticky; top: 0; z-index: 100; background: var(--surface-0); border-bottom: 1px solid var(--border); padding: 10px 0; margin: 0 -20px; overflow-x: auto; -webkit-overflow-scrolling: touch; } .test-nav .wrap { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; } .test-nav a { text-decoration: none; color: var(--text-secondary); font-size: 0.82rem; padding: 5px 12px; border-radius: 999px; transition: all 0.15s; border: 1px solid transparent; } .test-nav a:hover { color: var(--text-primary); background: var(--surface-2); border-color: var(--border); } .test-nav a.home { font-weight: 700; color: var(--text-primary); } .test-nav .sep { width: 1px; height: 18px; background: var(--border); margin: 0 4px; flex-shrink: 0; }
+  .chart-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 24px; } .chart-card h3 { margin: 0 0 4px; font-size: 1.05rem; } .chart-card .chart-note { color: var(--text-muted); font-size: 0.85rem; margin: 0 0 16px; } canvas { max-width: 100%; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; } th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); white-space: nowrap; } th { color: var(--text-muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.02em; } td.model-name { font-weight: 600; white-space: normal; }
+  .table-scroll { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); } .table-scroll table { margin: 0; } .table-scroll th, .table-scroll td { border-bottom: 1px solid var(--border); } .table-scroll tr:last-child td { border-bottom: none; }
+  .status-cell { display: inline-flex; align-items: center; gap: 5px; font-weight: 600; font-size: 0.85rem; } .status-pass { color: var(--status-good); } .status-warn { color: var(--status-warning); } .status-fail { color: var(--status-critical); } .status-na { color: var(--text-muted); font-weight: 400; }
+  .story-block { margin-bottom: 28px; } .story-block h3 { margin: 0 0 8px; font-size: 1.15rem; } .story-block p { color: var(--text-secondary); margin: 0 0 8px; } .story-block .emoji-marker { font-size: 1.3rem; margin-right: 6px; }
+  .lessons { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; } .lesson-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; } .lesson-card .n { font-size: 1.6rem; margin-bottom: 6px; } .lesson-card h4 { margin: 0 0 6px; font-size: 0.95rem; } .lesson-card p { margin: 0; color: var(--text-secondary); font-size: 0.87rem; }
+  code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-size: 0.88em; } pre { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; overflow-x: auto; font-size: 0.85rem; } a { color: var(--link); }
+  footer { padding: 32px 0 60px; color: var(--text-muted); font-size: 0.85rem; }
+  .legend-row { display: flex; gap: 18px; flex-wrap: wrap; margin: 6px 0 18px; font-size: 0.85rem; color: var(--text-secondary); } .legend-row span { display: inline-flex; align-items: center; gap: 6px; }
+</style>
+</head>
+<body>
+
+<div class="fixed-controls">
+  <div class="lang-toggle-group">
+    <button class="lang-toggle active" id="langNl" aria-label="Nederlands">NL</button>
+    <button class="lang-toggle" id="langEn" aria-label="English">EN</button>
+  </div>
+  <button class="theme-toggle" id="themeToggle" data-i18n-attr="aria-label:themeAria">🌓</button>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <h1 data-i18n="pageHeading">🧪 C4130 LLM Benchmark Suite</h1>
+    <p class="lead" data-i18n="heroLead">Welk lokaal LLM is écht het snelst én slimst op een Dell C4130 met 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM)? 7 modellen zelf gedownload, zelf gedraaid, zelf getest — inclusief de modellen die faalden en waarom.</p>
+    <div class="badges">
+      <span class="badge" data-i18n="badgeHW">🖥️ 4× Tesla V100-SXM2-32GB · 128GB VRAM</span>
+      <span class="badge" data-i18n="badgeModels">📦 7 modellen getest</span>
+      <span class="badge" data-i18n="badgeCats">🔬 7 testcategorieën</span>
+      <span class="badge" data-i18n="badgeVerified">✅ alles zelf geverifieerd, geen blog-cijfers</span>
+    </div>
+  </header>
+
+  <nav class="test-nav">
+    <div class="wrap">
+      <a href="./" class="home" data-i18n="navHome">📊 C4130 Benchmarks</a>
+      <span class="sep"></span>
+      <a href="tests/speed.html" data-i18n="navSpeed">⚡ Snelheid</a>
+      <a href="tests/hard.html" data-i18n="navHard">🧩 Zware taken</a>
+      <a href="tests/longctx.html" data-i18n="navLongctx">📄 Long-context</a>
+      <a href="tests/reliability.html" data-i18n="navReliability">🔁 Betrouwbaarheid</a>
+      <a href="tests/tools.html" data-i18n="navTools">🔧 Tools</a>
+      <a href="tests/knowledge.html" data-i18n="navKnowledge">📚 Kennis</a>
+      <a href="tests/math.html" data-i18n="navMath">🧮 Rekenen</a>
+    </div>
+  </nav>
+
+  <section id="winner">
+    <h2><span class="num">01</span><span data-i18n="winnerTitle">De winnaar</span></h2>
+    <p class="subtitle" data-i18n="winnerSubtitle">Perfecte score op elke testcategorie, en 3× sneller dan de enige gelijkwaardige concurrent.</p>
+    <div class="winner-card">
+      <div class="medal">🥇</div>
+      <div>
+        <h3>GPT-OSS-120B <span style="color:var(--text-muted); font-weight:400;">— OpenAI, Apache 2.0</span></h3>
+        <p>117B totaal / 5,1B actief · MoE · 59GB (UD-Q4_K_XL) · 53,4 t/s generatie</p>
+        <div class="pill-row">
+          <span class="pill">✅ zware taken 4/4</span> <span class="pill">✅ long-context 6/6</span>
+          <span class="pill">✅ betrouwbaarheid 5/5</span> <span class="pill">✅ tool-gebruik 4/4</span>
+          <span class="pill">✅ kennis 14/14</span> <span class="pill">✅ rekenen 10/10</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="charts">
+    <h2><span class="num">02</span><span data-i18n="chartsTitle">Resultaten in grafieken</span></h2>
+    <p class="subtitle" data-i18n-html="chartsSubtitle">Live gegenereerd uit <code>docs/data/results.json</code> — nieuwe modeltests verschijnen hier automatisch na een push.</p>
+    <div class="chart-card">
+      <h3 data-i18n="speedChartTitle">⚡ Generatiesnelheid (tokens/sec)</h3>
+      <p class="chart-note" data-i18n-html="speedChartNote">Gemeten met <code>llama-bench</code> / server-timings. Hoger = sneller.</p>
+      <canvas id="speedChart" height="120"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3 data-i18n="mathChartTitle">🧮 Score op de zware reken-/redeneertest (van 10)</h3>
+      <p class="chart-note" data-i18n="mathChartNote">Alleen modellen die deze specifieke testronde doorliepen. Dit is waar de meeste modellen zich daadwerkelijk van elkaar onderscheiden.</p>
+      <canvas id="mathChart" height="110"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3 data-i18n="scatterChartTitle">💾 Omvang op schijf vs. snelheid</h3>
+      <p class="chart-note" data-i18n="scatterChartNote">Grotere bubbel = meer totale parameters. Rechtsonder is de ideale hoek: klein én snel.</p>
+      <canvas id="scatterChart" height="140"></canvas>
+    </div>
+  </section>
+
+  <section id="matrix">
+    <h2><span class="num">03</span><span data-i18n="matrixTitle">Volledige scorematrix</span></h2>
+    <p class="subtitle" data-i18n="matrixSubtitle">Alle 7 geteste modellen, alle categorieën. Niet elk model doorliep elke test (zie toelichting per rij in het README).</p>
+    <div class="legend-row">
+      <span>✅ <span class="status-pass" data-i18n="legendPass">geslaagd</span></span>
+      <span>⚠️ <span class="status-warn" data-i18n="legendWarn">gedeeltelijk / met kanttekening</span></span>
+      <span>❌ <span class="status-fail" data-i18n="legendFail">gefaald</span></span>
+      <span>– <span class="status-na" data-i18n="legendNa">niet getest</span></span>
+    </div>
+    <div class="table-scroll">
+      <table id="matrixTable">
+        <thead><tr>
+          <th data-i18n="thModel">Model</th><th data-i18n="thPublisher">Uitgever</th><th data-i18n="thArch">Architectuur</th><th data-i18n="thDisk">Schijf</th>
+          <th data-i18n="thSpeed">Snelheid</th><th data-i18n="thHard">Zware taken</th><th data-i18n="thLongctx">Long-ctx</th>
+          <th data-i18n="thReliability">Betrouwbaar</th><th data-i18n="thTools">Tools</th><th data-i18n="thKnowledge">Kennis</th><th data-i18n="thMath">Rekenen</th>
+        </tr></thead>
+        <tbody id="matrixBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="story">
+    <h2><span class="num">04</span><span data-i18n="storyTitle">Het verhaal: zes testrondes</span></h2>
+    <p class="subtitle" data-i18n="storySubtitle">Waarom dit zes rondes duurde, en wat elke ronde ons leerde.</p>
+    <div class="story-block"><h3><span class="emoji-marker">1️⃣</span><span data-i18n="story1Title">De eerste kandidaat, en een harde geheugen-les</span></h3>
+      <p data-i18n-html="story1Text">GPT-OSS-120B was de voor de hand liggende eerste keuze — native ontworpen voor precies dit soort hardware. Daarna probeerden we Qwen3-235B-A22B op de grootste quant die "net" leek te passen (134GB) — en dat ging mis: llama.cpp offloadde een deel naar de CPU en de snelheid stortte in van tientallen tokens/sec naar <strong>2 tokens/sec</strong>. Les: reken een marge van 15-20GB voor context/overhead, quantiseer niet tot de rand.</p>
+    </div>
+    <div class="story-block"><h3><span class="emoji-marker">2️⃣</span><span data-i18n="story2Title">De Chinese labs, en een architecturale ontdekking</span></h3>
+      <p data-i18n-html="story2Text">GLM-4.5-Air maakte een rekenfout ondanks een lange interne denkstap. MiniMax-M2 liep vast in een <strong>letterlijke herhalingslus</strong> op een notulen-taak. Maar de belangrijkste ontdekking kwam van DeepSeek-R1-Distill-Llama-70B: als <strong>dense</strong> model (alle parameters actief per token) kelderde de snelheid naar 2,9 t/s. Op deze bandbreedte-gelimiteerde hardware is <strong>MoE-architectuur belangrijker dan merk, leverancier of modelgrootte</strong>.</p>
+    </div>
+    <div class="story-block"><h3><span class="emoji-marker">3️⃣</span><span data-i18n="story3Title">Zwaardere testen, gelijke lat</span></h3>
+      <p data-i18n="story3Text">De testset discrimineerde niet meer scherp genoeg — bijna alles scoorde 4/4. We voegden een long-context test toe (feiten verspreid door een 8k-token document) en een 5x-herhalingstest, specifiek om het soort loop-bug van MiniMax-M2 systematisch te vangen. Alle overlevende kandidaten scoorden foutloos.</p>
+    </div>
+    <div class="story-block"><h3><span class="emoji-marker">4️⃣</span><span data-i18n="story4Title">Nieuwe generatie modellen, en de reken-bottleneck</span></h3>
+      <p data-i18n-html="story4Text">Tegen een zwaardere reken-/redeneertest (logica, kansrekening, combinatoriek, met opzettelijke datum-valstrikken) bleek het échte onderscheid: GPT-OSS-120B en Nemotron-3-Super-120B-A12B losten alles efficiënt op. De hele Qwen3.x-lijn liep bij <strong>40-50% van de vragen leeg</strong> binnen een redelijk tokenbudget — bij één vraag had het model het juiste antwoord intern al twee keer gevalideerd, en bleef het daarna eindeloos twijfelen over de presentatie tot het budget op was.</p>
+    </div>
+    <div class="story-block"><h3><span class="emoji-marker">5️⃣</span><span data-i18n="story5Title">Dag-1 test: Nemotron 3.5 Lightning (12 aug 2026)</span></h3>
+      <p data-i18n-html="story5Text">Eén dag na release door dezelfde batterij: NVIDIA's Nemotron-3.5-Lightning-30B-A3B (3.5B actief, hybride Mamba2-MoE). Vereiste een llama.cpp-upgrade naar b10380, en de standaard-thinking-modus at in de eerste run het complete tokenbudget op (long-context 0/6, notulen 0/5). Met <strong>per taaktype de juiste thinking-modus</strong> — uit voor formaat-taken, aan voor rekenwerk — scoorde het 10/10 rekenen, 13/14 kennis, 6/6 long-context, 5/5 betrouwbaarheid en 4/4 tools, bij 58 t/s op maar 35GB. De snelste prompt-verwerking van alle 7 modellen (1978 t/s) en de nieuwe <strong>runner-up</strong> achter GPT-OSS-120B.</p>
+    </div>
+    <div class="story-block"><h3><span class="emoji-marker">6️⃣</span><span data-i18n="story6Title">Dense perfectie: Google Gemma 4 31B (12 aug 2026)</span></h3>
+      <p data-i18n-html="story6Text1">Direct na Nemotron volgde <strong>Google DeepMind's Gemma 4 31B</strong> — het eerste <strong>dense</strong> model (30.7B, alle parameters actief per token) dat de volledige batterij doorliep, en meteen het eerste dense model met een <strong>perfecte score (43/43)</strong>. De thinking-aanpak is anders dan bij Nemotron: Gemma 4 gebruikt <code>&lt;think&gt;</code>-tags, bestuurbaar via llama.cpp's <code>--reasoning off/on</code> en <code>--reasoning-budget N</code>. Hybride strategie: <code>--reasoning off</code> voor format/long-context/betrouwbaarheid/tools, <code>--reasoning on --reasoning-budget 800</code> voor rekenen.</p>
+      <p data-i18n-html="story6Text2">De scores: 4/4 zware taken (uniek: rekenvraag <strong>correct zónder thinking</strong> — 2195 — wat geen enkel ander model lukte), 6/6 long-context, 5/5 betrouwbaarheid, 4/4 tools, 14/14 kennis (2 combo-vragen correct mét thinking), 10/10 rekenen. Het Mulisch-publicatiejaar had Gemma 4 wél correct (1992), in tegenstelling tot Nemotron-3.5. De keerzijde: <strong>6.4 t/s generatiesnelheid</strong> — 9× trager dan Nemotron-3.5-Lightning (58 t/s) en 8× trager dan GPT-OSS-120B (53 t/s). Dit bevestigt opnieuw de dense-vs-MoE-les: bij gelijke kwaliteit kost dense 8-9× meer tijd per token op bandbreedte-gelimiteerde hardware. Perfect voor batch-verwerking of kwaliteit-boven-snelheid; ongeschikt voor interactief gebruik.</p>
+    </div>
+  </section>
+
+  <section id="lessons">
+    <h2><span class="num">05</span><span data-i18n="lessonsTitle">Belangrijkste lessen</span></h2>
+    <div class="lessons">
+      <div class="lesson-card"><div class="n">🏗️</div><h4 data-i18n="lesson1Title">MoE &gt; dense, punt</h4><p data-i18n="lesson1Text">Op bandbreedte-gelimiteerde hardware kan een dense 70B-model 15-20x trager zijn dan een MoE-model van vergelijkbare grootte. Check dit vóór je downloadt.</p></div>
+      <div class="lesson-card"><div class="n">📏</div><h4 data-i18n="lesson2Title">Quantiseer niet tot de rand</h4><p data-i18n="lesson2Text">Reken 15-20GB marge boven de modelgrootte voor context/KV-cache, anders forceer je CPU-offload en wordt het model onbruikbaar traag.</p></div>
+      <div class="lesson-card"><div class="n">🧠</div><h4 data-i18n="lesson3Title">Reasoning kan zijn eigen budget opeten</h4><p data-i18n-html="lesson3Text">Zonder ruim <code>max_tokens</code> (2000+) en zonder te checken op <code>reasoning_content</code> naast <code>content</code> lijkt een goed model plots "leeg" te antwoorden.</p></div>
+      <div class="lesson-card"><div class="n">🔀</div><h4 data-i18n="lesson4Title">Ken de thinking-toggle</h4><p data-i18n-html="lesson4Text">Qwen3.x: <code>enable_thinking: false</code>. NVIDIA Nemotron: <code>"detailed thinking off"</code>. Zet dit alléén uit voor pure formaat-taken — voor rekenwerk kost het correctheid.</p></div>
+      <div class="lesson-card"><div class="n">🔁</div><h4 data-i18n="lesson5Title">Snel en correct ≠ betrouwbaar</h4><p data-i18n="lesson5Text">Meerdere modellen kwamen intern tot het juiste antwoord maar faalden om het te leveren. Alleen herhalingstests vangen dit systematisch.</p></div>
+      <div class="lesson-card"><div class="n">🔍</div><h4 data-i18n="lesson6Title">Verifieer modelclaims altijd zelf</h4><p data-i18n="lesson6Text">Publieke "beste LLM"-lijsten bevatten vaak plausibele maar onbetrouwbare informatie. De officiële Hugging Face API was onze enige vertrouwde bron.</p></div>
+    </div>
+  </section>
+
+  <section id="reproduce">
+    <h2><span class="num">06</span><span data-i18n="reproTitle">Zelf reproduceren</span></h2>
+    <p class="subtitle" data-i18n-html="reproSubtitle">Alle scripts zijn pure Python (stdlib) en praten met een lokale <code>llama-server</code>. Volledige uitleg: <a href="https://github.com/sayfjawad/c4130-llm-benchmarks/blob/main/scripts/README.md">scripts/README.md</a>.</p>
+<pre>git clone https://github.com/sayfjawad/c4130-llm-benchmarks.git
+cd c4130-llm-benchmarks
+
+pip install -U "huggingface_hub[cli]"
+hf download unsloth/gpt-oss-120b-GGUF --include "UD-Q4_K_XL/*" --local-dir ~/models/gpt-oss-120b
+
+llama-server --model ~/models/gpt-oss-120b/UD-Q4_K_XL/gpt-oss-120b-UD-Q4_K_XL-00001-of-00002.gguf \
+  --alias gpt-oss-120b --host 127.0.0.1 --port 8081 --n-gpu-layers 999 --cont-batching
+
+python3 scripts/bench_hard.py 8081 gpt-oss-120b</pre>
+    <p data-i18n-html="reproNote">💾 <strong>Schijfruimte:</strong> reken ~50GB voor kleine kandidaten (30-40GB klasse), ~130GB voor grote (~100GB klasse). Sequentieel testen (download → test → opruimen → volgende) houdt 150GB vrije ruimte ruim voldoende, ongeacht hoeveel modellen je wilt vergelijken.</p>
+  </section>
+
+  <footer>
+    <p data-i18n-html="footerSources">📚 Bronnen: <a href="https://huggingface.co">Hugging Face</a> (modelgewichten, met name <a href="https://huggingface.co/unsloth">unsloth</a>-GGUF-conversies) · <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a> (inference) · officiële Hugging Face API voor modelverificatie.</p>
+    <p data-i18n-html="footerContribute">🤝 Bijdragen welkom — zie de <a href="https://github.com/sayfjawad/c4130-llm-benchmarks#-bijdragen">README</a>. Volledige broncode: <a href="https://github.com/sayfjawad/c4130-llm-benchmarks">github.com/sayfjawad/c4130-llm-benchmarks</a>.</p>
+  </footer>
+</div>
+
+<script>
+// ── I18N Dictionary ──────────────────────────────────
+const I18N = {
+  nl: {
+    pageTitle: "🧪 C4130 LLM Benchmark Suite",
+    metaDesc: "7 lokale LLM's zelf gedownload, gedraaid en getest op een Dell C4130 met 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM).",
+    pageHeading: "🧪 C4130 LLM Benchmark Suite",
+    heroLead: "Welk lokaal LLM is écht het snelst én slimst op een Dell C4130 met 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM)? 7 modellen zelf gedownload, zelf gedraaid, zelf getest — inclusief de modellen die faalden en waarom.",
+    badgeHW: "🖥️ 4× Tesla V100-SXM2-32GB · 128GB VRAM", badgeModels: "📦 7 modellen getest", badgeCats: "🔬 7 testcategorieën", badgeVerified: "✅ alles zelf geverifieerd, geen blog-cijfers",
+    navHome: "📊 C4130 Benchmarks", navSpeed: "⚡ Snelheid", navHard: "🧩 Zware taken", navLongctx: "📄 Long-context", navReliability: "🔁 Betrouwbaarheid", navTools: "🔧 Tools", navKnowledge: "📚 Kennis", navMath: "🧮 Rekenen",
+    winnerTitle: "De winnaar", winnerSubtitle: "Perfecte score op elke testcategorie, en 3× sneller dan de enige gelijkwaardige concurrent.",
+    chartsTitle: "Resultaten in grafieken", chartsSubtitle: "Live gegenereerd uit <code>docs/data/results.json</code> — nieuwe modeltests verschijnen hier automatisch na een push.",
+    speedChartTitle: "⚡ Generatiesnelheid (tokens/sec)", speedChartNote: "Gemeten met <code>llama-bench</code> / server-timings. Hoger = sneller.",
+    mathChartTitle: "🧮 Score op de zware reken-/redeneertest (van 10)", mathChartNote: "Alleen modellen die deze specifieke testronde doorliepen. Dit is waar de meeste modellen zich daadwerkelijk van elkaar onderscheiden.",
+    scatterChartTitle: "💾 Omvang op schijf vs. snelheid", scatterChartNote: "Grotere bubbel = meer totale parameters. Rechtsonder is de ideale hoek: klein én snel.",
+    matrixTitle: "Volledige scorematrix", matrixSubtitle: "Alle 7 geteste modellen, alle categorieën. Niet elk model doorliep elke test (zie toelichting per rij in het README).",
+    legendPass: "geslaagd", legendWarn: "gedeeltelijk / met kanttekening", legendFail: "gefaald", legendNa: "niet getest",
+    thModel: "Model", thPublisher: "Uitgever", thArch: "Architectuur", thDisk: "Schijf", thSpeed: "Snelheid",
+    thHard: "Zware taken", thLongctx: "Long-ctx", thReliability: "Betrouwbaar", thTools: "Tools", thKnowledge: "Kennis", thMath: "Rekenen",
+    storyTitle: "Het verhaal: zes testrondes", storySubtitle: "Waarom dit zes rondes duurde, en wat elke ronde ons leerde.",
+    story1Title: "De eerste kandidaat, en een harde geheugen-les",
+    story1Text: "GPT-OSS-120B was de voor de hand liggende eerste keuze — native ontworpen voor precies dit soort hardware. Daarna probeerden we Qwen3-235B-A22B op de grootste quant die \"net\" leek te passen (134GB) — en dat ging mis: llama.cpp offloadde een deel naar de CPU en de snelheid stortte in van tientallen tokens/sec naar <strong>2 tokens/sec</strong>. Les: reken een marge van 15-20GB voor context/overhead, quantiseer niet tot de rand.",
+    story2Title: "De Chinese labs, en een architecturale ontdekking",
+    story2Text: "GLM-4.5-Air maakte een rekenfout ondanks een lange interne denkstap. MiniMax-M2 liep vast in een <strong>letterlijke herhalingslus</strong> op een notulen-taak. Maar de belangrijkste ontdekking kwam van DeepSeek-R1-Distill-Llama-70B: als <strong>dense</strong> model (alle parameters actief per token) kelderde de snelheid naar 2,9 t/s. Op deze bandbreedte-gelimiteerde hardware is <strong>MoE-architectuur belangrijker dan merk, leverancier of modelgrootte</strong>.",
+    story3Title: "Zwaardere testen, gelijke lat", story3Text: "De testset discrimineerde niet meer scherp genoeg — bijna alles scoorde 4/4. We voegden een long-context test toe (feiten verspreid door een 8k-token document) en een 5x-herhalingstest, specifiek om het soort loop-bug van MiniMax-M2 systematisch te vangen. Alle overlevende kandidaten scoorden foutloos.",
+    story4Title: "Nieuwe generatie modellen, en de reken-bottleneck",
+    story4Text: "Tegen een zwaardere reken-/redeneertest (logica, kansrekening, combinatoriek, met opzettelijke datum-valstrikken) bleek het échte onderscheid: GPT-OSS-120B en Nemotron-3-Super-120B-A12B losten alles efficiënt op. De hele Qwen3.x-lijn liep bij <strong>40-50% van de vragen leeg</strong> binnen een redelijk tokenbudget — bij één vraag had het model het juiste antwoord intern al twee keer gevalideerd, en bleef het daarna eindeloos twijfelen over de presentatie tot het budget op was.",
+    story5Title: "Dag-1 test: Nemotron 3.5 Lightning (12 aug 2026)",
+    story5Text: "Eén dag na release door dezelfde batterij: NVIDIA's Nemotron-3.5-Lightning-30B-A3B (3.5B actief, hybride Mamba2-MoE). Vereiste een llama.cpp-upgrade naar b10380, en de standaard-thinking-modus at in de eerste run het complete tokenbudget op (long-context 0/6, notulen 0/5). Met <strong>per taaktype de juiste thinking-modus</strong> — uit voor formaat-taken, aan voor rekenwerk — scoorde het 10/10 rekenen, 13/14 kennis, 6/6 long-context, 5/5 betrouwbaarheid en 4/4 tools, bij 58 t/s op maar 35GB. De snelste prompt-verwerking van alle 7 modellen (1978 t/s) en de nieuwe <strong>runner-up</strong> achter GPT-OSS-120B.",
+    story6Title: "Dense perfectie: Google Gemma 4 31B (12 aug 2026)",
+    story6Text1: "Direct na Nemotron volgde <strong>Google DeepMind's Gemma 4 31B</strong> — het eerste <strong>dense</strong> model (30.7B, alle parameters actief per token) dat de volledige batterij doorliep, en meteen het eerste dense model met een <strong>perfecte score (43/43)</strong>. De thinking-aanpak is anders dan bij Nemotron: Gemma 4 gebruikt <code>&lt;think&gt;</code>-tags, bestuurbaar via llama.cpp's <code>--reasoning off/on</code> en <code>--reasoning-budget N</code>. Hybride strategie: <code>--reasoning off</code> voor format/long-context/betrouwbaarheid/tools, <code>--reasoning on --reasoning-budget 800</code> voor rekenen.",
+    story6Text2: "De scores: 4/4 zware taken (uniek: rekenvraag <strong>correct zónder thinking</strong> — 2195 — wat geen enkel ander model lukte), 6/6 long-context, 5/5 betrouwbaarheid, 4/4 tools, 14/14 kennis (2 combo-vragen correct mét thinking), 10/10 rekenen. Het Mulisch-publicatiejaar had Gemma 4 wél correct (1992), in tegenstelling tot Nemotron-3.5. De keerzijde: <strong>6.4 t/s generatiesnelheid</strong> — 9× trager dan Nemotron-3.5-Lightning (58 t/s) en 8× trager dan GPT-OSS-120B (53 t/s). Dit bevestigt opnieuw de dense-vs-MoE-les: bij gelijke kwaliteit kost dense 8-9× meer tijd per token op bandbreedte-gelimiteerde hardware. Perfect voor batch-verwerking of kwaliteit-boven-snelheid; ongeschikt voor interactief gebruik.",
+    lessonsTitle: "Belangrijkste lessen",
+    lesson1Title: "MoE > dense, punt", lesson1Text: "Op bandbreedte-gelimiteerde hardware kan een dense 70B-model 15-20x trager zijn dan een MoE-model van vergelijkbare grootte. Check dit vóór je downloadt.",
+    lesson2Title: "Quantiseer niet tot de rand", lesson2Text: "Reken 15-20GB marge boven de modelgrootte voor context/KV-cache, anders forceer je CPU-offload en wordt het model onbruikbaar traag.",
+    lesson3Title: "Reasoning kan zijn eigen budget opeten", lesson3Text: "Zonder ruim <code>max_tokens</code> (2000+) en zonder te checken op <code>reasoning_content</code> naast <code>content</code> lijkt een goed model plots \"leeg\" te antwoorden.",
+    lesson4Title: "Ken de thinking-toggle", lesson4Text: "Qwen3.x: <code>enable_thinking: false</code>. NVIDIA Nemotron: <code>\"detailed thinking off\"</code>. Zet dit alléén uit voor pure formaat-taken — voor rekenwerk kost het correctheid.",
+    lesson5Title: "Snel en correct ≠ betrouwbaar", lesson5Text: "Meerdere modellen kwamen intern tot het juiste antwoord maar faalden om het te leveren. Alleen herhalingstests vangen dit systematisch.",
+    lesson6Title: "Verifieer modelclaims altijd zelf", lesson6Text: "Publieke \"beste LLM\"-lijsten bevatten vaak plausibele maar onbetrouwbare informatie. De officiële Hugging Face API was onze enige vertrouwde bron.",
+    reproTitle: "Zelf reproduceren", reproSubtitle: "Alle scripts zijn pure Python (stdlib) en praten met een lokale <code>llama-server</code>. Volledige uitleg: <a href=\"https://github.com/sayfjawad/c4130-llm-benchmarks/blob/main/scripts/README.md\">scripts/README.md</a>.",
+    reproNote: "💾 <strong>Schijfruimte:</strong> reken ~50GB voor kleine kandidaten (30-40GB klasse), ~130GB voor grote (~100GB klasse). Sequentieel testen (download → test → opruimen → volgende) houdt 150GB vrije ruimte ruim voldoende, ongeacht hoeveel modellen je wilt vergelijken.",
+    footerSources: "📚 Bronnen: <a href=\"https://huggingface.co\">Hugging Face</a> (modelgewichten, met name <a href=\"https://huggingface.co/unsloth\">unsloth</a>-GGUF-conversies) · <a href=\"https://github.com/ggml-org/llama.cpp\">llama.cpp</a> (inference) · officiële Hugging Face API voor modelverificatie.",
+    footerContribute: "🤝 Bijdragen welkom — zie de <a href=\"https://github.com/sayfjawad/c4130-llm-benchmarks#-bijdragen\">README</a>. Volledige broncode: <a href=\"https://github.com/sayfjawad/c4130-llm-benchmarks\">github.com/sayfjawad/c4130-llm-benchmarks</a>.",
+    themeAria: "Wissel donker/licht thema",
+    chartSpeedLabel: "tokens/sec (generatie)", chartSpeedX: "tokens/sec",
+    chartMathLabel: "score / 10", chartMathX: "correcte antwoorden / 10",
+    chartScatterX: "schijfruimte (GB)", chartScatterY: "tokens/sec",
+    loadError: "Kon resultaten niet laden: ",
+  },
+  en: {
+    pageTitle: "🧪 C4130 LLM Benchmark Suite",
+    metaDesc: "7 local LLMs downloaded, run, and tested on an Dell C4130 with 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM).",
+    pageHeading: "🧪 C4130 LLM Benchmark Suite",
+    heroLead: "Which local LLM is truly the fastest and smartest on an Dell C4130 with 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM)? 7 models downloaded, run, and tested ourselves — including the models that failed and why.",
+    badgeHW: "🖥️ 4× Tesla V100-SXM2-32GB · 128GB VRAM", badgeModels: "📦 7 models tested", badgeCats: "🔬 7 test categories", badgeVerified: "✅ all self-verified, no blog stats",
+    navHome: "📊 C4130 Benchmarks", navSpeed: "⚡ Speed", navHard: "🧩 Hard Tasks", navLongctx: "📄 Long-Context", navReliability: "🔁 Reliability", navTools: "🔧 Tools", navKnowledge: "📚 Knowledge", navMath: "🧮 Math",
+    winnerTitle: "The Winner", winnerSubtitle: "Perfect score on every test category, and 3× faster than the only comparable competitor.",
+    chartsTitle: "Results in Charts", chartsSubtitle: "Live generated from <code>docs/data/results.json</code> — new model tests appear here automatically after a push.",
+    speedChartTitle: "⚡ Generation Speed (tokens/sec)", speedChartNote: "Measured with <code>llama-bench</code> / server timings. Higher = faster.",
+    mathChartTitle: "🧮 Hard Math/Reasoning Test Score (out of 10)", mathChartNote: "Only models that completed this specific test round. This is where most models actually distinguish themselves from each other.",
+    scatterChartTitle: "💾 Disk Size vs. Speed", scatterChartNote: "Larger bubble = more total parameters. Bottom-right is the ideal corner: small and fast.",
+    matrixTitle: "Full Score Matrix", matrixSubtitle: "All 7 tested models, all categories. Not every model completed every test (see per-row notes in the README).",
+    legendPass: "passed", legendWarn: "partial / with caveat", legendFail: "failed", legendNa: "not tested",
+    thModel: "Model", thPublisher: "Publisher", thArch: "Architecture", thDisk: "Disk", thSpeed: "Speed",
+    thHard: "Hard Tasks", thLongctx: "Long-ctx", thReliability: "Reliability", thTools: "Tools", thKnowledge: "Knowledge", thMath: "Math",
+    storyTitle: "The Story: Six Test Rounds", storySubtitle: "Why this took six rounds, and what each round taught us.",
+    story1Title: "The First Candidate, and a Hard Memory Lesson",
+    story1Text: "GPT-OSS-120B was the obvious first choice — natively designed for exactly this kind of hardware. Then we tried Qwen3-235B-A22B at the largest quant that \"just\" seemed to fit (134GB) — and it went wrong: llama.cpp offloaded part to the CPU and speed plummeted from tens of tokens/sec to <strong>2 tokens/sec</strong>. Lesson: budget 15-20GB margin above model size for context/KV-cache; don't quantize to the edge.",
+    story2Title: "The Chinese Labs, and an Architectural Discovery",
+    story2Text: "GLM-4.5-Air made a math error despite a long internal reasoning step. MiniMax-M2 got stuck in a <strong>literal repetition loop</strong> on a minutes task. But the most important discovery came from DeepSeek-R1-Distill-Llama-70B: as a <strong>dense</strong> model (all parameters active per token), speed plummeted to 2.9 t/s. On this bandwidth-limited hardware, <strong>MoE architecture matters more than brand, vendor, or model size</strong>.",
+    story3Title: "Harder Tests, Equal Bar", story3Text: "The test suite no longer discriminated sharply enough — nearly everything scored 4/4. We added a long-context test (facts scattered through an 8k-token document) and a 5× repetition test, specifically to systematically catch the kind of loop bug MiniMax-M2 exhibited. All surviving candidates scored flawlessly.",
+    story4Title: "New Generation Models, and the Math Bottleneck",
+    story4Text: "Against a harder math/reasoning test (logic, probability, combinatorics, with deliberate date traps) the real distinction emerged: GPT-OSS-120B and Nemotron-3-Super-120B-A12B solved everything efficiently. The entire Qwen3.x line ran out of tokens on <strong>40-50% of the questions</strong> within a reasonable token budget — on one question, the model had internally validated the correct answer twice, then kept endlessly second-guessing the presentation until the budget ran out.",
+    story5Title: "Day-1 Test: Nemotron 3.5 Lightning (Aug 12, 2026)",
+    story5Text: "One day after release, through the same battery: NVIDIA's Nemotron-3.5-Lightning-30B-A3B (3.5B active, hybrid Mamba2-MoE). Required a llama.cpp upgrade to b10380, and the default thinking mode ate the entire token budget in the first run (long-context 0/6, minutes 0/5). With <strong>the right thinking mode per task type</strong> — off for formatting tasks, on for math — it scored 10/10 math, 13/14 knowledge, 6/6 long-context, 5/5 reliability, and 4/4 tools, at 58 t/s on just 35GB. Fastest prompt processing of all 7 models (1978 t/s) and the new <strong>runner-up</strong> behind GPT-OSS-120B.",
+    story6Title: "Dense Perfection: Google Gemma 4 31B (Aug 12, 2026)",
+    story6Text1: "Right after Nemotron came <strong>Google DeepMind's Gemma 4 31B</strong> — the first <strong>dense</strong> model (30.7B, all parameters active per token) to complete the full battery, and immediately the first dense model with a <strong>perfect score (43/43)</strong>. The thinking approach differs from Nemotron: Gemma 4 uses <code>&lt;think&gt;</code> tags, controllable via llama.cpp's <code>--reasoning off/on</code> and <code>--reasoning-budget N</code>. Hybrid strategy: <code>--reasoning off</code> for format/long-context/reliability/tools, <code>--reasoning on --reasoning-budget 800</code> for math.",
+    story6Text2: "The scores: 4/4 hard tasks (unique: math question <strong>correct without thinking</strong> — 2195 — which no other model achieved), 6/6 long-context, 5/5 reliability, 4/4 tools, 14/14 knowledge (2 combo questions correct with thinking), 10/10 math. Gemma 4 correctly identified Mulisch's publication year (1992), unlike Nemotron-3.5. The trade-off: <strong>6.4 t/s generation speed</strong> — 9× slower than Nemotron-3.5-Lightning (58 t/s) and 8× slower than GPT-OSS-120B (53 t/s). This reconfirms the dense-vs-MoE lesson: at equal quality, dense costs 8-9× more time per token on bandwidth-limited hardware. Perfect for batch processing or quality-over-speed; unsuitable for interactive use.",
+    lessonsTitle: "Key Lessons",
+    lesson1Title: "MoE > dense, period", lesson1Text: "On bandwidth-limited hardware, a dense 70B model can be 15-20× slower than an MoE model of comparable size. Check this before you download.",
+    lesson2Title: "Don't Quantize to the Edge", lesson2Text: "Budget 15-20GB margin above model size for context/KV-cache, otherwise you force CPU offload and the model becomes unusably slow.",
+    lesson3Title: "Reasoning Can Eat Its Own Budget", lesson3Text: "Without generous <code>max_tokens</code> (2000+) and without checking <code>reasoning_content</code> alongside <code>content</code>, a good model can appear to answer \"empty\".",
+    lesson4Title: "Know the Thinking Toggle", lesson4Text: "Qwen3.x: <code>enable_thinking: false</code>. NVIDIA Nemotron: <code>\"detailed thinking off\"</code>. Only disable this for pure formatting tasks — for math work, it costs correctness.",
+    lesson5Title: "Fast and Correct ≠ Reliable", lesson5Text: "Multiple models internally reached the correct answer but failed to deliver it. Only repetition tests catch this systematically.",
+    lesson6Title: "Always Verify Model Claims Yourself", lesson6Text: "Public \"best LLM\" lists often contain plausible but unreliable information. The official Hugging Face API was our only trusted source.",
+    reproTitle: "Reproduce It Yourself", reproSubtitle: "All scripts are pure Python (stdlib) and talk to a local <code>llama-server</code>. Full guide: <a href=\"https://github.com/sayfjawad/c4130-llm-benchmarks/blob/main/scripts/README.md\">scripts/README.md</a>.",
+    reproNote: "💾 <strong>Disk space:</strong> budget ~50GB for small candidates (30-40GB class), ~130GB for large (~100GB class). Sequential testing (download → test → clean up → next) keeps 150GB free space more than sufficient, regardless of how many models you want to compare.",
+    footerSources: "📚 Sources: <a href=\"https://huggingface.co\">Hugging Face</a> (model weights, especially <a href=\"https://huggingface.co/unsloth\">unsloth</a>-GGUF conversions) · <a href=\"https://github.com/ggml-org/llama.cpp\">llama.cpp</a> (inference) · official Hugging Face API for model verification.",
+    footerContribute: "🤝 Contributions welcome — see the <a href=\"https://github.com/sayfjawad/c4130-llm-benchmarks#-bijdragen\">README</a>. Full source code: <a href=\"https://github.com/sayfjawad/c4130-llm-benchmarks\">github.com/sayfjawad/c4130-llm-benchmarks</a>.",
+    themeAria: "Toggle dark/light theme",
+    chartSpeedLabel: "tokens/sec (generation)", chartSpeedX: "tokens/sec",
+    chartMathLabel: "score / 10", chartMathX: "correct answers / 10",
+    chartScatterX: "disk space (GB)", chartScatterY: "tokens/sec",
+    loadError: "Could not load results: ",
+  }
+};
+
+// ── i18n Core ────────────────────────────────────────
+let L = 'nl';
+function t(key) { return (I18N[L] && I18N[L][key] != null) ? I18N[L][key] : key; }
+function updateLangButtons() {
+  document.getElementById('langNl').classList.toggle('active', L === 'nl');
+  document.getElementById('langEn').classList.toggle('active', L === 'en');
+}
+function applyLang() {
+  document.documentElement.lang = L;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (I18N[L][k] != null && !el.hasAttribute('data-i18n-html')) el.textContent = I18N[L][k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const k = el.getAttribute('data-i18n-html');
+    if (I18N[L][k] != null) el.innerHTML = I18N[L][k];
+  });
+  document.querySelectorAll('[data-i18n-attr]').forEach(el => {
+    const spec = el.getAttribute('data-i18n-attr');
+    const [attr, key] = spec.split(':');
+    if (I18N[L][key] != null) el.setAttribute(attr, I18N[L][key]);
+  });
+  updateLangButtons();
+  if (cachedData) { renderMatrix(); renderCharts(); }
+}
+function setLang(lang) {
+  if (L === lang) return;
+  L = lang;
+  localStorage.setItem('c4130-lang', L);
+  applyLang();
+}
+
+// ── Theme Toggle ─────────────────────────────────────
+const toggleBtn = document.getElementById('themeToggle');
+toggleBtn.addEventListener('click', () => {
+  const root = document.documentElement;
+  const current = root.getAttribute('data-theme');
+  root.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  localStorage.setItem('c4130-theme', root.getAttribute('data-theme'));
+  if (cachedData) renderCharts(); // her-render charts met nieuwe kleuren
+});
+(function initTheme() {
+  const saved = localStorage.getItem('c4130-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+})();
+
+// ── Language Toggle ──────────────────────────────────
+document.getElementById('langNl').addEventListener('click', () => setLang('nl'));
+document.getElementById('langEn').addEventListener('click', () => setLang('en'));
+
+// ── Data + Rendering ─────────────────────────────────
+let cachedData = null;
+let chartInstances = [];
+
+function cellHtml(score) {
+  if (!score || score.of == null) return '<span class="status-cell status-na">–</span>';
+  if (score.n == null) return '<span class="status-cell status-na">–</span>';
+  const ratio = score.n / score.of;
+  if (ratio === 1) return `<span class="status-cell status-pass">✅ ${score.n}/${score.of}</span>`;
+  if (ratio >= 0.5) return `<span class="status-cell status-warn">⚠️ ${score.n}/${score.of}</span>`;
+  return `<span class="status-cell status-fail">❌ ${score.n}/${score.of}</span>`;
+}
+
+function renderMatrix() {
+  if (!cachedData) return;
+  const models = cachedData.models;
+  const tbody = document.getElementById('matrixBody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  models.forEach(m => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="model-name">${m.name}</td>
+      <td>${m.publisher}</td>
+      <td>${m.architecture}</td>
+      <td>${m.disk_gb ? m.disk_gb + 'GB' : '–'}</td>
+      <td>${m.gen_tps ? m.gen_tps + ' t/s' : '–'}</td>
+      <td>${cellHtml(m.scores && m.scores.hard4)}</td>
+      <td>${cellHtml(m.scores && m.scores.longctx)}</td>
+      <td>${cellHtml(m.scores && m.scores.reliability)}</td>
+      <td>${cellHtml(m.scores && m.scores.tools)}</td>
+      <td>${cellHtml(m.scores && m.scores.knowledge)}</td>
+      <td>${cellHtml(m.scores && m.scores.math)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderCharts() {
+  if (!cachedData) return;
+  // Destroy existing charts
+  chartInstances.forEach(c => c.destroy());
+  chartInstances = [];
+
+  const models = cachedData.models;
+  const style = getComputedStyle(document.body);
+  const seriesColor = style.getPropertyValue('--series-1').trim() || '#2a78d6';
+  const seriesColor2 = style.getPropertyValue('--series-2').trim() || '#eb6834';
+  const gridColor = style.getPropertyValue('--border').trim() || '#e4e2dc';
+  const textColor = style.getPropertyValue('--text-secondary').trim() || '#52514e';
+  Chart.defaults.color = textColor;
+  Chart.defaults.borderColor = gridColor;
+  Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+
+  // --- speed chart ---
+  const withSpeed = models.filter(m => m.gen_tps != null).sort((a, b) => b.gen_tps - a.gen_tps);
+  chartInstances.push(new Chart(document.getElementById('speedChart'), {
+    type: 'bar', data: {
+      labels: withSpeed.map(m => m.name),
+      datasets: [{ label: t('chartSpeedLabel'), data: withSpeed.map(m => m.gen_tps),
+        backgroundColor: withSpeed.map(m => m.id === 'gpt-oss-120b' ? seriesColor2 : seriesColor),
+        borderRadius: 4, maxBarThickness: 26 }]
+    }, options: {
+      indexAxis: 'y', plugins: { legend: { display: false } },
+      scales: { x: { grid: { color: gridColor }, title: { display: true, text: t('chartSpeedX') } }, y: { grid: { display: false } } }
+    }
+  }));
+
+  // --- math score chart ---
+  const withMath = models.filter(m => m.scores && m.scores.math && m.scores.math.n != null)
+    .sort((a, b) => b.scores.math.n - a.scores.math.n);
+  chartInstances.push(new Chart(document.getElementById('mathChart'), {
+    type: 'bar', data: {
+      labels: withMath.map(m => m.name),
+      datasets: [{ label: t('chartMathLabel'), data: withMath.map(m => m.scores.math.n),
+        backgroundColor: withMath.map(m => m.scores.math.n === 10 ? 'rgb(12,163,12)' : (m.scores.math.n >= 5 ? 'rgb(250,178,25)' : 'rgb(208,59,59)')),
+        borderRadius: 4, maxBarThickness: 26 }]
+    }, options: {
+      indexAxis: 'y', plugins: { legend: { display: false } },
+      scales: { x: { min: 0, max: 10, grid: { color: gridColor }, title: { display: true, text: t('chartMathX') } }, y: { grid: { display: false } } }
+    }
+  }));
+
+  // --- scatter: disk size vs speed ---
+  const withBoth = models.filter(m => m.gen_tps != null && m.disk_gb != null);
+  chartInstances.push(new Chart(document.getElementById('scatterChart'), {
+    type: 'bubble', data: {
+      datasets: withBoth.map(m => ({
+        label: m.name,
+        data: [{ x: m.disk_gb, y: m.gen_tps, r: Math.max(6, Math.sqrt(m.params_total_b || 30) * 2) }],
+        backgroundColor: m.id === 'gpt-oss-120b'
+          ? 'rgba(235,104,52,0.75)'
+          : (m.architecture && m.architecture.toLowerCase().includes('dense') ? 'rgba(208,59,59,0.55)' : 'rgba(42,120,214,0.55)')
+      }))
+    }, options: {
+      plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.x}GB, ${ctx.raw.y} t/s` } }
+      },
+      scales: {
+        x: { title: { display: true, text: t('chartScatterX') }, grid: { color: gridColor } },
+        y: { title: { display: true, text: t('chartScatterY') }, grid: { color: gridColor } }
+      }
+    }
+  }));
+}
+
+fetch('data/results.json').then(r => r.json()).then(data => {
+  cachedData = data;
+  const savedLang = localStorage.getItem('c4130-lang');
+  if (savedLang && (savedLang === 'nl' || savedLang === 'en')) L = savedLang;
+  applyLang();
+  renderMatrix();
+  renderCharts();
+}).catch(err => {
+  document.getElementById('matrixBody').innerHTML = `<tr><td colspan="11">${t('loadError')}${err}</td></tr>`;
+});
+</script>
+</body>
+</html>

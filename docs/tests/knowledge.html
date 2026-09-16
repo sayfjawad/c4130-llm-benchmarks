@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="pageTitle">📚 Kennis — C4130 LLM Benchmarks</title>
+<style>
+:root { color-scheme: light; --surface-0: #ffffff; --surface-1: #fcfcfb; --surface-2: #f3f2ef; --border: #e4e2dc; --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #79776f; --series-1: #2a78d6; --series-2: #eb6834; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #d03b3b; --link: #1c5cab; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; --surface-0: #121211; --surface-1: #1a1a19; --surface-2: #232320; --border: #34342f; --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #918f84; --series-1: #3987e5; --series-2: #d95926; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #e66767; --link: #86b6ef; } }
+[data-theme="dark"] { color-scheme: dark; --surface-0: #121211; --surface-1: #1a1a19; --surface-2: #232320; --border: #34342f; --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #918f84; --series-1: #3987e5; --series-2: #d95926; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #e66767; --link: #86b6ef; }
+* { box-sizing: border-box; } body { margin: 0; background: var(--surface-0); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.55; } .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; } h1 { font-size: 2rem; margin-bottom: 6px; } h2 { font-size: 1.5rem; margin: 36px 0 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); } h3 { font-size: 1.15rem; margin: 20px 0 8px; } p, li { margin-bottom: 10px; color: var(--text-secondary); } header.hero p.lead { font-size: 1.15rem; color: var(--text-secondary); max-width: 680px; margin: 0 0 20px; }
+.fixed-controls { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 8px; align-items: center; } .theme-toggle { background: var(--surface-2); border: 1px solid var(--border); color: var(--text-primary); border-radius: 999px; padding: 8px 14px; cursor: pointer; font-size: 0.85rem; } .lang-toggle-group { display: flex; gap: 2px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 2px; } .lang-toggle { background: transparent; border: none; color: var(--text-muted); border-radius: 999px; padding: 6px 10px; cursor: pointer; font-size: 0.78rem; font-weight: 600; line-height: 1; } .lang-toggle.active { background: var(--surface-0); color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+header.hero { padding: 56px 0 40px; border-bottom: 1px solid var(--border); } header.hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0 0 12px; }
+.test-nav { position: sticky; top: 0; z-index: 100; background: var(--surface-0); border-bottom: 1px solid var(--border); padding: 10px 0; margin: 0 -20px; overflow-x: auto; -webkit-overflow-scrolling: touch; } .test-nav .wrap { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; } .test-nav a { text-decoration: none; color: var(--text-secondary); font-size: 0.82rem; padding: 5px 12px; border-radius: 999px; transition: all 0.15s; border: 1px solid transparent; } .test-nav a:hover { color: var(--text-primary); background: var(--surface-2); border-color: var(--border); } .test-nav a.home { font-weight: 700; color: var(--text-primary); }
+.breadcrumb { margin-bottom: 8px; } .breadcrumb a { color: var(--link); text-decoration: none; font-size: 0.9rem; } .breadcrumb a:hover { text-decoration: underline; }
+.winner-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 16px 0; display: flex; align-items: flex-start; gap: 16px; } .winner-card .trophy { font-size: 2.2rem; flex-shrink: 0; } .winner-card h3 { margin: 0 0 4px; font-size: 1.25rem; } .winner-card .detail { font-size: 0.9rem; color: var(--text-secondary); }
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 16px 0; } .info-grid .cell { background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; } .info-grid .cell .label { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; } .info-grid .cell .value { font-size: 1.15rem; font-weight: 700; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0 28px; font-size: 0.92rem; } th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); } th { background: var(--surface-1); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-secondary); position: sticky; top: 48px; } tr:hover td { background: var(--surface-1); } .num { text-align: center; font-variant-numeric: tabular-nums; } .score-cell { font-weight: 700; font-size: 1.05rem; }
+.note { font-size: 0.85rem; color: var(--text-muted); font-style: italic; } .tag { display: inline-block; font-size: 0.75rem; padding: 2px 8px; border-radius: 999px; font-weight: 600; margin-right: 4px; } .tag-perfect { background: color-mix(in oklab, var(--status-good) 18%, transparent); color: var(--status-good); } .tag-good { background: color-mix(in oklab, var(--link) 15%, transparent); color: var(--link); } .tag-warn { background: color-mix(in oklab, var(--status-warning) 18%, transparent); color: var(--status-warning); } .tag-fail { background: color-mix(in oklab, var(--status-critical) 15%, transparent); color: var(--status-critical); }
+code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-size: 0.88em; } pre { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; overflow-x: auto; font-size: 0.85rem; } a { color: var(--link); } footer { padding: 32px 0 60px; color: var(--text-muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="fixed-controls">
+  <div class="lang-toggle-group"><button class="lang-toggle active" id="langNl" aria-label="Nederlands">NL</button><button class="lang-toggle" id="langEn" aria-label="English">EN</button></div>
+  <button class="theme-toggle" id="themeToggle" data-i18n-attr="aria-label:themeAria">🌓</button>
+</div>
+<div class="wrap">
+  <header class="hero">
+    <div class="breadcrumb"><a href="../" data-i18n="breadcrumb">← Dashboard</a></div>
+    <h1 data-i18n="pageHeading">📚 Kennis</h1>
+    <p class="lead" data-i18n="leadText">14 vragen over scheikunde, geschiedenis, geografie, biologie, wiskunde, technologie, literatuur, astronomie, economie, muziek en natuurkunde — plus 2 kennis+redeneer-combinaties.</p>
+  </header>
+  <nav class="test-nav"><div class="wrap">
+    <a href="../" class="home" data-i18n="navOverview">📊 Overzicht</a>
+    <span style="width:1px;height:18px;background:var(--border);margin:0 4px;flex-shrink:0"></span>
+    <a href="speed.html" data-i18n="navSpeed">⚡ Snelheid</a> <a href="hard.html" data-i18n="navHard">🧩 Zware taken</a>
+    <a href="longctx.html" data-i18n="navLongctx">📄 Long-context</a> <a href="reliability.html" data-i18n="navReliability">🔁 Betrouwbaarheid</a>
+    <a href="tools.html" data-i18n="navTools">🔧 Tools</a>
+    <a href="knowledge.html" style="background:var(--surface-2);border-color:var(--border)" data-i18n="navKnowledge">📚 Kennis</a>
+    <a href="math.html" data-i18n="navMath">🧮 Rekenen</a>
+  </div></nav>
+  <section id="what">
+    <h2 data-i18n="whatTitle">Wat test dit?</h2>
+    <p data-i18n="whatText1">12 pure kennisvragen uit 12 verschillende domeinen plus 2 "combo"-vragen die kennis combineren met redeneren. Dit test de breedte en accuraatheid van de in het model opgeslagen kennis.</p>
+    <div class="info-grid">
+      <div class="cell"><div class="label" data-i18n="infoQuestions">Vragen</div><div class="value">14</div></div>
+      <div class="cell"><div class="label" data-i18n="infoDomain">Domeinen</div><div class="value">12</div></div>
+      <div class="cell"><div class="label" data-i18n="infoTemp">Temperature</div><div class="value">0.2</div></div>
+      <div class="cell"><div class="label" data-i18n="infoThinking">Thinking</div><div class="value" data-i18n="infoThinkingVal">UIT (12) / AAN (2)</div></div>
+    </div>
+  </section>
+  <section id="winner">
+    <h2 data-i18n="winnerTitle">🏆 Winnaars</h2>
+    <div class="winner-card"><span class="trophy">🏆</span><div>
+      <h3 data-i18n="winnerHeading">GPT-OSS-120B en Gemma 4 31B scoren 14/14</h3>
+      <p class="detail" data-i18n="winnerDetail1">Beide modellen hebben perfecte feitelijke kennis over 12 domeinen. De meeste andere modellen scoren 11-13/14 — de combo-vragen zijn de grootste uitdaging.</p>
+      <p class="detail" data-i18n-html="winnerDetail2"><strong>Gemma 4:</strong> 12/14 zonder thinking. Met thinking AAN voor alleen de 2 combo-vragen stijgt de score naar 14/14 — het denken helpt specifiek bij het combineren van twee feiten (bijv. leeftijd berekenen uit geboortejaar en datum).</p>
+    </div></div>
+  </section>
+  <section id="reveals">
+    <h2 data-i18n="revealsTitle">Wat onthult deze test?</h2>
+    <h3 data-i18n="revealsComboTitle">Combo-vragen discrimineren het sterkst</h3>
+    <p data-i18n="revealsComboText">De twee combo-vragen (Franse koning in 1789 + aantal regeerjaren; leeftijd Napoleon bij Waterloo) zijn de grootste filters. Modellen weten beide losse feiten vaak wel, maar het combineren ervan vereist een extra redeneerstap die zonder thinking vaak mislukt.</p>
+    <h3 data-i18n="revealsDomainTitle">Kennis is breed maar niet uniform</h3>
+    <p data-i18n="revealsDomainText">Modellen scoren het best op scheikunde, geschiedenis, en astronomie. Literatuur en muziek zijn de zwakste domeinen — meerdere modellen missen de auteur van "De ontdekking van de hemel" en het aantal delen van Beethovens 9e.</p>
+  </section>
+  <section id="all-models">
+    <h2 data-i18n="resultsTitle">Alle modellen</h2>
+    <table id="knowledgeTable">
+      <thead><tr><th data-i18n="thModel">Model</th><th class="num" data-i18n="thScore">Score</th><th data-i18n="thDetails">Details</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+  <section id="methodology">
+    <h2 data-i18n="methTitle">Methodologie</h2>
+    <p data-i18n="methText1">14 vragen in één sessie. Scoring via keyword-matching (case-insensitive). Combo-vragen accepteren alternatieve antwoorden (45/46 voor Napoleon).</p>
+    <pre>python3 scripts/bench_knowledge.py &lt;port&gt; &lt;model_name&gt;</pre>
+    <p data-i18n="methText2">Gebruik <code>--nothink</code> voor de 12 pure kennisvragen. De 2 combo-vragen scoren het best met thinking AAN.</p>
+  </section>
+  <footer><p>C4130 LLM Benchmark Suite — <a href="https://github.com/sayfjawad/c4130-llm-benchmarks">GitHub</a> — <span data-i18n="footerDashboard">Dashboard:</span> <a href="https://c4130.multicode.nl">c4130.multicode.nl</a></p></footer>
+</div>
+<script>
+const I18N = {
+  nl: {
+    pageTitle: "📚 Kennis — C4130 LLM Benchmarks", pageHeading: "📚 Kennis",
+    leadText: "14 vragen over scheikunde, geschiedenis, geografie, biologie, wiskunde, technologie, literatuur, astronomie, economie, muziek en natuurkunde — plus 2 kennis+redeneer-combinaties.",
+    breadcrumb: "← Dashboard", navOverview: "📊 Overzicht", navSpeed: "⚡ Snelheid", navHard: "🧩 Zware taken", navLongctx: "📄 Long-context", navReliability: "🔁 Betrouwbaarheid", navTools: "🔧 Tools", navKnowledge: "📚 Kennis", navMath: "🧮 Rekenen",
+    whatTitle: "Wat test dit?", whatText1: "12 pure kennisvragen uit 12 verschillende domeinen plus 2 \"combo\"-vragen die kennis combineren met redeneren. Dit test de breedte en accuraatheid van de in het model opgeslagen kennis.",
+    infoQuestions: "Vragen", infoDomain: "Domeinen", infoTemp: "Temperature", infoThinking: "Thinking", infoThinkingVal: "UIT (12) / AAN (2)",
+    winnerTitle: "🏆 Winnaars", winnerHeading: "GPT-OSS-120B en Gemma 4 31B scoren 14/14",
+    winnerDetail1: "Beide modellen hebben perfecte feitelijke kennis over 12 domeinen. De meeste andere modellen scoren 11-13/14 — de combo-vragen zijn de grootste uitdaging.",
+    winnerDetail2: "<strong>Gemma 4:</strong> 12/14 zonder thinking. Met thinking AAN voor alleen de 2 combo-vragen stijgt de score naar 14/14 — het denken helpt specifiek bij het combineren van twee feiten (bijv. leeftijd berekenen uit geboortejaar en datum).",
+    revealsTitle: "Wat onthult deze test?",
+    revealsComboTitle: "Combo-vragen discrimineren het sterkst",
+    revealsComboText: "De twee combo-vragen (Franse koning in 1789 + aantal regeerjaren; leeftijd Napoleon bij Waterloo) zijn de grootste filters. Modellen weten beide losse feiten vaak wel, maar het combineren ervan vereist een extra redeneerstap die zonder thinking vaak mislukt.",
+    revealsDomainTitle: "Kennis is breed maar niet uniform",
+    revealsDomainText: "Modellen scoren het best op scheikunde, geschiedenis, en astronomie. Literatuur en muziek zijn de zwakste domeinen — meerdere modellen missen de auteur van \"De ontdekking van de hemel\" en het aantal delen van Beethovens 9e.",
+    resultsTitle: "Alle modellen", thModel: "Model", thScore: "Score", thDetails: "Details",
+    methTitle: "Methodologie",
+    methText1: "14 vragen in één sessie. Scoring via keyword-matching (case-insensitive). Combo-vragen accepteren alternatieve antwoorden (45/46 voor Napoleon).",
+    methText2: "Gebruik <code>--nothink</code> voor de 12 pure kennisvragen. De 2 combo-vragen scoren het best met thinking AAN.",
+    footerDashboard: "Dashboard:", themeAria: "Wissel donker/licht thema",
+    allCorrect: "Perfecte kennis + combo's", loadError: "Data laden mislukt: ",
+  },
+  en: {
+    pageTitle: "📚 Knowledge — C4130 LLM Benchmarks", pageHeading: "📚 Knowledge",
+    leadText: "14 questions across chemistry, history, geography, biology, mathematics, technology, literature, astronomy, economics, music, and physics — plus 2 knowledge+reasoning combinations.",
+    breadcrumb: "← Dashboard", navOverview: "📊 Overview", navSpeed: "⚡ Speed", navHard: "🧩 Hard Tasks", navLongctx: "📄 Long-Context", navReliability: "🔁 Reliability", navTools: "🔧 Tools", navKnowledge: "📚 Knowledge", navMath: "🧮 Math",
+    whatTitle: "What Does This Test?", whatText1: "12 pure factual questions from 12 different domains plus 2 \"combo\" questions that combine knowledge with reasoning. This tests the breadth and accuracy of the model's stored knowledge.",
+    infoQuestions: "Questions", infoDomain: "Domains", infoTemp: "Temperature", infoThinking: "Thinking", infoThinkingVal: "OFF (12) / ON (2)",
+    winnerTitle: "🏆 Winners", winnerHeading: "GPT-OSS-120B and Gemma 4 31B score 14/14",
+    winnerDetail1: "Both models have perfect factual knowledge across 12 domains. Most other models score 11-13/14 — the combo questions are the biggest challenge.",
+    winnerDetail2: "<strong>Gemma 4:</strong> 12/14 without thinking. With thinking ON for only the 2 combo questions, the score rises to 14/14 — thinking helps specifically with combining two facts (e.g., calculating age from birth year and date).",
+    revealsTitle: "What This Test Reveals",
+    revealsComboTitle: "Combo Questions Discriminate Most Strongly",
+    revealsComboText: "The two combo questions (French king in 1789 + years of reign; Napoleon's age at Waterloo) are the biggest filters. Models often know both individual facts, but combining them requires an extra reasoning step that often fails without thinking.",
+    revealsDomainTitle: "Knowledge Is Broad but Not Uniform",
+    revealsDomainText: "Models score best on chemistry, history, and astronomy. Literature and music are the weakest domains — multiple models miss the author of \"The Discovery of Heaven\" and the number of movements in Beethoven's 9th.",
+    resultsTitle: "All Models", thModel: "Model", thScore: "Score", thDetails: "Details",
+    methTitle: "Methodology",
+    methText1: "14 questions in one session. Scoring via keyword matching (case-insensitive). Combo questions accept alternative answers (45/46 for Napoleon).",
+    methText2: "Use <code>--nothink</code> for the 12 pure knowledge questions. The 2 combo questions score best with thinking ON.",
+    footerDashboard: "Dashboard:", themeAria: "Toggle dark/light theme",
+    allCorrect: "Perfect knowledge + combos", loadError: "Data loading failed: ",
+  }
+};
+let L = 'nl'; function t(key) { return (I18N[L] && I18N[L][key] != null) ? I18N[L][key] : key; }
+function updateLangButtons() { document.getElementById('langNl').classList.toggle('active', L === 'nl'); document.getElementById('langEn').classList.toggle('active', L === 'en'); }
+function applyLang() {
+  document.documentElement.lang = L;
+  document.querySelectorAll('[data-i18n]').forEach(el => { const k = el.getAttribute('data-i18n'); if (I18N[L][k] != null && !el.hasAttribute('data-i18n-html')) el.textContent = I18N[L][k]; });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { const k = el.getAttribute('data-i18n-html'); if (I18N[L][k] != null) el.innerHTML = I18N[L][k]; });
+  document.querySelectorAll('[data-i18n-attr]').forEach(el => { const spec = el.getAttribute('data-i18n-attr'); const [attr, key] = spec.split(':'); if (I18N[L][key] != null) el.setAttribute(attr, I18N[L][key]); });
+  updateLangButtons(); renderTable();
+}
+function setLang(lang) { if (L === lang) return; L = lang; localStorage.setItem('c4130-lang', L); applyLang(); }
+const toggleBtn = document.getElementById('themeToggle');
+toggleBtn.addEventListener('click', () => { const root = document.documentElement; const current = root.getAttribute('data-theme'); root.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark'); localStorage.setItem('c4130-theme', root.getAttribute('data-theme')); });
+(function initTheme() { const saved = localStorage.getItem('c4130-theme'); if (saved) document.documentElement.setAttribute('data-theme', saved); })();
+document.getElementById('langNl').addEventListener('click', () => setLang('nl'));
+document.getElementById('langEn').addEventListener('click', () => setLang('en'));
+let cachedData = null;
+function renderTable() {
+  if (!cachedData) return; const data = cachedData;
+  const tbody = document.querySelector('#knowledgeTable tbody'); if (!tbody) return; tbody.innerHTML = '';
+  const tested = data.models.filter(m => m.scores.knowledge && m.scores.knowledge.n != null);
+  tested.sort((a,b) => b.scores.knowledge.n - a.scores.knowledge.n || a.name.localeCompare(b.name));
+  tested.forEach(m => { const s = m.scores.knowledge; const perfect = s.n === 14; let color = perfect ? 'var(--status-good)' : s.n >= 11 ? 'var(--link)' : s.n >= 7 ? 'var(--status-warning)' : 'var(--status-critical)';
+    tbody.insertAdjacentHTML('beforeend', '<tr><td><strong>'+m.name+'</strong><br><span class="note">'+(m.publisher||'')+' · '+(m.quant||'')+'</span></td><td class="num"><span class="score-cell" style="color:'+color+'">'+s.n+' / '+s.of+'</span></td><td><span class="note">'+(s.note||(perfect?t('allCorrect'):''))+'</span></td></tr>'); });
+}
+fetch('../data/results.json').then(r => r.json()).then(data => { cachedData = data; const savedLang = localStorage.getItem('c4130-lang'); if (savedLang && (savedLang === 'nl' || savedLang === 'en')) L = savedLang; applyLang(); }).catch(err => { document.querySelector('#knowledgeTable tbody').innerHTML = '<tr><td colspan="3">'+t('loadError')+err+'</td></tr>'; });
+</script>
+</body>
+</html>

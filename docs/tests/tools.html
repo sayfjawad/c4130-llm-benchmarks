@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="pageTitle">🔧 Tools — C4130 LLM Benchmarks</title>
+<style>
+:root { color-scheme: light; --surface-0: #ffffff; --surface-1: #fcfcfb; --surface-2: #f3f2ef; --border: #e4e2dc; --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #79776f; --series-1: #2a78d6; --series-2: #eb6834; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #d03b3b; --link: #1c5cab; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; --surface-0: #121211; --surface-1: #1a1a19; --surface-2: #232320; --border: #34342f; --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #918f84; --series-1: #3987e5; --series-2: #d95926; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #e66767; --link: #86b6ef; } }
+[data-theme="dark"] { color-scheme: dark; --surface-0: #121211; --surface-1: #1a1a19; --surface-2: #232320; --border: #34342f; --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #918f84; --series-1: #3987e5; --series-2: #d95926; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #e66767; --link: #86b6ef; }
+* { box-sizing: border-box; } body { margin: 0; background: var(--surface-0); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.55; } .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; } h1 { font-size: 2rem; margin-bottom: 6px; } h2 { font-size: 1.5rem; margin: 36px 0 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); } h3 { font-size: 1.15rem; margin: 20px 0 8px; } p, li { margin-bottom: 10px; color: var(--text-secondary); } header.hero p.lead { font-size: 1.15rem; color: var(--text-secondary); max-width: 680px; margin: 0 0 20px; }
+.fixed-controls { position: fixed; top: 16px; right: 16px; z-index: 10; display: flex; gap: 8px; align-items: center; } .theme-toggle { background: var(--surface-2); border: 1px solid var(--border); color: var(--text-primary); border-radius: 999px; padding: 8px 14px; cursor: pointer; font-size: 0.85rem; } .lang-toggle-group { display: flex; gap: 2px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 2px; } .lang-toggle { background: transparent; border: none; color: var(--text-muted); border-radius: 999px; padding: 6px 10px; cursor: pointer; font-size: 0.78rem; font-weight: 600; line-height: 1; } .lang-toggle.active { background: var(--surface-0); color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+header.hero { padding: 56px 0 40px; border-bottom: 1px solid var(--border); } header.hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0 0 12px; }
+.test-nav { position: sticky; top: 0; z-index: 100; background: var(--surface-0); border-bottom: 1px solid var(--border); padding: 10px 0; margin: 0 -20px; overflow-x: auto; -webkit-overflow-scrolling: touch; } .test-nav .wrap { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; } .test-nav a { text-decoration: none; color: var(--text-secondary); font-size: 0.82rem; padding: 5px 12px; border-radius: 999px; transition: all 0.15s; border: 1px solid transparent; } .test-nav a:hover { color: var(--text-primary); background: var(--surface-2); border-color: var(--border); } .test-nav a.home { font-weight: 700; color: var(--text-primary); }
+.breadcrumb { margin-bottom: 8px; } .breadcrumb a { color: var(--link); text-decoration: none; font-size: 0.9rem; } .breadcrumb a:hover { text-decoration: underline; }
+.winner-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 16px 0; display: flex; align-items: flex-start; gap: 16px; } .winner-card .trophy { font-size: 2.2rem; flex-shrink: 0; } .winner-card h3 { margin: 0 0 4px; font-size: 1.25rem; } .winner-card .detail { font-size: 0.9rem; color: var(--text-secondary); }
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 16px 0; } .info-grid .cell { background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; } .info-grid .cell .label { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; } .info-grid .cell .value { font-size: 1.15rem; font-weight: 700; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0 28px; font-size: 0.92rem; } th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); } th { background: var(--surface-1); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-secondary); position: sticky; top: 48px; } tr:hover td { background: var(--surface-1); } .num { text-align: center; font-variant-numeric: tabular-nums; } .score-cell { font-weight: 700; font-size: 1.05rem; }
+.note { font-size: 0.85rem; color: var(--text-muted); font-style: italic; } .tag { display: inline-block; font-size: 0.75rem; padding: 2px 8px; border-radius: 999px; font-weight: 600; margin-right: 4px; } .tag-perfect { background: color-mix(in oklab, var(--status-good) 18%, transparent); color: var(--status-good); } .tag-good { background: color-mix(in oklab, var(--link) 15%, transparent); color: var(--link); } .tag-warn { background: color-mix(in oklab, var(--status-warning) 18%, transparent); color: var(--status-warning); } .tag-fail { background: color-mix(in oklab, var(--status-critical) 15%, transparent); color: var(--status-critical); }
+code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-size: 0.88em; } pre { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; overflow-x: auto; font-size: 0.85rem; } a { color: var(--link); } footer { padding: 32px 0 60px; color: var(--text-muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="fixed-controls">
+  <div class="lang-toggle-group"><button class="lang-toggle active" id="langNl" aria-label="Nederlands">NL</button><button class="lang-toggle" id="langEn" aria-label="English">EN</button></div>
+  <button class="theme-toggle" id="themeToggle" data-i18n-attr="aria-label:themeAria">🌓</button>
+</div>
+<div class="wrap">
+  <header class="hero">
+    <div class="breadcrumb"><a href="../" data-i18n="breadcrumb">← Dashboard</a></div>
+    <h1 data-i18n="pageHeading">🔧 Tool-gebruik</h1>
+    <p class="lead" data-i18n="leadText">Kan het model externe functies correct aanroepen? Vier scenario's testen enkelvoudig gebruik, ketens, vermijding, en conditionele multi-tool logica.</p>
+  </header>
+  <nav class="test-nav"><div class="wrap">
+    <a href="../" class="home" data-i18n="navOverview">📊 Overzicht</a>
+    <span style="width:1px;height:18px;background:var(--border);margin:0 4px;flex-shrink:0"></span>
+    <a href="speed.html" data-i18n="navSpeed">⚡ Snelheid</a> <a href="hard.html" data-i18n="navHard">🧩 Zware taken</a>
+    <a href="longctx.html" data-i18n="navLongctx">📄 Long-context</a> <a href="reliability.html" data-i18n="navReliability">🔁 Betrouwbaarheid</a>
+    <a href="tools.html" style="background:var(--surface-2);border-color:var(--border)" data-i18n="navTools">🔧 Tools</a>
+    <a href="knowledge.html" data-i18n="navKnowledge">📚 Kennis</a> <a href="math.html" data-i18n="navMath">🧮 Rekenen</a>
+  </div></nav>
+  <section id="what">
+    <h2 data-i18n="whatTitle">Wat test dit?</h2>
+    <p data-i18n="whatText1">Vier scenario's die oplopen in complexiteit, met 3 mock-tools: <code>get_weather</code>, <code>calculate</code>, en <code>search_klantendatabase</code>. Het model moet tools correct selecteren, parametriseren, en in de juiste volgorde aanroepen.</p>
+    <div class="info-grid">
+      <div class="cell"><div class="label" data-i18n="infoScenarios">Scenario's</div><div class="value">4</div></div>
+      <div class="cell"><div class="label" data-i18n="infoTools">Mock tools</div><div class="value">3</div></div>
+      <div class="cell"><div class="label" data-i18n="infoTemp">Temperature</div><div class="value">0.1</div></div>
+      <div class="cell"><div class="label" data-i18n="infoThinking">Thinking</div><div class="value" data-i18n="infoThinkingVal">UIT vereist</div></div>
+    </div>
+  </section>
+  <section id="winner">
+    <h2 data-i18n="winnerTitle">🏆 Winnaars</h2>
+    <div class="winner-card"><span class="trophy">🏆</span><div>
+      <h3 data-i18n="winnerHeading">4 modellen scoren 4/4</h3>
+      <p class="detail" data-i18n="winnerDetail1">GPT-OSS-120B, Nemotron-3.5-Lightning, Qwen3.6-35B, en Gemma 4 31B voltooien alle vier scenario's correct.</p>
+      <p class="detail" data-i18n-html="winnerDetail2"><strong>Vereist:</strong> Server moet gestart zijn met <code>--jinja</code> flag voor correcte chat-template verwerking van tool-calls. Zonder jinja werkt tool-calling niet bij de meeste modellen.</p>
+    </div></div>
+  </section>
+  <section id="reveals">
+    <h2 data-i18n="revealsTitle">Wat onthult deze test?</h2>
+    <h3 data-i18n="revealsJinjaTitle">--jinja is geen optie, het is verplicht</h3>
+    <p data-i18n="revealsJinjaText">Zonder de <code>--jinja</code> server-flag faalt tool-calling bij vrijwel alle modellen. Dit is een veelvoorkomende valkuil in productie: tool-calling werkt perfect in de documentatie, maar in de praktijk ontbreekt de flag en faalt alles zonder duidelijke foutmelding.</p>
+  </section>
+  <section id="all-models">
+    <h2 data-i18n="resultsTitle">Alle modellen</h2>
+    <table id="toolsTable">
+      <thead><tr><th data-i18n="thModel">Model</th><th class="num" data-i18n="thScore">Score</th><th data-i18n="thDetails">Details</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <p class="note" data-i18n="resultsNote">Alleen modellen die de tools-test hebben ondergaan (vele vielen af omdat tool-calling met llama.cpp specifieke chat-template support vereist).</p>
+  </section>
+  <section id="methodology">
+    <h2 data-i18n="methTitle">Methodologie</h2>
+    <p data-i18n="methText1">4 scenario's: enkelvoudige tool-call, geketende calls (weer → rekenen), irrelevante tool-vermijding (Parijs-vraag), en conditionele multi-tool logica (klant opzoeken → conditioneel weer). Scoring valideert tool-call traces op juiste functienaam, parameters, en volgorde.</p>
+    <pre>python3 scripts/bench_tools.py &lt;port&gt; &lt;model_name&gt;</pre>
+    <p data-i18n-html="methText2">Server starten met: <code>llama-server ... --jinja</code></p>
+  </section>
+  <footer><p>C4130 LLM Benchmark Suite — <a href="https://github.com/sayfjawad/c4130-llm-benchmarks">GitHub</a> — <span data-i18n="footerDashboard">Dashboard:</span> <a href="https://c4130.multicode.nl">c4130.multicode.nl</a></p></footer>
+</div>
+<script>
+const I18N = {
+  nl: {
+    pageTitle: "🔧 Tools — C4130 LLM Benchmarks", pageHeading: "🔧 Tool-gebruik",
+    leadText: "Kan het model externe functies correct aanroepen? Vier scenario's testen enkelvoudig gebruik, ketens, vermijding, en conditionele multi-tool logica.",
+    breadcrumb: "← Dashboard", navOverview: "📊 Overzicht", navSpeed: "⚡ Snelheid", navHard: "🧩 Zware taken", navLongctx: "📄 Long-context", navReliability: "🔁 Betrouwbaarheid", navTools: "🔧 Tools", navKnowledge: "📚 Kennis", navMath: "🧮 Rekenen",
+    whatTitle: "Wat test dit?", whatText1: "Vier scenario's die oplopen in complexiteit, met 3 mock-tools: <code>get_weather</code>, <code>calculate</code>, en <code>search_klantendatabase</code>. Het model moet tools correct selecteren, parametriseren, en in de juiste volgorde aanroepen.",
+    infoScenarios: "Scenario's", infoTools: "Mock tools", infoTemp: "Temperature", infoThinking: "Thinking", infoThinkingVal: "UIT vereist",
+    winnerTitle: "🏆 Winnaars", winnerHeading: "4 modellen scoren 4/4",
+    winnerDetail1: "GPT-OSS-120B, Nemotron-3.5-Lightning, Qwen3.6-35B, en Gemma 4 31B voltooien alle vier scenario's correct.",
+    winnerDetail2: "<strong>Vereist:</strong> Server moet gestart zijn met <code>--jinja</code> flag voor correcte chat-template verwerking van tool-calls. Zonder jinja werkt tool-calling niet bij de meeste modellen.",
+    revealsTitle: "Wat onthult deze test?",
+    revealsJinjaTitle: "--jinja is geen optie, het is verplicht",
+    revealsJinjaText: "Zonder de <code>--jinja</code> server-flag faalt tool-calling bij vrijwel alle modellen. Dit is een veelvoorkomende valkuil in productie: tool-calling werkt perfect in de documentatie, maar in de praktijk ontbreekt de flag en faalt alles zonder duidelijke foutmelding.",
+    resultsTitle: "Alle modellen", thModel: "Model", thScore: "Score", thDetails: "Details",
+    resultsNote: "Alleen modellen die de tools-test hebben ondergaan (vele vielen af omdat tool-calling met llama.cpp specifieke chat-template support vereist).",
+    methTitle: "Methodologie",
+    methText1: "4 scenario's: enkelvoudige tool-call, geketende calls (weer → rekenen), irrelevante tool-vermijding (Parijs-vraag), en conditionele multi-tool logica (klant opzoeken → conditioneel weer). Scoring valideert tool-call traces op juiste functienaam, parameters, en volgorde.",
+    methText2: "Server starten met: <code>llama-server ... --jinja</code>",
+    footerDashboard: "Dashboard:", themeAria: "Wissel donker/licht thema",
+    allCorrect: "Alle 4 tool-scenario's correct", untestedLabel: "niet getest",
+    modelDropped: "Model afgevallen vóór tools-tests", loadError: "Data laden mislukt: ",
+  },
+  en: {
+    pageTitle: "🔧 Tools — C4130 LLM Benchmarks", pageHeading: "🔧 Tool Use",
+    leadText: "Can the model correctly invoke external functions? Four scenarios test single use, chains, avoidance, and conditional multi-tool logic.",
+    breadcrumb: "← Dashboard", navOverview: "📊 Overview", navSpeed: "⚡ Speed", navHard: "🧩 Hard Tasks", navLongctx: "📄 Long-Context", navReliability: "🔁 Reliability", navTools: "🔧 Tools", navKnowledge: "📚 Knowledge", navMath: "🧮 Math",
+    whatTitle: "What Does This Test?", whatText1: "Four scenarios of increasing complexity, with 3 mock tools: <code>get_weather</code>, <code>calculate</code>, and <code>search_klantendatabase</code>. The model must correctly select, parameterize, and sequence tool calls.",
+    infoScenarios: "Scenarios", infoTools: "Mock Tools", infoTemp: "Temperature", infoThinking: "Thinking", infoThinkingVal: "OFF required",
+    winnerTitle: "🏆 Winners", winnerHeading: "4 models score 4/4",
+    winnerDetail1: "GPT-OSS-120B, Nemotron-3.5-Lightning, Qwen3.6-35B, and Gemma 4 31B complete all four scenarios correctly.",
+    winnerDetail2: "<strong>Required:</strong> Server must be started with <code>--jinja</code> flag for correct chat template processing of tool calls. Without jinja, tool-calling fails for most models.",
+    revealsTitle: "What This Test Reveals",
+    revealsJinjaTitle: "--jinja Is Not Optional, It's Mandatory",
+    revealsJinjaText: "Without the <code>--jinja</code> server flag, tool-calling fails for virtually all models. This is a common production pitfall: tool-calling works perfectly in the docs, but in practice the flag is missing and everything fails without a clear error message.",
+    resultsTitle: "All Models", thModel: "Model", thScore: "Score", thDetails: "Details",
+    resultsNote: "Only models that underwent the tools test (many were dropped because tool-calling with llama.cpp requires specific chat template support).",
+    methTitle: "Methodology",
+    methText1: "4 scenarios: single tool call, chained calls (weather → calculation), irrelevant tool avoidance (Paris question), and conditional multi-tool logic (lookup customer → conditional weather). Scoring validates tool-call traces for correct function name, parameters, and order.",
+    methText2: "Start server with: <code>llama-server ... --jinja</code>",
+    footerDashboard: "Dashboard:", themeAria: "Toggle dark/light theme",
+    allCorrect: "All 4 tool scenarios correct", untestedLabel: "not tested",
+    modelDropped: "Model dropped before tools tests", loadError: "Data loading failed: ",
+  }
+};
+let L = 'nl'; function t(key) { return (I18N[L] && I18N[L][key] != null) ? I18N[L][key] : key; }
+function updateLangButtons() { document.getElementById('langNl').classList.toggle('active', L === 'nl'); document.getElementById('langEn').classList.toggle('active', L === 'en'); }
+function applyLang() {
+  document.documentElement.lang = L;
+  document.querySelectorAll('[data-i18n]').forEach(el => { const k = el.getAttribute('data-i18n'); if (I18N[L][k] != null && !el.hasAttribute('data-i18n-html')) el.textContent = I18N[L][k]; });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { const k = el.getAttribute('data-i18n-html'); if (I18N[L][k] != null) el.innerHTML = I18N[L][k]; });
+  document.querySelectorAll('[data-i18n-attr]').forEach(el => { const spec = el.getAttribute('data-i18n-attr'); const [attr, key] = spec.split(':'); if (I18N[L][key] != null) el.setAttribute(attr, I18N[L][key]); });
+  updateLangButtons(); renderTable();
+}
+function setLang(lang) { if (L === lang) return; L = lang; localStorage.setItem('c4130-lang', L); applyLang(); }
+const toggleBtn = document.getElementById('themeToggle');
+toggleBtn.addEventListener('click', () => { const root = document.documentElement; const current = root.getAttribute('data-theme'); root.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark'); localStorage.setItem('c4130-theme', root.getAttribute('data-theme')); });
+(function initTheme() { const saved = localStorage.getItem('c4130-theme'); if (saved) document.documentElement.setAttribute('data-theme', saved); })();
+document.getElementById('langNl').addEventListener('click', () => setLang('nl'));
+document.getElementById('langEn').addEventListener('click', () => setLang('en'));
+let cachedData = null;
+function renderTable() {
+  if (!cachedData) return; const data = cachedData;
+  const tbody = document.querySelector('#toolsTable tbody'); if (!tbody) return; tbody.innerHTML = '';
+  const tested = data.models.filter(m => m.scores.tools && m.scores.tools.n != null);
+  tested.sort((a,b) => b.scores.tools.n - a.scores.tools.n || a.name.localeCompare(b.name));
+  tested.forEach(m => { const s = m.scores.tools; const perfect = s.n === 4; let color = perfect ? 'var(--status-good)' : s.n >= 3 ? 'var(--link)' : s.n >= 2 ? 'var(--status-warning)' : 'var(--status-critical)';
+    tbody.insertAdjacentHTML('beforeend', '<tr><td><strong>'+m.name+'</strong><br><span class="note">'+(m.publisher||'')+' · '+(m.quant||'')+'</span></td><td class="num"><span class="score-cell" style="color:'+color+'">'+s.n+' / '+s.of+'</span></td><td><span class="note">'+(s.note||(perfect?t('allCorrect'):''))+'</span></td></tr>'); });
+  const untested = data.models.filter(m => m.scores.tools && m.scores.tools.n == null && m.scores.tools.of != null);
+  untested.sort((a,b) => a.name.localeCompare(b.name));
+  untested.forEach(m => { const s = m.scores.tools;
+    tbody.insertAdjacentHTML('beforeend', '<tr style="opacity:0.5"><td><strong>'+m.name+'</strong><br><span class="note">'+(m.publisher||'')+'</span></td><td class="num"><span class="note">'+t('untestedLabel')+'</span></td><td><span class="note">'+(s.note||t('modelDropped'))+'</span></td></tr>'); });
+}
+fetch('../data/results.json').then(r => r.json()).then(data => { cachedData = data; const savedLang = localStorage.getItem('c4130-lang'); if (savedLang && (savedLang === 'nl' || savedLang === 'en')) L = savedLang; applyLang(); }).catch(err => { document.querySelector('#toolsTable tbody').innerHTML = '<tr><td colspan="3">'+t('loadError')+err+'</td></tr>'; });
+</script>
+</body>
+</html>
