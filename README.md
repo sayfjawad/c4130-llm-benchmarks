@@ -8,7 +8,7 @@ Het korte antwoord: **ja voor 128k, en alleen met hybride Mamba-MoE-architectuur
 
 [![Pages Build](https://github.com/sayfjawad/c4130-llm-benchmarks/actions/workflows/deploy.yml/badge.svg)](https://github.com/sayfjawad/c4130-llm-benchmarks/actions/workflows/deploy.yml)
 ![License](https://img.shields.io/badge/license-MIT-blue)
-![Models tested](https://img.shields.io/badge/modellen%20getest-7-informational)
+![Models tested](https://img.shields.io/badge/modellen%20getest-8-informational)
 
 ---
 

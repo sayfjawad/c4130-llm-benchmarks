@@ -1,0 +1,10 @@
+# NOTE: NOT llama-bench. This model was served on vLLM 0.9.2 (V0 engine, sm_70),
+# tensor-parallel-size=4, FP16, xformers backend, --enforce-eager (no CUDA graphs),
+# on the c4140 (4x Tesla V100-SXM2-32GB, NVLink). Numbers measured via the OpenAI
+# streaming API (single concurrent request), not llama-bench, and are therefore NOT
+# directly comparable to the llama.cpp rows (different runtime + real 4-GPU tensor
+# parallelism vs llama.cpp layer-split). Decode is single-stream; prefill is TP-parallel.
+# Concurrency scaling (the real vLLM win): 10 users -> ~236 tok/s aggregate, per-user flat ~24 tok/s.
+|            model             |   test   |         t/s |
+| Qwen2.5-32B vLLM-TP4 (FP16)  |    pp512 |     4202.00 |
+| Qwen2.5-32B vLLM-TP4 (FP16)  |    tg128 |       27.20 |

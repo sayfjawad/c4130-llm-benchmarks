@@ -77,6 +77,14 @@ METADATA = {
         "verdict": "BF16 zonder hardware-support op Volta: 15 t/s, géén winst over Q8_0.",
         "notes": "BF16 is geëmuleerd op sm_70 (geen BF16-hardware) → trager dan Q8_0. Bewijs dat BF16 op V100 geen zin heeft.",
     },
+    "qwen2.5-32b-vllm": {
+        "name": "Qwen2.5-32B-Instruct (vLLM TP4)", "publisher": "Alibaba",
+        "hf_repo": "Qwen/Qwen2.5-32B-Instruct", "quant": "FP16 (vLLM)",
+        "params_total_b": 32, "params_active_b": 32, "architecture": "Dense — vLLM tensor-parallel ×4",
+        "disk_gb": 62.0, "ctx_cap": 32768,
+        "verdict": "ANDERE runtime: vLLM 0.9.2 op sm_70 met échte 4-GPU tensor-parallelism — de multi-user winnaar.",
+        "notes": "36/43 (tools 4/4 — vLLM's hermes-parser verslaat llama.cpp hier). Draait op c4140 (4× V100), NIET llama.cpp: kwaliteitsscores zijn vergelijkbaar (zelfde prompts+scoring), snelheid NIET (TP-4 vs layer-split). Dense 32B FP16, 32k native (geen YaRN) → sweep clamt bij 32k, net als Qwen2.5-72B. tg128=27 t/s single-stream (--enforce-eager; CUDA-graphs zouden dit verhogen), prefill ~4200 t/s (TP parallelt prefill). Échte concurrency-winst: 10 gelijktijdige users → ~236 tok/s aggregaat, per-user vlak ~24 tok/s, alle 4 GPU's 85-95% — waar llama.cpp layer-split plateaut op ~1 GPU.",
+    },
 }
 
 # Score-key per raw-bestand-suffix (identiek aan aggregate_results.py).

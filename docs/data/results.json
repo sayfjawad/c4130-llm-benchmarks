@@ -604,6 +604,96 @@
       ]
     },
     {
+      "id": "qwen2.5-32b-vllm",
+      "name": "Qwen2.5-32B-Instruct (vLLM TP4)",
+      "publisher": "Alibaba",
+      "hf_repo": "Qwen/Qwen2.5-32B-Instruct",
+      "quant": "FP16 (vLLM)",
+      "params_total_b": 32,
+      "params_active_b": 32,
+      "architecture": "Dense — vLLM tensor-parallel ×4",
+      "disk_gb": 62.0,
+      "ctx_cap": 32768,
+      "max_ctx_tokens": 11325,
+      "gen_tps": 27.2,
+      "prompt_tps": 4202.0,
+      "scores": {
+        "hard4": {
+          "n": 3,
+          "of": 4
+        },
+        "longctx": {
+          "n": 6,
+          "of": 6
+        },
+        "reliability": {
+          "n": 5,
+          "of": 5
+        },
+        "tools": {
+          "n": 4,
+          "of": 4
+        },
+        "knowledge": {
+          "n": 12,
+          "of": 14
+        },
+        "math": {
+          "n": 6,
+          "of": 10
+        }
+      },
+      "verdict": "ANDERE runtime: vLLM 0.9.2 op sm_70 met échte 4-GPU tensor-parallelism — de multi-user winnaar.",
+      "notes": "36/43 (tools 4/4 — vLLM's hermes-parser verslaat llama.cpp hier). Draait op c4140 (4× V100), NIET llama.cpp: kwaliteitsscores zijn vergelijkbaar (zelfde prompts+scoring), snelheid NIET (TP-4 vs layer-split). Dense 32B FP16, 32k native (geen YaRN) → sweep clamt bij 32k, net als Qwen2.5-72B. tg128=27 t/s single-stream (--enforce-eager; CUDA-graphs zouden dit verhogen), prefill ~4200 t/s (TP parallelt prefill). Échte concurrency-winst: 10 gelijktijdige users → ~236 tok/s aggregaat, per-user vlak ~24 tok/s, alle 4 GPU's 85-95% — waar llama.cpp layer-split plateaut op ~1 GPU.",
+      "longctx_sweep": [
+        {
+          "ctx_requested": 8192,
+          "prompt_tokens": 11325,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 32768,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"object\":\"error\",\"message\":\"This model's maximum context length is 32768 tokens",
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 65536,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"object\":\"error\",\"message\":\"This model's maximum context length is 32768 tokens",
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 131072,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"object\":\"error\",\"message\":\"This model's maximum context length is 32768 tokens",
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 200000,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"object\":\"error\",\"message\":\"This model's maximum context length is 32768 tokens",
+          "decode_tps": 0.0
+        }
+      ]
+    },
+    {
       "id": "qwen2.5-72b",
       "name": "Qwen2.5-72B-Instruct",
       "publisher": "Alibaba",

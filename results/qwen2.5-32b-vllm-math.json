@@ -1,0 +1,96 @@
+{
+  "stap_korting": {
+    "question": "Een winkel past na elkaar drie kortingen toe op een product van 250 euro: eerst 20% korting, dan nog eens 10% korting op het resterende bedrag, en tot slot een vaste korting van 15 euro. Wat is de einprijs? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <bedrag>'.",
+    "answer": "Laten we stap voor stap de kortingen toepassen op het oorspronkelijke bedrag van 250 euro.\n\n1. **Eerste korting (20%)**:\n   - Oorspronkelijk bedrag: 250 euro.\n   - Korting: 20% van 250 euro = 0.20 * 250 = 50 euro.\n   - Nieuw bedrag na deze korting: 250 - 50 = 200 euro.\n\n2. **Tweede korting (10%)**:\n   - Bedrag na eerste korting: 200 euro.\n   - Korting: 10% van 200 euro = 0.10 * 200 = 20 euro.\n   - Nieuw bedrag na deze korting: 200 - 20 = 180 euro.\n\n3. **Derde korting (vaste korting van 15 euro)**:\n   - Bedrag na tweede korting: 180 euro.\n   - Vaste korting: 15 euro.\n   - Eindbedrag: 180 - 15 = 165 euro.\n\nEINDANTWOORD: 165 euro.",
+    "predicted_answer": "165 euro",
+    "expected_answer": "165 euro",
+    "correct": true,
+    "wall_seconds": 12.97,
+    "completion_tokens": 287
+  },
+  "logica_ridders": {
+    "question": "Op een eiland zijn er Ridders (spreken altijd de waarheid) en Schurken (liegen altijd). Je ontmoet A en B. A zegt: 'B is een schurk.' B zegt: 'A en ik zijn beiden ridders.' Wat zijn A en B? Redeneer stap voor stap en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: A=..., B=...'.",
+    "answer": "Laten we dit probleem stap voor stap analyseren:\n\n1. We hebben twee personen, A en B.\n2. A zegt: \"B is een schurk.\"\n3. B zegt: \"A en ik zijn beide ridders.\"\n\nStap 1: Laten we eerst aannemen dat A een ridder is.\n- Als A een ridder is, dan spreekt A altijd de waarheid.\n- Dus als A zegt dat B een schurk is, moet B inderdaad een schurk zijn.\n- Maar als B een schurk is, kan B niet zeggen dat A en hijzelf beide ridders zijn, omdat dat zou betekenen dat B de waarheid spreekt.\n- Dit leidt tot een contradictie, dus A kan geen ridder zijn.\n\nStap 2: Nu aannemen dat A een schurk is.\n- Als A een schurk is, dan liegt A altijd.\n- Dus als A zegt dat B een schurk is, moet B in feite een ridder zijn.\n- Als B een ridder is, spreekt B altijd de waarheid.\n- Dus als B zegt dat A en hijzelf beide ridders zijn, moet dit een leugen zijn, wat klopt met onze aanname dat A een schurk is.\n\nDit betekent dat onze tweede aanname consistent is en dus juist.\n\nEINDANTWOORD: A=schurk, B=ridder.",
+    "predicted_answer": "a=schurk, b=ridder",
+    "expected_answer": "A=ridder, B=schurk",
+    "correct": false,
+    "wall_seconds": 14.67,
+    "completion_tokens": 324
+  },
+  "kans_dobbelsteen": {
+    "question": "Je gooit twee eerlijke dobbelstenen. Wat is de kans dat de som van de ogen precies 7 is? Geef het antwoord als breuk EN als percentage, op de laatste regel als 'EINDANTWOORD: <breuk> = <percentage>%'.",
+    "answer": "Wanneer je twee eerlijke dobbelstenen gooit, zijn er in totaal \\(6 \\times 6 = 36\\) mogelijke uitkomsten, omdat elke dobbelsteen 6 zijden heeft.\n\nDe combinaties die een som van 7 geven zijn:\n- (1, 6)\n- (2, 5)\n- (3, 4)\n- (4, 3)\n- (5, 2)\n- (6, 1)\n\nDit zijn 6 verschillende manieren om een som van 7 te krijgen.\n\nDe kans dat de som van de ogen precies 7 is, is dus het aantal gunstige uitkomsten gedeeld door het totale aantal mogelijke uitkomsten:\n\n\\[\n\\frac{6}{36} = \\frac{1}{6}\n\\]\n\nAls percentage is dit:\n\n\\[\n\\frac{1}{6} \\approx 0.1667 \\approx 16.67\\%\n\\]\n\nEINDANTWOORD: \\(\\frac{1}{6} = 16.67\\%\\).",
+    "predicted_answer": "\\(\\frac{1}{6} = 16.67\\%\\)",
+    "expected_answer": "1/6",
+    "correct": false,
+    "wall_seconds": 11.16,
+    "completion_tokens": 243
+  },
+  "combinatoriek": {
+    "question": "Op hoeveel manieren kunnen 5 verschillende boeken worden verdeeld over 3 verschillende personen, als elke persoon minstens 1 boek moet krijgen? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "Om dit probleem op te lossen, moeten we rekening houden met de combinaties waarbij elk van de drie personen minstens één boek krijgt. Dit betekent dat we de mogelijke delingen van de 5 boeken in 3 groepen moeten beschouwen, waarbij geen groep leeg mag zijn.\n\nEr zijn twee mogelijke configuraties voor deze deling:\n\n1. Een persoon krijgt 3 boeken, en de andere twee personen krijgen elk 1 boek.\n2. Een persoon krijgt 1 boek, een andere persoon krijgt ook 1 boek, en de derde persoon krijgt de overige 3 boeken.\n\nWe gaan deze twee gevallen afzonderlijk bekijken.\n\n### Geval 1: (3, 1, 1)\n\n- **Kiezen van de persoon die 3 boeken krijgt**: Er zijn 3 manieren om deze persoon te kiezen.\n- **Kiezen van 3 boeken uit de 5 voor deze persoon**: Dit kan op \\(\\binom{5}{3} = 10\\) manieren.\n- **De resterende 2 boeken aan de overige 2 personen verdelen**: Dit kan op \\(2!\\) (2 fakulteit) = 2 manieren.\n\nDus, voor dit geval is het totaal aantal manieren:\n\\[ 3 \\times 10 \\times 2 = 60 \\]\n\n### Geval 2: (1, 1, 3)\n\nDit is essentieel hetzelfde als geval 1, maar dan omgekeerd. De berekening blijft hetzelfde, dus we krijgen ook 60 manieren.\n\n### Totaal aantal manieren\n\nHet totaal aantal manieren is de som van beide gevallen:\n\\[ 60 + 60 = 120 \\]\n\n**EINDANTWOORD: 120**",
+    "predicted_answer": "120**",
+    "expected_answer": "150",
+    "correct": false,
+    "wall_seconds": 19.75,
+    "completion_tokens": 437
+  },
+  "algebra": {
+    "question": "Twee getallen hebben een som van 47 en een verschil van 13. Wat zijn de twee getallen? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <groot getal> en <klein getal>'.",
+    "answer": "Laten we dit probleem stap voor stap oplossen.\n\nStel de twee getallen als \\(x\\) en \\(y\\), waarbij \\(x > y\\).\n\nWe hebben twee vergelijkingen:\n\n1. \\(x + y = 47\\)\n2. \\(x - y = 13\\)\n\nWe kunnen deze vergelijkingen oplossen door ze te combineren. Als we de eerste vergelijking bij de tweede optellen, krijgen we:\n\n\\[ (x + y) + (x - y) = 47 + 13 \\]\n\\[ 2x = 60 \\]\n\\[ x = 30 \\]\n\nNu we \\(x\\) kennen, kunnen we \\(y\\) vinden door de waarde van \\(x\\) in een van de oorspronkelijke vergelijkingen in te vullen. Laten we de eerste vergelijking gebruiken:\n\n\\[ x + y = 47 \\]\n\\[ 30 + y = 47 \\]\n\\[ y = 17 \\]\n\nDus de twee getallen zijn 30 en 17.\n\nEINDANTWOORD: 30 en 17",
+    "predicted_answer": "30 en 17",
+    "expected_answer": "30 en 17",
+    "correct": true,
+    "wall_seconds": 11.53,
+    "completion_tokens": 255
+  },
+  "getaltheorie": {
+    "question": "Wat is de kleinste positieve gehele n waarvoor n! (n faculteit) deelbaar is door 1000? Toon je redenering en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "Om te bepalen welke de kleinste positieve gehele n is waarvoor \\(n!\\) (n faculteit) deelbaar is door 1000, moeten we eerst begrijpen wat het betekent dat een getal deelbaar is door 1000. Het getal 1000 kan worden ontbonden in priemfactoren als volgt:\n\n\\[1000 = 2^3 \\times 5^3\\]\n\nDit betekent dat \\(n!\\) minimaal moet bevatten drie factoren van 2 en drie factoren van 5 om deelbaar te zijn door 1000.\n\nIn een faculteitsvermenigvuldiging komen er meer factoren van 2 dan van 5, omdat er meer even getallen zijn dan veelvouden van 5. Daarom is het cruciaal om te kijken naar hoe vaak de factor 5 voorkomt in de ontbinding van \\(n!\\).\n\nWe kunnen dit doen door te tellen hoe vaak 5 als factor optreedt in de getallen van 1 tot en met n. Dit doen we door te kijken naar hoe vaak 5, 25, 125, etc., als factor voorkomen in deze getallen.\n\n- Voor \\(n=5\\), hebben we één factor 5.\n- Voor \\(n=10\\), hebben we twee factoren 5 (een van 5 en een van 10).\n- Voor \\(n=15\\), hebben we drie factoren 5 (een van 5, een van 10, en een van 15).\n- Voor \\(n=20\\), hebben we vier factoren 5 (een van 5, een van 10, een van 15, en een van 20).\n- Voor \\(n=25\\), hebben we zes factoren 5 (vier van de getallen 5 t/m 20, plus twee extra van 25, omdat 25 = 5^2).\n\nZoals we zien, bij \\(n=25\\) hebben we al zes factoren 5, wat meer dan genoeg is voor de vereiste drie factoren 5 om deelbaar te zijn door 1000. We moeten echter ook controleren of er genoeg factoren 2 zijn, maar gezien er altijd meer factoren 2 dan 5 zijn in een faculteitsvermenigvuldiging, is dit niet het bepalende factor.\n\nDaarom is de kleinste positieve gehele n waarvoor \\(n!\\) deelbaar is door 1000, gelijk aan 25.\n\nEINDANTWOORD: 25",
+    "predicted_answer": "25",
+    "expected_answer": "15",
+    "correct": false,
+    "wall_seconds": 27.63,
+    "completion_tokens": 608
+  },
+  "meetkunde": {
+    "question": "Een rechthoekige driehoek heeft een hypotenusa van 13 cm en een rechthoekszijde van 5 cm. Wat is de oppervlakte van de driehoek? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> cm2'.",
+    "answer": "Om de oppervlakte van de rechthoekige driehoek te vinden, moeten we eerst de lengte van de andere rechthoekszijde bepalen. We kunnen hiervoor de stelling van Pythagoras gebruiken, die luidt:\n\n\\[a^2 + b^2 = c^2\\]\n\nwaarbij \\(c\\) de lengte van de hypotenusa is, en \\(a\\) en \\(b\\) de lengtes van de rechthoekszijden. In dit geval is \\(c = 13\\) cm en \\(a = 5\\) cm. We moeten \\(b\\) vinden.\n\n\\[5^2 + b^2 = 13^2\\]\n\\[25 + b^2 = 169\\]\n\\[b^2 = 144\\]\n\\[b = \\sqrt{144}\\]\n\\[b = 12\\] cm\n\nNu we weten dat de rechthoekszijden 5 cm en 12 cm zijn, kunnen we de oppervlakte van de driehoek berekenen met de formule voor de oppervlakte van een driehoek:\n\n\\[Oppervlakte = \\frac{1}{2} \\times \\text{basis} \\times \\text{hoogte}\\]\n\nIn dit geval zijn de basis en de hoogte de rechthoekszijden van de driehoek:\n\n\\[Oppervlakte = \\frac{1}{2} \\times 5 \\times 12\\]\n\\[Oppervlakte = \\frac{1}{2} \\times 60\\]\n\\[Oppervlakte = 30\\] cm²\n\nEINDANTWOORD: 30 cm²",
+    "predicted_answer": "30 cm²",
+    "expected_answer": "30 cm2",
+    "correct": true,
+    "wall_seconds": 17.52,
+    "completion_tokens": 390
+  },
+  "rente": {
+    "question": "Je zet 1000 euro op een spaarrekening met 4% samengestelde rente per jaar. Na hoeveel volle jaren is het bedrag meer dan verdubbeld? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> jaar'.",
+    "answer": "Om te bepalen na hoeveel volle jaren het bedrag op een spaarrekening met 4% samengestelde rente per jaar meer dan verdubbeld is, kunnen we gebruik maken van de formule voor samengestelde rente:\n\n\\[ A = P(1 + r)^n \\]\n\nwaarin:\n- \\(A\\) het eindbedrag is,\n- \\(P\\) het beginbedrag (hoofdsom) is,\n- \\(r\\) de jaarlijkse rentekoers is,\n- \\(n\\) het aantal jaren is.\n\nIn dit geval willen we weten wanneer het bedrag meer dan verdubbeld is, dus we zoeken naar het moment waarop \\(A > 2P\\). Met de gegeven waarden (\\(P = 1000\\) euro, \\(r = 0.04\\)) krijgen we:\n\n\\[ 2000 < 1000(1 + 0.04)^n \\]\n\\[ 2 < (1.04)^n \\]\n\nNu moeten we \\(n\\) vinden. Dit doen we door de vergelijking om te vormen naar \\(n\\):\n\n\\[ n > \\frac{\\log(2)}{\\log(1.04)} \\]\n\nBerekenen we dit:\n\n\\[ n > \\frac{\\log(2)}{\\log(1.04)} \\approx \\frac{0.3010}{0.0170} \\approx 17.69 \\]\n\nDit betekent dat na ongeveer 17.69 jaar het bedrag meer dan verdubbeld is. Omdat we naar volle jaren kijken, rond je dit om naar boven naar het volgende gehele getal, wat 18 jaar is.\n\nEINDANTWOORD: 18 jaar",
+    "predicted_answer": "18 jaar",
+    "expected_answer": "18 jaar",
+    "correct": true,
+    "wall_seconds": 15.35,
+    "completion_tokens": 405
+  },
+  "valstrik_schapen": {
+    "question": "Een boer heeft 17 schapen. Op 1 na sterven ze allemaal. Hoeveel schapen heeft hij nog? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "EINDANTWOORD: 1",
+    "predicted_answer": "1",
+    "expected_answer": "1 schaap",
+    "correct": true,
+    "wall_seconds": 0.41,
+    "completion_tokens": 9
+  },
+  "valstrik_caesar": {
+    "question": "Julius Caesar werd geboren in juli 100 v.Chr. en stierf op 15 maart 44 v.Chr. Hoe oud was hij toen hij stierf? Let goed op of zijn verjaardag dat jaar al was geweest. Toon je redenering en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> jaar'.",
+    "answer": "Om te bepalen hoe oud Julius Caesar was toen hij stierf, moeten we rekening houden met zijn geboortedatum en sterfdatum, en controleren of zijn verjaardag in het jaar van zijn dood al was geweest.\n\n1. Geboortedatum: Juli 100 v.Chr.\n2. Sterfdatum: 15 maart 44 v.Chr.\n\nAangezien hij in juli is geboren, zou zijn verjaardag in het jaar 44 v.Chr. pas in juli zijn geweest. Hij stierf echter in maart, wat betekent dat hij zijn verjaardag dat jaar nog niet had gevierd.\n\nDus, we berekenen het leeftijdsgap tussen juli 100 v.Chr. en juli 44 v.Chr., wat 56 jaar is. Aangezien hij in het jaar 44 v.Chr. zijn verjaardag nog niet had gevierd, blijft hij 55 jaar oud.\n\nEINDANTWOORD: 55 jaar",
+    "predicted_answer": "55 jaar",
+    "expected_answer": "55 jaar",
+    "correct": true,
+    "wall_seconds": 9.27,
+    "completion_tokens": 243
+  },
+  "_summary": {
+    "n_correct": 6,
+    "n_total": 10
+  }
+}

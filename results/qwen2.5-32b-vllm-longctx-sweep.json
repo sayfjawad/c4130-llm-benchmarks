@@ -1,0 +1,235 @@
+{
+  "model": "Qwen/Qwen2.5-32B-Instruct",
+  "sizes": [
+    {
+      "ctx_requested": 8192,
+      "prompt_tokens": 11325,
+      "completion_tokens": 222,
+      "content": "ANTWOORD 1: Het projectreferentie nummer van het nieuwe ERP-project is PRJ-2247 en het toegekende budget is 487.300 euro.\nANTWOORD 2: De controleaanduiding die bij kwaliteitsregistratie op positie 25% wordt genoemd is RK-93810-214.\nANTWOORD 3: De controleaanduiding die bij kwaliteitsregistratie op positie 50% wordt genoemd is RK-13278-859.\nANTWOORD 4: De controleaanduiding die bij kwaliteitsregistratie op positie 75% wordt genoemd is RK-46048-350.\nANTWOORD 5: De controleaanduiding die bij kwaliteitsregistratie op positie 100% wordt genoemd is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 13.35,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        29126,
+        29012,
+        28980,
+        28916
+      ]
+    },
+    {
+      "ctx_requested": 32768,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"object\":\"error\",\"message\":\"This model's maximum context length is 32768 tokens. However, you requested 45436 tokens (43436 in the messages, 2000 in the completion). Please reduce the length of the messages or completion. None\",\"type\":\"BadRequestError\",\"param\":null,\"code\":400}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 0.1,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        29126,
+        29012,
+        28980,
+        28916
+      ]
+    },
+    {
+      "ctx_requested": 65536,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"object\":\"error\",\"message\":\"This model's maximum context length is 32768 tokens. However, you requested 88067 tokens (86067 in the messages, 2000 in the completion). Please reduce the length of the messages or completion. None\",\"type\":\"BadRequestError\",\"param\":null,\"code\":400}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 0.18,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        29126,
+        29012,
+        28980,
+        28916
+      ]
+    },
+    {
+      "ctx_requested": 131072,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"object\":\"error\",\"message\":\"This model's maximum context length is 32768 tokens. However, you requested 173261 tokens (171261 in the messages, 2000 in the completion). Please reduce the length of the messages or completion. None\",\"type\":\"BadRequestError\",\"param\":null,\"code\":400}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 0.37,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        29126,
+        29012,
+        28980,
+        28916
+      ]
+    },
+    {
+      "ctx_requested": 200000,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"object\":\"error\",\"message\":\"This model's maximum context length is 32768 tokens. However, you requested 262840 tokens (260840 in the messages, 2000 in the completion). Please reduce the length of the messages or completion. None\",\"type\":\"BadRequestError\",\"param\":null,\"code\":400}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 0.62,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        29126,
+        29012,
+        28980,
+        28916
+      ]
+    }
+  ]
+}
