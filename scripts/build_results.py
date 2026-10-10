@@ -85,6 +85,14 @@ METADATA = {
         "verdict": "ANDERE runtime: vLLM 0.9.2 op sm_70 met échte 4-GPU tensor-parallelism — de multi-user winnaar.",
         "notes": "36/43 (tools 4/4 — vLLM's hermes-parser verslaat llama.cpp hier). Draait op c4140 (4× V100), NIET llama.cpp: kwaliteitsscores zijn vergelijkbaar (zelfde prompts+scoring), snelheid NIET (TP-4 vs layer-split). Dense 32B FP16, 32k native (geen YaRN) → sweep clamt bij 32k, net als Qwen2.5-72B. tg128=27 t/s single-stream (--enforce-eager; CUDA-graphs zouden dit verhogen), prefill ~4200 t/s (TP parallelt prefill). Échte concurrency-winst: 10 gelijktijdige users → ~236 tok/s aggregaat, per-user vlak ~24 tok/s, alle 4 GPU's 85-95% — waar llama.cpp layer-split plateaut op ~1 GPU.",
     },
+    "qwen3.8-27b-nvfp4-vllm": {
+        "name": "Qwen3.8-27B NVFP4 (vLLM/1Cat + DFlash2)", "publisher": "Alibaba",
+        "hf_repo": "QUASAR-QAT/Qwen3.8-27B-QUASAR-NVFP4", "quant": "NVFP4 (QUASAR QAT) + DFlash2",
+        "params_total_b": 27, "params_active_b": 27, "architecture": "Hybride Gated DeltaNet — vLLM/1Cat TP×4 (sm_70)",
+        "disk_gb": 20.0, "ctx_cap": 131072,
+        "verdict": "ANDERE runtime: 1Cat-vLLM op V100 met NVFP4 + DFlash2-speculatie — ~5× sneller decode dan llama.cpp Q8_0 (124 vs 24 t/s), zelfde kaarten.",
+        "notes": "Performance-entry — kwaliteits-battery is NIET opnieuw gedraaid (zelfde gewichten als de Q8_0/BF16-entries hierboven, die 40/43 scoorden). Engine = 1Cat-vLLM v1.5.1 (CUDA 12.8.1, docker) op 4× V100-32GB sm_70, attention-backend FLASH_ATTN_V100, TP=4, NVFP4-gewichten + DFlash2-drafter (7 spec-tokens). tg128=124 t/s single-stream (DFlash2) vs Q8_0 llama.cpp 24 t/s → ~5×; pp512≈1175 t/s. Concurrency (max-num-seqs 4): 1 user 137 → 4 users 233 tok/s aggregaat. Context geverifieerd tot 124.861 tokens (retrieval correct), 131k geserveerd. Vervangt sinds 2026-10-10 de GLM-4.5-Air op de c4130 :8080.",
+    },
 }
 
 # Score-key per raw-bestand-suffix (identiek aan aggregate_results.py).
@@ -202,7 +210,7 @@ def main():
             "memory_gb": 128,
             "gpu_addressable_gb": 128,
             "bandwidth_gbps": 900,
-            "last_updated": "2026-09-16",
+            "last_updated": "2026-10-10",
             "test_categories": [
                 {"id": "speed", "label": "Snelheid", "tool": "llama-bench / server timings"},
                 {"id": "hard4", "label": "Zware taken (4)", "desc": "multi-stap redeneren, LRU-cache coding, notulen-structurering, strikte JSON-instructies"},

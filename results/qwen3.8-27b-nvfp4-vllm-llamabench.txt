@@ -1,0 +1,6 @@
+# vLLM server-timing (1Cat-vLLM FLASH_ATTN_V100, NVFP4 + DFlash2 speculative, TP4)
+# NOT llama-bench; pp512 = prompt-processing t/s, tg128 = single-stream decode t/s.
+| model                               | backend | test  |            t/s |
+| ----------------------------------- | ------- | ----- | -------------: |
+| qwen3.8-27b NVFP4 vLLM+DFlash2      | CUDA    | pp512 |      1174.77 |
+| qwen3.8-27b NVFP4 vLLM+DFlash2      | CUDA    | tg128 |       124.45 |

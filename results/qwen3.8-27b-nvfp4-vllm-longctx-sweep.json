@@ -1,0 +1,49 @@
+{
+  "model": "qwen3.8-27b-nvfp4-vllm",
+  "sizes": [
+    {
+      "ctx_requested": 8192,
+      "prompt_tokens": 10989,
+      "completion_tokens": 28,
+      "content": "The secret project reference is PRJ-7788 and its approved budget is 912.400 euro.",
+      "status": "ok",
+      "retrieval_correct": true,
+      "failure_mode": null,
+      "score": 1,
+      "decode_tps": 10.1
+    },
+    {
+      "ctx_requested": 32768,
+      "prompt_tokens": 43757,
+      "completion_tokens": 28,
+      "content": "The secret project reference is PRJ-7788 and its approved budget is 912.400 euro.",
+      "status": "ok",
+      "retrieval_correct": true,
+      "failure_mode": null,
+      "score": 1,
+      "decode_tps": 2.89
+    },
+    {
+      "ctx_requested": 65536,
+      "prompt_tokens": 87445,
+      "completion_tokens": 28,
+      "content": "The secret project reference is PRJ-7788 and its approved budget is 912.400 euro.",
+      "status": "ok",
+      "retrieval_correct": true,
+      "failure_mode": null,
+      "score": 1,
+      "decode_tps": 1.68
+    },
+    {
+      "ctx_requested": 131072,
+      "prompt_tokens": 124861,
+      "completion_tokens": 28,
+      "content": "The secret project reference is PRJ-7788 and its approved budget is 912.400 euro.",
+      "status": "ok",
+      "retrieval_correct": true,
+      "failure_mode": null,
+      "score": 1,
+      "decode_tps": 1.5
+    }
+  ]
+}

@@ -5,7 +5,7 @@
     "memory_gb": 128,
     "gpu_addressable_gb": 128,
     "bandwidth_gbps": 900,
-    "last_updated": "2026-09-16",
+    "last_updated": "2026-10-10",
     "test_categories": [
       {
         "id": "speed",
@@ -240,6 +240,62 @@
           "status": "error",
           "failure_mode": "HTTP 400: {\"error\":{\"code\":400,\"message\":\"request (318596 tokens) exceeds the available co",
           "decode_tps": 0.0
+        }
+      ]
+    },
+    {
+      "id": "qwen3.8-27b-nvfp4-vllm",
+      "name": "Qwen3.8-27B NVFP4 (vLLM/1Cat + DFlash2)",
+      "publisher": "Alibaba",
+      "hf_repo": "QUASAR-QAT/Qwen3.8-27B-QUASAR-NVFP4",
+      "quant": "NVFP4 (QUASAR QAT) + DFlash2",
+      "params_total_b": 27,
+      "params_active_b": 27,
+      "architecture": "Hybride Gated DeltaNet — vLLM/1Cat TP×4 (sm_70)",
+      "disk_gb": 20.0,
+      "ctx_cap": 131072,
+      "max_ctx_tokens": 124861,
+      "gen_tps": 124.45,
+      "prompt_tps": 1174.77,
+      "scores": {},
+      "verdict": "ANDERE runtime: 1Cat-vLLM op V100 met NVFP4 + DFlash2-speculatie — ~5× sneller decode dan llama.cpp Q8_0 (124 vs 24 t/s), zelfde kaarten.",
+      "notes": "Performance-entry — kwaliteits-battery is NIET opnieuw gedraaid (zelfde gewichten als de Q8_0/BF16-entries hierboven, die 40/43 scoorden). Engine = 1Cat-vLLM v1.5.1 (CUDA 12.8.1, docker) op 4× V100-32GB sm_70, attention-backend FLASH_ATTN_V100, TP=4, NVFP4-gewichten + DFlash2-drafter (7 spec-tokens). tg128=124 t/s single-stream (DFlash2) vs Q8_0 llama.cpp 24 t/s → ~5×; pp512≈1175 t/s. Concurrency (max-num-seqs 4): 1 user 137 → 4 users 233 tok/s aggregaat. Context geverifieerd tot 124.861 tokens (retrieval correct), 131k geserveerd. Vervangt sinds 2026-10-10 de GLM-4.5-Air op de c4130 :8080.",
+      "longctx_sweep": [
+        {
+          "ctx_requested": 8192,
+          "prompt_tokens": 10989,
+          "score": 1,
+          "of": null,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 10.1
+        },
+        {
+          "ctx_requested": 32768,
+          "prompt_tokens": 43757,
+          "score": 1,
+          "of": null,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 2.89
+        },
+        {
+          "ctx_requested": 65536,
+          "prompt_tokens": 87445,
+          "score": 1,
+          "of": null,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 1.68
+        },
+        {
+          "ctx_requested": 131072,
+          "prompt_tokens": 124861,
+          "score": 1,
+          "of": null,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 1.5
         }
       ]
     },
