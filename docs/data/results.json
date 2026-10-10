@@ -46,6 +46,123 @@
   },
   "models": [
     {
+      "id": "qwen3.8-27b-nvfp4-vllm-262k",
+      "name": "Qwen3.8-27B NVFP4 (vLLM/1Cat release-profiel, 262k)",
+      "publisher": "Alibaba",
+      "hf_repo": "QUASAR-QAT/Qwen3.8-27B-QUASAR-NVFP4",
+      "quant": "NVFP4 (QUASAR QAT) + DFlash2",
+      "params_total_b": 27,
+      "params_active_b": 27,
+      "architecture": "Hybride Gated DeltaNet — vLLM/1Cat TP×4 (sm_70)",
+      "disk_gb": 20.0,
+      "ctx_cap": 262144,
+      "max_ctx_tokens": 253161,
+      "gen_tps": 110.71,
+      "prompt_tps": 4174.5,
+      "scores": {
+        "hard4": {
+          "n": 4,
+          "of": 4
+        },
+        "longctx": {
+          "n": 6,
+          "of": 6
+        },
+        "reliability": {
+          "n": 5,
+          "of": 5
+        },
+        "tools": {
+          "n": 3,
+          "of": 4
+        },
+        "knowledge": {
+          "n": 11,
+          "of": 14
+        },
+        "math": {
+          "n": 10,
+          "of": 10
+        }
+      },
+      "verdict": "Beste allrounder: 39/43, 5/5 retrieval tot 253k tokens, ~100 t/s op Nederlandse tekst en 350–390 t/s op code — met 24.5 GB/GPU.",
+      "notes": "39/43 (tools 3/4 in de officiële run: multi_entity sloeg 1 weer-call over en verzon 18°C; 5 herhalingen daarna allemaal 4/4 → 1 misser op 24 scenario's). Rekenen 10/10. Zelfde gewichten als de 131k-entry, maar het officiële 1Cat v1.5.1-profiel (qwen38_27b_nvfp4_dflash2): fp8_e4m3 KV, max-model-len 262144, --max-num-batched-tokens 8192, block-size 2048 / mamba-block-size 8192 → alle 8 SM70-versnellingspaden AAN, 24.5 i.p.v. 27.0 GB/GPU. Sweep: 5/5 naalden tot 253.161 tokens (262k = harde cap). Snelheid (scripts/bench_vllm_speed.py, usage-geteld, 1 koud + mediaan 3 warm, 256 out, T=1): prefill 4175/4300/3327/2457 t/s bij 4k/32k/117k/244k (+10–16% vs eigen flags), decode ~111 t/s bij 4k en 102 t/s bij 244k (TTFT 99 s). DFlash2-decodesnelheid hangt sterk af van de tekst: code/SQL (Engels) 350–390 t/s, Nederlandse proza ~97 t/s — de drafter voorspelt Engels/code veel beter. tg128 hieronder = Nederlandse synthetische tekst (conservatief). Gemeten op c4140 (zelfde 4× V100-SXM2-32GB).",
+      "longctx_sweep": [
+        {
+          "ctx_requested": 8192,
+          "prompt_tokens": 10102,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 32768,
+          "prompt_tokens": 38388,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 65536,
+          "prompt_tokens": 76023,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 110000,
+          "prompt_tokens": 127006,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 131072,
+          "prompt_tokens": 151229,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 200000,
+          "prompt_tokens": 230208,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 220000,
+          "prompt_tokens": 253161,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 262144,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"message\":\"This model's maximum context length is 262144 tokens. Howev",
+          "decode_tps": 0.0
+        }
+      ]
+    },
+    {
       "id": "nemotron-3.5-lightning",
       "name": "Nemotron-3.5-Lightning-30B-A3B",
       "publisher": "NVIDIA",
@@ -245,7 +362,7 @@
     },
     {
       "id": "qwen3.8-27b-nvfp4-vllm",
-      "name": "Qwen3.8-27B NVFP4 (vLLM/1Cat + DFlash2)",
+      "name": "Qwen3.8-27B NVFP4 (vLLM/1Cat, eigen flags, 131k)",
       "publisher": "Alibaba",
       "hf_repo": "QUASAR-QAT/Qwen3.8-27B-QUASAR-NVFP4",
       "quant": "NVFP4 (QUASAR QAT) + DFlash2",
@@ -283,8 +400,8 @@
           "of": 10
         }
       },
-      "verdict": "Snelste sterke model met 128k: 1Cat-vLLM + NVFP4 + DFlash2 — 124 t/s (~5× llama.cpp Q8_0), 39/43, 5/5 retrieval tot 127k tokens.",
-      "notes": "39/43 (2026-10-11, volledige battery op c4140, identieke prompts+scoring; thinking per taaktype als bij Q8_0/BF16 via FORCE_THINKING=1, want de productie-server zet thinking standaard UIT). Vs Q8_0 (40/43): 1 extra kennisfout (literatuur_1: Mulisch → gehallucineerde auteur — plausibel NVFP4-kwantisatieverlies); rekenen 9/10 zoals Q8_0 maar andere fout (logica_ridders: thinking-runaway, 2000-token budget op, lege content). Sweep: 5/5 naalden tot 127.006 tokens; 131k/200k = harde max-model-len 131072. Engine = 1Cat-vLLM v1.5.1 (CUDA 12.8.1, docker) op 4× V100-32GB sm_70, FLASH_ATTN_V100, TP=4, fp8_e5m2 KV, NVFP4-gewichten + DFlash2-drafter. tg128=124 t/s single-stream vs Q8_0 llama.cpp 24 t/s → ~5×; pp512≈1175 t/s. Concurrency (max-num-seqs 4): 1 user 137 → 4 users 233 tok/s aggregaat. Productie op c4130 :8080 sinds 2026-10-10.",
+      "verdict": "Eerste productie-config (c4130, 2026-10-10): 39/43, 5/5 tot 127k — maar 4 van 8 SM70-versnellingspaden UIT door eigen flags. Opgevolgd door de 262k-entry.",
+      "notes": "39/43 (2026-10-11, volledige battery op c4140, identieke prompts+scoring; thinking per taaktype als bij Q8_0/BF16 via FORCE_THINKING=1, want de productie-server zet thinking standaard UIT). Vs Q8_0 (40/43): 1 extra kennisfout (literatuur_1: Mulisch → gehallucineerde auteur — plausibel NVFP4-kwantisatieverlies); rekenen 9/10 zoals Q8_0 maar andere fout (logica_ridders: thinking-runaway, 2000-token budget op, lege content). Sweep: 5/5 naalden tot 127.006 tokens; 131k/200k = harde max-model-len 131072. Engine = 1Cat-vLLM v1.5.1 (docker) op 4× V100-32GB, FLASH_ATTN_V100, TP=4, fp8_e5m2 KV, --max-num-batched-tokens 4096. /v1/sm70/acceleration meldt 4/8 paden UIT: e4m3_grouped_fp32, long_context, scalar_tail (reden kv_dtype) en q8000_prefill (budget<8000). tg128=124 t/s was gemeten door SSE-chunks te tellen op een code-prompt — met speculatieve decoding bevat één chunk soms meerdere tokens, dus dit is een ondergrens; zie speed.json (usage-geteld) en de 262k-entry. Concurrency (max-num-seqs 4): 1 user 137 → 4 users 233 tok/s aggregaat.",
       "longctx_sweep": [
         {
           "ctx_requested": 8192,

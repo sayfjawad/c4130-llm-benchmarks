@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-i18n="pageTitle">🧪 C41xx LLM Benchmark Suite</title>
-<meta name="description" data-i18n-attr="content:metaDesc" content="7 lokale LLM's zelf gedownload, gedraaid en getest op een Dell C4130 met 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM).">
+<meta name="description" data-i18n-attr="content:metaDesc" content="8 lokale LLM's in 10 configuraties zelf gedownload, gedraaid en getest op een Dell C4130 met 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM).">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <style>
   :root { color-scheme: light; --surface-0: #ffffff; --surface-1: #fcfcfb; --surface-2: #f3f2ef; --border: #e4e2dc; --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #79776f; --series-1: #2a78d6; --series-2: #eb6834; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #d03b3b; --link: #1c5cab; }
@@ -44,10 +44,10 @@
 <div class="wrap">
   <header class="hero">
     <h1 data-i18n="pageHeading">🧪 C41xx LLM Benchmark Suite</h1>
-    <p class="lead" data-i18n="heroLead">Welk lokaal LLM is écht het snelst én slimst op een Dell C4130 met 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM)? 7 modellen zelf gedownload, zelf gedraaid, zelf getest — inclusief de modellen die faalden en waarom.</p>
+    <p class="lead" data-i18n="heroLead">Welk lokaal LLM is écht het snelst én slimst op een Dell C4130 met 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM)? 8 modellen in 10 configuraties zelf gedownload, zelf gedraaid, zelf getest — inclusief de modellen die faalden en waarom.</p>
     <div class="badges">
       <span class="badge" data-i18n="badgeHW">🖥️ 4× Tesla V100-SXM2-32GB · 128GB VRAM</span>
-      <span class="badge" data-i18n="badgeModels">📦 7 modellen getest</span>
+      <span class="badge" data-i18n="badgeModels">📦 10 configuraties getest</span>
       <span class="badge" data-i18n="badgeCats">🔬 7 testcategorieën</span>
       <span class="badge" data-i18n="badgeVerified">✅ alles zelf geverifieerd, geen blog-cijfers</span>
     </div>
@@ -105,7 +105,7 @@
 
   <section id="matrix">
     <h2><span class="num">03</span><span data-i18n="matrixTitle">Volledige scorematrix</span></h2>
-    <p class="subtitle" data-i18n="matrixSubtitle">Alle 7 geteste modellen, alle categorieën. Niet elk model doorliep elke test (zie toelichting per rij in het README).</p>
+    <p class="subtitle" data-i18n="matrixSubtitle">Alle 10 geteste configuraties, alle categorieën. Niet elk model doorliep elke test (zie toelichting per rij in het README).</p>
     <div class="legend-row">
       <span>✅ <span class="status-pass" data-i18n="legendPass">geslaagd</span></span>
       <span>⚠️ <span class="status-warn" data-i18n="legendWarn">gedeeltelijk / met kanttekening</span></span>
@@ -131,7 +131,7 @@
       <p data-i18n-html="story1Text">De machine was al verkocht en stond op afhaling, maar de vraag was te mooi om te laten liggen: kan deze 4× V100-opstelling (128GB VRAM, sm_70) een Opus-klasse LLM serveren met 64k–200k context? Het eerder gebouwde gx10-project had de <em>kwaliteits</em>-methodologie al; dit project voegt de <strong>context-sweep</strong> toe die nog niemand had gedaan voor tweedehands Volta-hardware.</p>
     </div>
     <div class="story-block"><h3><span class="emoji-marker">2️⃣</span><span data-i18n="story2Title">De architectuur-drempel: Volta limiteert alles</span></h3>
-      <p data-i18n-html="story2Text">Vóór de eerste benchmark bleek dat bijna de hele moderne inference-stack afvalt op sm_70: geen BF16/FP8-hardware, geen FlashAttention-2, geen Marlin 4-bit kernels. <strong>llama.cpp is de enige runtime</strong> — en dan alleen correct als je specifiek voor sm_70 compileert (<code>CMAKE_CUDA_ARCHITECTURES=70</code>), anders valt FlashAttention stilletjes weg. De bouw zelf kostte drie valkuilen: een glibc↔CUDA <code>math</code>-clash, de eis dat K en V dezelfde quant hebben voor FlashAttention, en het vermijden van BF16-KV op Volta.</p>
+      <p data-i18n-html="story2Text">Vóór de eerste benchmark bleek dat bijna de hele moderne inference-stack afvalt op sm_70: geen BF16/FP8-hardware, geen FlashAttention-2, geen Marlin 4-bit kernels. <strong>llama.cpp was in de eerste ronde de enige runtime</strong> (sinds oktober 2026 is er ook 1Cat-vLLM — zie hoofdstuk 6) — en dan alleen correct als je specifiek voor sm_70 compileert (<code>CMAKE_CUDA_ARCHITECTURES=70</code>), anders valt FlashAttention stilletjes weg. De bouw zelf kostte drie valkuilen: een glibc↔CUDA <code>math</code>-clash, de eis dat K en V dezelfde quant hebben voor FlashAttention, en het vermijden van BF16-KV op Volta.</p>
     </div>
     <div class="story-block"><h3><span class="emoji-marker">3️⃣</span><span data-i18n="story3Title">De KV-les: waarom alleen hybride modellen 200k halen</span></h3>
       <p data-i18n-html="story3Text">De doorslaggevende ontdekking. Dense 70B/72B-modellen zijn per token even duur in KV-cache als in gewichten (<strong>~320 KiB/token</strong>), waardoor 128k context al ~43GB aan KV vergt. De hybride Nemotron-familie draait het om: maar 6–8 van hun ~52–88 lagen zijn attention (de rest is Mamba, met een context-onafhankelijke toestand), dus een token kost er <strong>6–8 KiB</strong>. Het gevolg is binair: Nemotron-3-Super serveerde 243k tokens (5/5 retrieval) in 87GB VRAM; een dense 70B zou bij 200k ~68GB aan KV alleen al nodig hebben.</p>
@@ -142,6 +142,8 @@
     <div class="story-block"><h3><span class="emoji-marker">5️⃣</span><span data-i18n="story5Title">De kwaliteits-batterij: waar de modellen zich onderscheiden</span></h3>
       <p data-i18n-html="story5Text">Op de 43/43-batterij staan <strong>GPT-OSS-120B</strong> en <strong>Nemotron-3-Super</strong> bovenaan (42/43); GPT-OSS is 2.3× sneller (110 vs 48 t/s) maar capped op 128k. <strong>Nemotron-3.5-Lightning</strong> is de snelste van allemaal (142 t/s) op 25.5GB, maar loopt op één kansreken-vraag leeg (thinking-runaway). <strong>Llama-3.3-70B</strong> faalt op tool-calling (2/4) door een llama.cpp parser-limiet, en <strong>Qwen2.5-72B</strong> zakt op rekenen (7/10) én context (32k).</p>
     </div>
+    <div class="story-block"><h3><span class="emoji-marker">6️⃣</span><span data-i18n="story6Title">vLLM op Volta: 1Cat</span></h3>
+      <p data-i18n-html="story6Text"><a href="https://github.com/1CatAI/1Cat-vLLM">1Cat-vLLM</a> v1.5.1, een vLLM-fork met eigen V100-kernels, draait <strong>Qwen3.8-27B NVFP4 + DFlash2</strong> tensor-parallel over alle vier de V100's: <strong>39/43, 5/5 retrieval tot 253k tokens</strong>, prefill 3.3–4.3k t/s, 24.5 GB/GPU. Twee lessen. <strong>Flags:</strong> onze eerste config (<code>fp8_e5m2</code> KV, 4096-token prefill-budget, 131k) zette 4 van de 8 V100-versnellingen uit — het officiële release-profiel (<code>fp8_e4m3</code>, 8192, 262k) zet ze alle 8 aan, verdubbelt de context en gebruikt minder VRAM. <strong>Taal:</strong> speculatieve decoding is tekstafhankelijk — 350–390 t/s op Engelse code, ~97 t/s op Nederlandse proza, op dezelfde server.</p></div>
   </section>
 
   <section id="lessons">
@@ -190,17 +192,17 @@ python3 scripts/bench_hard.py 8081 gpt-oss-120b</pre>
 const I18N = {
   nl: {
     pageTitle: "🧪 C41xx LLM Benchmark Suite",
-    metaDesc: "7 lokale LLM's zelf gedownload, gedraaid en getest op een Dell C4130 met 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM).",
+    metaDesc: "8 lokale LLM's in 10 configuraties zelf gedownload, gedraaid en getest op een Dell C4130 met 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM).",
     pageHeading: "🧪 C41xx LLM Benchmark Suite",
-    heroLead: "Welk lokaal LLM is écht het snelst én slimst op een Dell C4130 met 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM)? 7 modellen zelf gedownload, zelf gedraaid, zelf getest — inclusief de modellen die faalden en waarom.",
-    badgeHW: "🖥️ 4× Tesla V100-SXM2-32GB · 128GB VRAM", badgeModels: "📦 7 modellen getest", badgeCats: "🔬 7 testcategorieën", badgeVerified: "✅ alles zelf geverifieerd, geen blog-cijfers",
+    heroLead: "Welk lokaal LLM is écht het snelst én slimst op een Dell C4130 met 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM)? 8 modellen in 10 configuraties zelf gedownload, zelf gedraaid, zelf getest — inclusief de modellen die faalden en waarom.",
+    badgeHW: "🖥️ 4× Tesla V100-SXM2-32GB · 128GB VRAM", badgeModels: "📦 10 configuraties getest", badgeCats: "🔬 7 testcategorieën", badgeVerified: "✅ alles zelf geverifieerd, geen blog-cijfers",
     navHome: "📊 C4130 Benchmarks", navSpeed: "⚡ Snelheid", navHard: "🧩 Zware taken", navLongctx: "📄 Long-context", navReliability: "🔁 Betrouwbaarheid", navTools: "🔧 Tools", navKnowledge: "📚 Kennis", navMath: "🧮 Rekenen",
     winnerTitle: "De winnaar", winnerSubtitle: "Voor 200k context is er maar één antwoord. Op 128k is GPT-OSS-120B sneller met dezelfde kwaliteit.",
     chartsTitle: "Resultaten in grafieken", chartsSubtitle: "Live gegenereerd uit <code>docs/data/results.json</code> — nieuwe modeltests verschijnen hier automatisch na een push.",
     speedChartTitle: "⚡ Generatiesnelheid (tokens/sec)", speedChartNote: "Gemeten met <code>llama-bench</code> / server-timings. Hoger = sneller.",
     mathChartTitle: "🧮 Score op de zware reken-/redeneertest (van 10)", mathChartNote: "Alleen modellen die deze specifieke testronde doorliepen. Dit is waar de meeste modellen zich daadwerkelijk van elkaar onderscheiden.",
     scatterChartTitle: "💾 Omvang op schijf vs. snelheid", scatterChartNote: "Grotere bubbel = meer totale parameters. Rechtsonder is de ideale hoek: klein én snel.",
-    matrixTitle: "Volledige scorematrix", matrixSubtitle: "Alle 7 geteste modellen, alle categorieën. Niet elk model doorliep elke test (zie toelichting per rij in het README).",
+    matrixTitle: "Volledige scorematrix", matrixSubtitle: "Alle 10 geteste configuraties, alle categorieën. Niet elk model doorliep elke test (zie toelichting per rij in het README).",
     legendPass: "geslaagd", legendWarn: "gedeeltelijk / met kanttekening", legendFail: "gefaald", legendNa: "niet getest",
     thModel: "Model", thPublisher: "Uitgever", thArch: "Architectuur", thDisk: "Schijf", thSpeed: "Snelheid", thContext: "Context",
     thHard: "Zware taken", thLongctx: "Long-ctx", thReliability: "Betrouwbaar", thTools: "Tools", thKnowledge: "Kennis", thMath: "Rekenen",
@@ -208,13 +210,15 @@ const I18N = {
     story1Title: "De opdracht: Opus-klasse op een 2017-machine",
     story1Text: "De machine was al verkocht en stond op afhaling, maar de vraag was te mooi om te laten liggen: kan deze 4× V100-opstelling (128GB VRAM, sm_70) een Opus-klasse LLM serveren met 64k–200k context? Het eerder gebouwde gx10-project had de <em>kwaliteits</em>-methodologie al; dit project voegt de <strong>context-sweep</strong> toe die nog niemand had gedaan voor tweedehands Volta-hardware.",
     story2Title: "De architectuur-drempel: Volta limiteert alles",
-    story2Text: "Vóór de eerste benchmark bleek dat bijna de hele moderne inference-stack afvalt op sm_70: geen BF16/FP8-hardware, geen FlashAttention-2, geen Marlin 4-bit kernels. <strong>llama.cpp is de enige runtime</strong> — en dan alleen correct als je specifiek voor sm_70 compileert (<code>CMAKE_CUDA_ARCHITECTURES=70</code>), anders valt FlashAttention stilletjes weg. De bouw zelf kostte drie valkuilen: een glibc↔CUDA <code>math</code>-clash, de eis dat K en V dezelfde quant hebben voor FlashAttention, en het vermijden van BF16-KV op Volta.",
+    story2Text: "Vóór de eerste benchmark bleek dat bijna de hele moderne inference-stack afvalt op sm_70: geen BF16/FP8-hardware, geen FlashAttention-2, geen Marlin 4-bit kernels. <strong>llama.cpp was in de eerste ronde de enige runtime</strong> (sinds oktober 2026 is er ook 1Cat-vLLM — zie hoofdstuk 6) — en dan alleen correct als je specifiek voor sm_70 compileert (<code>CMAKE_CUDA_ARCHITECTURES=70</code>), anders valt FlashAttention stilletjes weg. De bouw zelf kostte drie valkuilen: een glibc↔CUDA <code>math</code>-clash, de eis dat K en V dezelfde quant hebben voor FlashAttention, en het vermijden van BF16-KV op Volta.",
     story3Title: "De KV-les: waarom alleen hybride modellen 200k halen",
     story3Text: "De doorslaggevende ontdekking. Dense 70B/72B-modellen zijn per token even duur in KV-cache als in gewichten (<strong>~320 KiB/token</strong>), waardoor 128k context al ~43GB aan KV vergt. De hybride Nemotron-familie draait het om: maar 6–8 van hun ~52–88 lagen zijn attention (de rest is Mamba, met een context-onafhankelijke toestand), dus een token kost er <strong>6–8 KiB</strong>. Het gevolg is binair: Nemotron-3-Super serveerde 243k tokens (5/5 retrieval) in 87GB VRAM; een dense 70B zou bij 200k ~68GB aan KV alleen al nodig hebben.",
     story4Title: "De sweep: hoe elk model faalt op 200k",
     story4Text: "Elk model werd doorgemeten op 8k/32k/64k/128k en daarna opzettelijk op 200k gezet om de faalmodus te vangen. <strong>Nemotron-3-Super en -3.5-Lightning</strong> haalden 5/5 tot en met 243k tokens — de enige twee die 200k echt halen. <strong>GPT-OSS-120B</strong> stopte op 117k (128k hard cap), <strong>Llama-3.3-70B</strong> op 79k, <strong>Qwen3.8-27B</strong> op 76k (open bug: stille EOS boven ~130k), en <strong>Qwen2.5-72B</strong> clamt al bij 32k native.",
     story5Title: "De kwaliteits-batterij: waar de modellen zich onderscheiden",
     story5Text: "Op de 43/43-batterij staan <strong>GPT-OSS-120B</strong> en <strong>Nemotron-3-Super</strong> bovenaan (42/43); GPT-OSS is 2.3× sneller (110 vs 48 t/s) maar capped op 128k. <strong>Nemotron-3.5-Lightning</strong> is de snelste van allemaal (142 t/s) op 25.5GB, maar loopt op één kansreken-vraag leeg (thinking-runaway). <strong>Llama-3.3-70B</strong> faalt op tool-calling (2/4) door een llama.cpp parser-limiet, en <strong>Qwen2.5-72B</strong> zakt op rekenen (7/10) én context (32k).",
+    story6Title: "vLLM op Volta: 1Cat",
+    story6Text: "<a href=\"https://github.com/1CatAI/1Cat-vLLM\">1Cat-vLLM</a> v1.5.1, een vLLM-fork met eigen V100-kernels, draait <strong>Qwen3.8-27B NVFP4 + DFlash2</strong> tensor-parallel over alle vier de V100's: <strong>39/43, 5/5 retrieval tot 253k tokens</strong>, prefill 3.3–4.3k t/s, 24.5 GB/GPU. Twee lessen. <strong>Flags:</strong> onze eerste config (<code>fp8_e5m2</code> KV, 4096-token prefill-budget, 131k) zette 4 van de 8 V100-versnellingen uit — het officiële release-profiel (<code>fp8_e4m3</code>, 8192, 262k) zet ze alle 8 aan, verdubbelt de context en gebruikt minder VRAM. <strong>Taal:</strong> speculatieve decoding is tekstafhankelijk — 350–390 t/s op Engelse code, ~97 t/s op Nederlandse proza, op dezelfde server.",
     lessonsTitle: "Belangrijkste lessen",
     lesson1Title: "KV-geometrie bepaalt je context", lesson1Text: "Dense 70B/72B = <strong>~320 KiB/token</strong> KV (128k ≈ 43GB). Hybride Mamba = <strong>6–8 KiB/token</strong>. Wil je 200k? Kies op het aantal attention-lagen, niet op de gewichten.",
     lesson2Title: "Bouw voor sm_70, of verlies FlashAttention", lesson2Text: "Alleen <code>CMAKE_CUDA_ARCHITECTURES=70</code> activeert de Volta-FA-pad; een multi-arch build valt stilletjes terug. En: geen BF16/FP8/Marlin op V100.",
@@ -234,17 +238,17 @@ const I18N = {
   },
   en: {
     pageTitle: "🧪 C41xx LLM Benchmark Suite",
-    metaDesc: "7 local LLMs downloaded, run, and tested on an Dell C4130 with 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM).",
+    metaDesc: "8 local LLMs in 10 configurations downloaded, run, and tested on a Dell C4130 with 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM).",
     pageHeading: "🧪 C41xx LLM Benchmark Suite",
-    heroLead: "Which local LLM is truly the fastest and smartest on an Dell C4130 with 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM)? 7 models downloaded, run, and tested ourselves — including the models that failed and why.",
-    badgeHW: "🖥️ 4× Tesla V100-SXM2-32GB · 128GB VRAM", badgeModels: "📦 7 models tested", badgeCats: "🔬 7 test categories", badgeVerified: "✅ all self-verified, no blog stats",
+    heroLead: "Which local LLM is truly the fastest and smartest on a Dell C4130 with 4× Tesla V100-SXM2-32GB (128GB dedicated VRAM)? 8 models in 10 configurations downloaded, run, and tested ourselves — including the models that failed and why.",
+    badgeHW: "🖥️ 4× Tesla V100-SXM2-32GB · 128GB VRAM", badgeModels: "📦 10 configurations tested", badgeCats: "🔬 7 test categories", badgeVerified: "✅ all self-verified, no blog stats",
     navHome: "📊 C4130 Benchmarks", navSpeed: "⚡ Speed", navHard: "🧩 Hard Tasks", navLongctx: "📄 Long-Context", navReliability: "🔁 Reliability", navTools: "🔧 Tools", navKnowledge: "📚 Knowledge", navMath: "🧮 Math",
     winnerTitle: "The Winner", winnerSubtitle: "For 200k context there is only one answer. At 128k, GPT-OSS-120B is faster at the same quality.",
     chartsTitle: "Results in Charts", chartsSubtitle: "Live generated from <code>docs/data/results.json</code> — new model tests appear here automatically after a push.",
     speedChartTitle: "⚡ Generation Speed (tokens/sec)", speedChartNote: "Measured with <code>llama-bench</code> / server timings. Higher = faster.",
     mathChartTitle: "🧮 Hard Math/Reasoning Test Score (out of 10)", mathChartNote: "Only models that completed this specific test round. This is where most models actually distinguish themselves from each other.",
     scatterChartTitle: "💾 Disk Size vs. Speed", scatterChartNote: "Larger bubble = more total parameters. Bottom-right is the ideal corner: small and fast.",
-    matrixTitle: "Full Score Matrix", matrixSubtitle: "All 7 tested models, all categories. Not every model completed every test (see per-row notes in the README).",
+    matrixTitle: "Full Score Matrix", matrixSubtitle: "All 10 tested configurations, all categories. Not every model completed every test (see per-row notes in the README).",
     legendPass: "passed", legendWarn: "partial / with caveat", legendFail: "failed", legendNa: "not tested",
     thModel: "Model", thPublisher: "Publisher", thArch: "Architecture", thDisk: "Disk", thSpeed: "Speed", thContext: "Context",
     thHard: "Hard Tasks", thLongctx: "Long-ctx", thReliability: "Reliability", thTools: "Tools", thKnowledge: "Knowledge", thMath: "Math",
@@ -252,13 +256,15 @@ const I18N = {
     story1Title: "The Brief: Opus-Class on a 2017 Machine",
     story1Text: "The machine was already sold and awaiting pickup, but the question was too good to leave unanswered: can this 4× V100 setup (128GB VRAM, sm_70) serve an Opus-class LLM with 64k–200k context? The earlier gx10 project already had the <em>quality</em> methodology; this project adds the <strong>context sweep</strong> nobody had done for second-hand Volta hardware.",
     story2Title: "The Architecture Barrier: Volta Limits Everything",
-    story2Text: "Before the first benchmark it became clear that almost the entire modern inference stack fails on sm_70: no BF16/FP8 hardware, no FlashAttention-2, no Marlin 4-bit kernels. <strong>llama.cpp is the only runtime</strong> — and only correct when compiled specifically for sm_70 (<code>CMAKE_CUDA_ARCHITECTURES=70</code>), otherwise FlashAttention silently drops off. The build itself cost three pitfalls: a glibc↔CUDA <code>math</code> clash, the requirement that K and V share the same quant for FlashAttention, and avoiding BF16-KV on Volta.",
+    story2Text: "Before the first benchmark it became clear that almost the entire modern inference stack fails on sm_70: no BF16/FP8 hardware, no FlashAttention-2, no Marlin 4-bit kernels. <strong>llama.cpp was the only runtime in the first round</strong> (since October 2026 there is also 1Cat-vLLM — see chapter 6) — and only correct when compiled specifically for sm_70 (<code>CMAKE_CUDA_ARCHITECTURES=70</code>), otherwise FlashAttention silently drops off. The build itself cost three pitfalls: a glibc↔CUDA <code>math</code> clash, the requirement that K and V share the same quant for FlashAttention, and avoiding BF16-KV on Volta.",
     story3Title: "The KV Lesson: Why Only Hybrid Models Reach 200k",
     story3Text: "The decisive discovery. Dense 70B/72B models are as expensive per token in KV-cache as in weights (<strong>~320 KiB/token</strong>), so 128k context already needs ~43GB of KV. The hybrid Nemotron family turns it around: only 6–8 of their ~52–88 layers are attention (the rest is Mamba, with a context-independent state), so a token costs <strong>6–8 KiB</strong>. The result is binary: Nemotron-3-Super served 243k tokens (5/5 retrieval) in 87GB VRAM; a dense 70B would need ~68GB for KV alone at 200k.",
     story4Title: "The Sweep: How Each Model Fails at 200k",
     story4Text: "Each model was measured at 8k/32k/64k/128k, then deliberately pushed to 200k to capture its failure mode. <strong>Nemotron-3-Super and -3.5-Lightning</strong> scored 5/5 up to 243k tokens — the only two that genuinely reach 200k. <strong>GPT-OSS-120B</strong> stopped at 117k (128k hard cap), <strong>Llama-3.3-70B</strong> at 79k, <strong>Qwen3.8-27B</strong> at 76k (open bug: silent EOS above ~130k), and <strong>Qwen2.5-72B</strong> already clamps at 32k native.",
     story5Title: "The Quality Battery: Where Models Distinguish Themselves",
     story5Text: "On the 43/43 battery, <strong>GPT-OSS-120B</strong> and <strong>Nemotron-3-Super</strong> lead (42/43); GPT-OSS is 2.3× faster (110 vs 48 t/s) but capped at 128k. <strong>Nemotron-3.5-Lightning</strong> is the fastest of all (142 t/s) at 25.5GB, but runs empty on one probability question (thinking-runaway). <strong>Llama-3.3-70B</strong> fails tool-calling (2/4) due to a llama.cpp parser limit, and <strong>Qwen2.5-72B</strong> drops on math (7/10) and context (32k).",
+    story6Title: "vLLM on Volta: 1Cat",
+    story6Text: "<a href=\"https://github.com/1CatAI/1Cat-vLLM\">1Cat-vLLM</a> v1.5.1, a vLLM fork with its own V100 kernels, runs <strong>Qwen3.8-27B NVFP4 + DFlash2</strong> tensor-parallel across all four V100s: <strong>39/43, 5/5 retrieval up to 253k tokens</strong>, prefill 3.3–4.3k t/s, 24.5 GB/GPU. Two lessons. <strong>Flags:</strong> our first config (<code>fp8_e5m2</code> KV, 4096-token prefill budget, 131k) disabled 4 of the 8 V100 accelerations — the official release profile (<code>fp8_e4m3</code>, 8192, 262k) enables all 8, doubles the context and uses less VRAM. <strong>Language:</strong> speculative decoding is text-dependent — 350–390 t/s on English code, ~97 t/s on Dutch prose, on the same server.",
     lessonsTitle: "Key Lessons",
     lesson1Title: "KV Geometry Determines Your Context", lesson1Text: "Dense 70B/72B = <strong>~320 KiB/token</strong> KV (128k ≈ 43GB). Hybrid Mamba = <strong>6–8 KiB/token</strong>. Want 200k? Choose on attention-layer count, not on weights.",
     lesson2Title: "Build for sm_70, or Lose FlashAttention", lesson2Text: "Only <code>CMAKE_CUDA_ARCHITECTURES=70</code> enables the Volta FA path; a multi-arch build silently falls back. And: no BF16/FP8/Marlin on V100.",

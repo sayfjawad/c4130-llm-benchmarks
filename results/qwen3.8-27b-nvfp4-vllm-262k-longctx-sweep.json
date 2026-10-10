@@ -1,0 +1,373 @@
+{
+  "model": "qwen3.8-27b-nvfp4-vllm",
+  "sizes": [
+    {
+      "ctx_requested": 8192,
+      "prompt_tokens": 10102,
+      "completion_tokens": 481,
+      "content": "\n\nANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget is 487.300 euro.\n\nANTWOORD 2: De controleaanduiding op positie 25% is RK-93810-214.\n\nANTWOORD 3: De controleaanduiding op positie 50% is RK-13278-859.\n\nANTWOORD 4: De controleaanduiding op positie 75% is RK-46048-350.\n\nANTWOORD 5: De controleaanduiding op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 4.07,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        26558,
+        26552,
+        26552,
+        26552
+      ]
+    },
+    {
+      "ctx_requested": 32768,
+      "prompt_tokens": 38388,
+      "completion_tokens": 534,
+      "content": "\n\nANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget is 487.300 euro.\n\nANTWOORD 2: De controleaanduiding op positie 25% is RK-93810-214.\n\nANTWOORD 3: De controleaanduiding op positie 50% is RK-13278-859.\n\nANTWOORD 4: De controleaanduiding op positie 75% is RK-46048-350.\n\nANTWOORD 5: De controleaanduiding op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 11.67,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        26558,
+        26552,
+        26552,
+        26552
+      ]
+    },
+    {
+      "ctx_requested": 65536,
+      "prompt_tokens": 76023,
+      "completion_tokens": 809,
+      "content": "\n\nANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget is 487.300 euro.\n\nANTWOORD 2: De controleaanduiding bij kwaliteitsregistratie op positie 25% is RK-93810-214.\n\nANTWOORD 3: De controleaanduiding bij kwaliteitsregistratie op positie 50% is RK-13278-859.\n\nANTWOORD 4: De controleaanduiding bij kwaliteitsregistratie op positie 75% is RK-46048-350.\n\nANTWOORD 5: De controleaanduiding bij kwaliteitsregistratie op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 23.79,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        26558,
+        26552,
+        26552,
+        26552
+      ]
+    },
+    {
+      "ctx_requested": 110000,
+      "prompt_tokens": 127006,
+      "completion_tokens": 381,
+      "content": "\n\nANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget is 487.300 euro.  \nANTWOORD 2: RK-93810-214.  \nANTWOORD 3: RK-13278-859.  \nANTWOORD 4: RK-46048-350.  \nANTWOORD 5: RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 41.28,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        26558,
+        26552,
+        26552,
+        26552
+      ]
+    },
+    {
+      "ctx_requested": 131072,
+      "prompt_tokens": 151229,
+      "completion_tokens": 596,
+      "content": "\n\nANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget is 487.300 euro.\n\nANTWOORD 2: De controleaanduiding op positie 25% is RK-93810-214.\n\nANTWOORD 3: De controleaanduiding op positie 50% is RK-13278-859.\n\nANTWOORD 4: De controleaanduiding op positie 75% is RK-46048-350.\n\nANTWOORD 5: De controleaanduiding op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 52.86,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        26558,
+        26552,
+        26552,
+        26552
+      ]
+    },
+    {
+      "ctx_requested": 200000,
+      "prompt_tokens": 230208,
+      "completion_tokens": 573,
+      "content": "\n\nANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget is 487.300 euro.\n\nANTWOORD 2: RK-93810-214.\n\nANTWOORD 3: RK-13278-859.\n\nANTWOORD 4: RK-46048-350.\n\nANTWOORD 5: RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 90.64,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        26558,
+        26552,
+        26552,
+        26552
+      ]
+    },
+    {
+      "ctx_requested": 220000,
+      "prompt_tokens": 253161,
+      "completion_tokens": 680,
+      "content": "\n\nANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget is 487.300 euro.  \nANTWOORD 2: RK-93810-214.  \nANTWOORD 3: RK-13278-859.  \nANTWOORD 4: RK-46048-350.  \nANTWOORD 5: RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 108.35,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        26558,
+        26552,
+        26552,
+        26552
+      ]
+    },
+    {
+      "ctx_requested": 262144,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"error\":{\"message\":\"This model's maximum context length is 262144 tokens. However, you requested 2000 output tokens and your prompt contains at least 260145 input tokens, for a total of at least 262145 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=260145)\",\"type\":\"BadRequestError\",\"param\":\"input_tokens\",\"code\":400}}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 0.77,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        26558,
+        26552,
+        26552,
+        26552
+      ]
+    }
+  ]
+}

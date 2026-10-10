@@ -39,6 +39,7 @@ python3 scripts/aggregate_results.py --results-dir results/ --model my-model --o
 | `long_transcript.py` | ~8K-token transcript data | — | (geïmporteerd) |
 | `run_benchmarks.sh` | Orchestratie: server starten → alle tests → server stoppen | — | Volledige set |
 | `aggregate_results.py` | Ruwe results → `docs/data/results.json` | — | Dashboard data |
+| `bench_vllm_speed.py` | Snelheid tegen een vLLM-server: prefill + pure decode per contextmaat, tokens uit `usage` (niet uit chunks), 1 koud + mediaan 3 warm | — | `<model>-speed.json` |
 
 ## Opties per script
 

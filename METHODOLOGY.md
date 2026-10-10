@@ -205,3 +205,39 @@ cd docs && python3 -m http.server 8080
 - [`llama.cpp`](https://github.com/ggml-org/llama.cpp) met `llama-server` en `llama-bench` in PATH
 - `curl` (voor health checks in `run_benchmarks.sh`)
 - Optioneel: [`huggingface_hub`](https://huggingface.co/docs/huggingface_hub) CLI voor model-downloads (`pip install huggingface_hub[cli]`)
+
+---
+
+## 1Cat-vLLM op V100
+
+De vLLM-entries draaien op [1Cat-vLLM](https://github.com/1CatAI/1Cat-vLLM) v1.5.1 (vLLM-fork voor sm_70), via het docker-image `ghcr.io/dsyzayn/1cat-vllm-v100-docker:latest` (bevat de officiële `1cat-vllm` 1.5.1-wheel, torch 2.10.0+cu128). Gewichten: `QUASAR-QAT/Qwen3.8-27B-QUASAR-NVFP4` (20.6 GB) + drafter `incoai/Qwen3.8-27B-DFlash2` (3.6 GB).
+
+### Release-profiel (entry `qwen3.8-27b-nvfp4-vllm-262k`)
+
+Dit zijn exact de argumenten die `python -m vllm.sm70_profiles argv qwen38_27b_nvfp4_dflash2` genereert (alleen host/poort/model-naam aangepast):
+
+```bash
+docker run -d --name q38 --gpus all -p 8001:8000 -v ~/models:/models:ro \
+  ghcr.io/dsyzayn/1cat-vllm-v100-docker:latest \
+  --model /models/Qwen3.8-27B-QUASAR-NVFP4 --served-model-name qwen3.8-27b-nvfp4-vllm-262k \
+  --host 0.0.0.0 --port 8000 --dtype half --tensor-parallel-size 4 --attention-backend FLASH_ATTN_V100 \
+  --kv-cache-dtype fp8_e4m3 --max-model-len 262144 --gpu-memory-utilization 0.8 \
+  --max-num-batched-tokens 8192 --max-num-seqs 4 --block-size 2048 --mamba-block-size 8192 \
+  --enable-prefix-caching --mamba-cache-mode align --limit-mm-per-prompt '{"image":0,"video":0}' \
+  --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser qwen3 \
+  --default-chat-template-kwargs '{"enable_thinking":false}' --seed 0 \
+  --speculative-config '{"method":"dflash","model":"/models/Qwen3.8-27B-DFlash2","num_speculative_tokens":7,"kv_cache_dtype":"auto","attention_backend":"FLASH_ATTN_V100","draft_sample_method":"probabilistic","enforce_eager":false}' \
+  --trust-remote-code
+```
+
+Opstarten duurt ~5 minuten (o.a. ~186 s compilatie). De meegeleverde launcher `serve_qwen38_27b_nvfp4_v100.sh` werkt in dít image niet (zoekt `/usr/local/bin/python`); de argumenten hierboven zijn het equivalent.
+
+### Eigen flags (entry `qwen3.8-27b-nvfp4-vllm`, eerste productie-config)
+
+Verschil met het release-profiel: `--kv-cache-dtype fp8_e5m2`, `--max-model-len 131072`, `--max-num-batched-tokens 4096`, geen `--block-size`/`--mamba-block-size`. Gevolg volgens `curl localhost:8001/v1/sm70/acceleration`: `e4m3_grouped_fp32`, `long_context`, `scalar_tail` UIT (reden `kv_dtype`) en `q8000_prefill` UIT (reden `budget<8000`).
+
+### Meetafspraken voor vLLM
+
+- **Thinking:** de server zet thinking standaard uit; de batterij draait met `FORCE_THINKING=1` zodat redeneer-/kennistaken thinking **aan** hebben, net als bij de llama.cpp-runs (zie scripts/README.md).
+- **Snelheid:** `scripts/bench_vllm_speed.py` — tokens uit `usage.completion_tokens` (niet uit SSE-chunks; bij speculatieve decoding bevat een chunk soms meerdere tokens), 1 koude + 3 warme requests per maat, mediaan van de warme, 256 output-tokens, T=1 / top_p=0.95 / top_k=20 / seed=0. Prefill = prompt-tokens / TTFT van de koude request (warme requests raken de prefix-cache). De prompt is herhalende Nederlandse synthetische tekst; DFlash2-decode is tekstafhankelijk, dus meet ook met je eigen soort tekst.
+- **Sweep-maten:** de sweep-generator overschiet de gevraagde maat ~1.15× (Qwen-tokenizer). Om binnen 262144 te blijven is 220000 de grootste nuttige maat (→ 253k tokens).
