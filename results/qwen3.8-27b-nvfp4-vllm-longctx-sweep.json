@@ -3,47 +3,279 @@
   "sizes": [
     {
       "ctx_requested": 8192,
-      "prompt_tokens": 10989,
-      "completion_tokens": 28,
-      "content": "The secret project reference is PRJ-7788 and its approved budget is 912.400 euro.",
+      "prompt_tokens": 10102,
+      "completion_tokens": 516,
+      "content": "\n\nANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget is 487.300 euro.\n\nANTWOORD 2: De controleaanduiding op positie 25% is RK-93810-214.\n\nANTWOORD 3: De controleaanduiding op positie 50% is RK-13278-859.\n\nANTWOORD 4: De controleaanduiding op positie 75% is RK-46048-350.\n\nANTWOORD 5: De controleaanduiding op positie 100% is RK-39256-242.",
       "status": "ok",
-      "retrieval_correct": true,
       "failure_mode": null,
-      "score": 1,
-      "decode_tps": 10.1
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 4.26,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        27016,
+        27010,
+        27010,
+        27010
+      ]
     },
     {
       "ctx_requested": 32768,
-      "prompt_tokens": 43757,
-      "completion_tokens": 28,
-      "content": "The secret project reference is PRJ-7788 and its approved budget is 912.400 euro.",
+      "prompt_tokens": 38388,
+      "completion_tokens": 462,
+      "content": "\n\nANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget is 487.300 euro.\nANTWOORD 2: De controleaanduiding op positie 25% is RK-93810-214.\nANTWOORD 3: De controleaanduiding op positie 50% is RK-13278-859.\nANTWOORD 4: De controleaanduiding op positie 75% is RK-46048-350.\nANTWOORD 5: De controleaanduiding op positie 100% is RK-39256-242.",
       "status": "ok",
-      "retrieval_correct": true,
       "failure_mode": null,
-      "score": 1,
-      "decode_tps": 2.89
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 11.84,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        27016,
+        27010,
+        27010,
+        27010
+      ]
     },
     {
       "ctx_requested": 65536,
-      "prompt_tokens": 87445,
-      "completion_tokens": 28,
-      "content": "The secret project reference is PRJ-7788 and its approved budget is 912.400 euro.",
+      "prompt_tokens": 76023,
+      "completion_tokens": 826,
+      "content": "\n\nANTWOORD 1: Het nieuwe ERP-project heeft projectreferentie PRJ-2247 en een toegekend budget van 487.300 euro.\n\nANTWOORD 2: De controleaanduiding op positie 25% is RK-93810-214.\n\nANTWOORD 3: De controleaanduiding op positie 50% is RK-13278-859.\n\nANTWOORD 4: De controleaanduiding op positie 75% is RK-46048-350.\n\nANTWOORD 5: De controleaanduiding op positie 100% is RK-39256-242.",
       "status": "ok",
-      "retrieval_correct": true,
       "failure_mode": null,
-      "score": 1,
-      "decode_tps": 1.68
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 26.52,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        27016,
+        27010,
+        27010,
+        27010
+      ]
+    },
+    {
+      "ctx_requested": 110000,
+      "prompt_tokens": 127006,
+      "completion_tokens": 647,
+      "content": "\n\nANTWOORD 1: De projectreferentie is PRJ-2247 en het toegekende budget is 487.300 euro.\n\nANTWOORD 2: De controleaanduiding op positie 25% is RK-93810-214.\n\nANTWOORD 3: De controleaanduiding op positie 50% is RK-13278-859.\n\nANTWOORD 4: De controleaanduiding op positie 75% is RK-46048-350.\n\nANTWOORD 5: De controleaanduiding op positie 100% is RK-39256-242.",
+      "status": "ok",
+      "failure_mode": null,
+      "score": 5,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": true
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": true
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": true
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": true
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": true
+        }
+      ],
+      "wall_seconds": 49.14,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        27016,
+        27010,
+        27010,
+        27010
+      ]
     },
     {
       "ctx_requested": 131072,
-      "prompt_tokens": 124861,
-      "completion_tokens": 28,
-      "content": "The secret project reference is PRJ-7788 and its approved budget is 912.400 euro.",
-      "status": "ok",
-      "retrieval_correct": true,
-      "failure_mode": null,
-      "score": 1,
-      "decode_tps": 1.5
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"error\":{\"message\":\"This model's maximum context length is 131072 tokens. However, you requested 2000 output tokens and your prompt contains at least 129073 input tokens, for a total of at least 131073 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=129073)\",\"type\":\"BadRequestError\",\"param\":\"input_tokens\",\"code\":400}}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 0.39,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        27016,
+        27010,
+        27010,
+        27010
+      ]
+    },
+    {
+      "ctx_requested": 200000,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "content": "",
+      "status": "error",
+      "failure_mode": "HTTP 400: {\"error\":{\"message\":\"This model's maximum context length is 131072 tokens. However, you requested 2000 output tokens and your prompt contains at least 129073 input tokens, for a total of at least 131073 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=129073)\",\"type\":\"BadRequestError\",\"param\":\"input_tokens\",\"code\":400}}",
+      "score": 0,
+      "n_needles": 5,
+      "needles": [
+        {
+          "q": 1,
+          "positie": "0%",
+          "ok": false
+        },
+        {
+          "q": 2,
+          "positie": "25%",
+          "ok": false
+        },
+        {
+          "q": 3,
+          "positie": "50%",
+          "ok": false
+        },
+        {
+          "q": 4,
+          "positie": "75%",
+          "ok": false
+        },
+        {
+          "q": 5,
+          "positie": "100%",
+          "ok": false
+        }
+      ],
+      "wall_seconds": 0.48,
+      "prefill_tps": 0.0,
+      "decode_tps": 0.0,
+      "peak_vram_mb": [
+        27016,
+        27010,
+        27010,
+        27010
+      ]
     }
   ]
 }

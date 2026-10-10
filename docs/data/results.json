@@ -254,48 +254,91 @@
       "architecture": "Hybride Gated DeltaNet — vLLM/1Cat TP×4 (sm_70)",
       "disk_gb": 20.0,
       "ctx_cap": 131072,
-      "max_ctx_tokens": 124861,
+      "max_ctx_tokens": 127006,
       "gen_tps": 124.45,
       "prompt_tps": 1174.77,
-      "scores": {},
-      "verdict": "ANDERE runtime: 1Cat-vLLM op V100 met NVFP4 + DFlash2-speculatie — ~5× sneller decode dan llama.cpp Q8_0 (124 vs 24 t/s), zelfde kaarten.",
-      "notes": "Performance-entry — kwaliteits-battery is NIET opnieuw gedraaid (zelfde gewichten als de Q8_0/BF16-entries hierboven, die 40/43 scoorden). Engine = 1Cat-vLLM v1.5.1 (CUDA 12.8.1, docker) op 4× V100-32GB sm_70, attention-backend FLASH_ATTN_V100, TP=4, NVFP4-gewichten + DFlash2-drafter (7 spec-tokens). tg128=124 t/s single-stream (DFlash2) vs Q8_0 llama.cpp 24 t/s → ~5×; pp512≈1175 t/s. Concurrency (max-num-seqs 4): 1 user 137 → 4 users 233 tok/s aggregaat. Context geverifieerd tot 124.861 tokens (retrieval correct), 131k geserveerd. Vervangt sinds 2026-10-10 de GLM-4.5-Air op de c4130 :8080.",
+      "scores": {
+        "hard4": {
+          "n": 4,
+          "of": 4
+        },
+        "longctx": {
+          "n": 6,
+          "of": 6
+        },
+        "reliability": {
+          "n": 5,
+          "of": 5
+        },
+        "tools": {
+          "n": 4,
+          "of": 4
+        },
+        "knowledge": {
+          "n": 11,
+          "of": 14
+        },
+        "math": {
+          "n": 9,
+          "of": 10
+        }
+      },
+      "verdict": "Snelste sterke model met 128k: 1Cat-vLLM + NVFP4 + DFlash2 — 124 t/s (~5× llama.cpp Q8_0), 39/43, 5/5 retrieval tot 127k tokens.",
+      "notes": "39/43 (2026-10-11, volledige battery op c4140, identieke prompts+scoring; thinking per taaktype als bij Q8_0/BF16 via FORCE_THINKING=1, want de productie-server zet thinking standaard UIT). Vs Q8_0 (40/43): 1 extra kennisfout (literatuur_1: Mulisch → gehallucineerde auteur — plausibel NVFP4-kwantisatieverlies); rekenen 9/10 zoals Q8_0 maar andere fout (logica_ridders: thinking-runaway, 2000-token budget op, lege content). Sweep: 5/5 naalden tot 127.006 tokens; 131k/200k = harde max-model-len 131072. Engine = 1Cat-vLLM v1.5.1 (CUDA 12.8.1, docker) op 4× V100-32GB sm_70, FLASH_ATTN_V100, TP=4, fp8_e5m2 KV, NVFP4-gewichten + DFlash2-drafter. tg128=124 t/s single-stream vs Q8_0 llama.cpp 24 t/s → ~5×; pp512≈1175 t/s. Concurrency (max-num-seqs 4): 1 user 137 → 4 users 233 tok/s aggregaat. Productie op c4130 :8080 sinds 2026-10-10.",
       "longctx_sweep": [
         {
           "ctx_requested": 8192,
-          "prompt_tokens": 10989,
-          "score": 1,
-          "of": null,
+          "prompt_tokens": 10102,
+          "score": 5,
+          "of": 5,
           "status": "ok",
           "failure_mode": null,
-          "decode_tps": 10.1
+          "decode_tps": 0.0
         },
         {
           "ctx_requested": 32768,
-          "prompt_tokens": 43757,
-          "score": 1,
-          "of": null,
+          "prompt_tokens": 38388,
+          "score": 5,
+          "of": 5,
           "status": "ok",
           "failure_mode": null,
-          "decode_tps": 2.89
+          "decode_tps": 0.0
         },
         {
           "ctx_requested": 65536,
-          "prompt_tokens": 87445,
-          "score": 1,
-          "of": null,
+          "prompt_tokens": 76023,
+          "score": 5,
+          "of": 5,
           "status": "ok",
           "failure_mode": null,
-          "decode_tps": 1.68
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 110000,
+          "prompt_tokens": 127006,
+          "score": 5,
+          "of": 5,
+          "status": "ok",
+          "failure_mode": null,
+          "decode_tps": 0.0
         },
         {
           "ctx_requested": 131072,
-          "prompt_tokens": 124861,
-          "score": 1,
-          "of": null,
-          "status": "ok",
-          "failure_mode": null,
-          "decode_tps": 1.5
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"message\":\"This model's maximum context length is 131072 tokens. Howev",
+          "decode_tps": 0.0
+        },
+        {
+          "ctx_requested": 200000,
+          "prompt_tokens": null,
+          "score": 0,
+          "of": 5,
+          "status": "error",
+          "failure_mode": "HTTP 400: {\"error\":{\"message\":\"This model's maximum context length is 131072 tokens. Howev",
+          "decode_tps": 0.0
         }
       ]
     },

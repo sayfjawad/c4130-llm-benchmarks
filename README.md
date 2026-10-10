@@ -8,7 +8,7 @@ Het korte antwoord: **ja voor 128k, en alleen met hybride Mamba-MoE-architectuur
 
 [![Pages Build](https://github.com/sayfjawad/c4130-llm-benchmarks/actions/workflows/deploy.yml/badge.svg)](https://github.com/sayfjawad/c4130-llm-benchmarks/actions/workflows/deploy.yml)
 ![License](https://img.shields.io/badge/license-MIT-blue)
-![Models tested](https://img.shields.io/badge/modellen%20getest-8-informational)
+![Models tested](https://img.shields.io/badge/modellen%20getest-9-informational)
 
 ---
 
@@ -96,11 +96,15 @@ Codeantwoorden werden daadwerkelijk uitgevoerd tegen testcases; feitelijke antwo
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 🥇 **Nemotron-3-Super-120B-A12B** | NVIDIA | Hybride Mamba-MoE (12B actief) | 82.5 GB | 48 | **243k** ✅ | 4/4 | 6/6 | 5/5 | 4/4 | 13/14 | 10/10 |
 | 🥈 **GPT-OSS-120B** | OpenAI | MoE (5.1B actief/117B) | 63.4 GB | 110 | 117k (128k cap) | 4/4 | 5/6 | 5/5 | 4/4 | 14/14 | 10/10 |
+| ⚡ **Qwen3.8-27B NVFP4 (1Cat-vLLM + DFlash2)** † | Alibaba | Hybride Gated DeltaNet, TP×4 | 20.0 GB | **124** | 127k (128k cap) | 4/4 | 6/6 | 5/5 | 4/4 | 11/14 | 9/10 |
 | 🥉 **Nemotron-3.5-Lightning-30B-A3B** | NVIDIA | Hybride Mamba2-MoE (3B actief) | 25.5 GB | 142 | **243k** ✅ | 4/4 | 6/6 | 5/5 | 4/4 | 11/14* | 9/10 |
 | Qwen3.8-27B (Q8_0) | Alibaba | Hybride Gated DeltaNet | 28.6 GB | 24 | 76k (128k cap) | 4/4 | 6/6 | 5/5 | 4/4 | 12/14 | 9/10 |
 | Llama-3.3-70B | Meta | Dense (70B) | 42.5 GB | 16 | 79k (128k cap) | 4/4 | 6/6 | 5/5 | **2/4** ❌ | 12/14 | 8/10 |
 | Qwen3.8-27B (BF16) | Alibaba | Hybride Gated DeltaNet | 53.8 GB | 15 | 76k (128k cap) | 4/4 | 6/6 | 5/5 | 4/4 | 12/14 | 10/10 |
+| Qwen2.5-32B (vLLM TP×4) † | Alibaba | Dense (32B), FP16 | 62.0 GB | 27 | **32k** ❌ | 3/4 | 6/6 | 5/5 | 4/4 | 12/14 | 6/10 |
 | Qwen2.5-72B | Alibaba | Dense (72B) | 47.4 GB | 15 | **32k** ❌ | 4/4 | 6/6 | 5/5 | 3/4 | 11/14 | 7/10 |
+
+† **Andere runtime: vLLM** (tensor-parallel over alle 4 V100's) i.p.v. llama.cpp — kwaliteitsscores zijn vergelijkbaar (identieke prompts + scoring), snelheid niet 1-op-1. De NVFP4-rij is dezelfde Qwen3.8-27B als de Q8_0/BF16-rijen, maar ~5× sneller en met 5/5 retrieval tot 127k tokens (de Q8_0-sweep sprong van 76k direct naar >131k). Sinds 2026-10-10 het productiemodel op de c4130. Gemeten op de c4140 (zelfde 4× V100-SXM2-32GB).
 
 \* 1 combo-vraag vereist thinking aan en een ruimer tokenbudget; zonder beide loopt hij leeg (zie lessen 3–4).
 

@@ -20,7 +20,7 @@ while args:
     elif a.startswith("--system-prompt="):
         SYSTEM_PROMPT = a.split("=", 1)[1]
 
-URL = f"http://127.0.0.1:{PORT}/v1/chat/completions"
+URL = os.environ.get("BENCH_URL") or f"http://127.0.0.1:{PORT}/v1/chat/completions"
 
 # --- ground truth for auto-scoring ---
 GROUND_TRUTH = {
@@ -125,6 +125,9 @@ def main():
         }
         if NO_THINK or key in FORMAT_TASKS:
             body["chat_template_kwargs"] = {"enable_thinking": False}
+        # FORCE_THINKING=1: servers whose default is thinking OFF (e.g. vLLM --default-chat-template-kwargs)
+        if os.environ.get("FORCE_THINKING") and "chat_template_kwargs" not in body:
+            body["chat_template_kwargs"] = {"enable_thinking": True}
         payload = json.dumps(body).encode()
         req = urllib.request.Request(URL, data=payload, headers={"Content-Type": "application/json"})
         t0 = time.time()

@@ -17,7 +17,7 @@ while args:
     elif a == "--out-dir" and args:
         OUT_DIR = args.pop(0)
 
-URL = f"http://127.0.0.1:{PORT}/v1/chat/completions"
+URL = os.environ.get("BENCH_URL") or f"http://127.0.0.1:{PORT}/v1/chat/completions"
 os.makedirs(OUT_DIR, exist_ok=True)
 
 TOOLS = [
@@ -107,6 +107,9 @@ def call(messages, extra_body=None):
         body["chat_template_kwargs"] = {"enable_thinking": False}
     if extra_body:
         body.update(extra_body)
+    # FORCE_THINKING=1: servers whose default is thinking OFF (e.g. vLLM --default-chat-template-kwargs)
+    if os.environ.get("FORCE_THINKING") and "chat_template_kwargs" not in body:
+        body["chat_template_kwargs"] = {"enable_thinking": True}
     req = urllib.request.Request(URL, data=json.dumps(body).encode(),
                                   headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=300) as resp:

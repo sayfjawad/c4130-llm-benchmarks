@@ -14,7 +14,7 @@ while args:
     if a == "--out-dir" and args:
         OUT_DIR = args.pop(0)
 
-URL = f"http://127.0.0.1:{PORT}/v1/chat/completions"
+URL = os.environ.get("BENCH_URL") or f"http://127.0.0.1:{PORT}/v1/chat/completions"
 os.makedirs(OUT_DIR, exist_ok=True)
 
 # Ground truth answers voor auto-scoring.
@@ -76,6 +76,9 @@ for key, q in QUESTIONS:
         "max_tokens": 2000,
         "temperature": 0.2,
     }
+    # FORCE_THINKING=1: servers whose default is thinking OFF (e.g. vLLM --default-chat-template-kwargs)
+    if os.environ.get("FORCE_THINKING") and "chat_template_kwargs" not in body:
+        body["chat_template_kwargs"] = {"enable_thinking": True}
     req = urllib.request.Request(URL, data=json.dumps(body).encode(),
                                   headers={"Content-Type": "application/json"})
     t0 = time.time()

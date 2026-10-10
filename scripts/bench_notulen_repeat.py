@@ -23,7 +23,7 @@ while args:
     elif a.isdigit():
         REPEATS = int(a)
 
-URL = f"http://127.0.0.1:{PORT}/v1/chat/completions"
+URL = os.environ.get("BENCH_URL") or f"http://127.0.0.1:{PORT}/v1/chat/completions"
 os.makedirs(OUT_DIR, exist_ok=True)
 
 prompt = PROMPTS["scribr_notulen"]
@@ -39,6 +39,9 @@ for run in range(1, REPEATS + 1):
     }
     if NO_THINK:
         body["chat_template_kwargs"] = {"enable_thinking": False}
+    # FORCE_THINKING=1: servers whose default is thinking OFF (e.g. vLLM --default-chat-template-kwargs)
+    if os.environ.get("FORCE_THINKING") and "chat_template_kwargs" not in body:
+        body["chat_template_kwargs"] = {"enable_thinking": True}
     payload = json.dumps(body).encode()
     req = urllib.request.Request(URL, data=payload, headers={"Content-Type": "application/json"})
     t0 = time.time()

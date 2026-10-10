@@ -1,0 +1,96 @@
+{
+  "stap_korting": {
+    "question": "Een winkel past na elkaar drie kortingen toe op een product van 250 euro: eerst 20% korting, dan nog eens 10% korting op het resterende bedrag, en tot slot een vaste korting van 15 euro. Wat is de einprijs? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <bedrag>'.",
+    "answer": "Eerste korting: 20% van 250 euro = 50 euro  \nBedrag na eerste korting: 250 − 50 = 200 euro  \n\nTweede korting: 10% van 200 euro = 20 euro  \nBedrag na tweede korting: 200 − 20 = 180 euro  \n\nDerde korting: vaste korting van 15 euro  \nEindprijs: 180 − 15 = 165 euro  \n\nEINDANTWOORD: 165 euro",
+    "predicted_answer": "165 euro",
+    "expected_answer": "165 euro",
+    "correct": true,
+    "wall_seconds": 1.2,
+    "completion_tokens": 264
+  },
+  "logica_ridders": {
+    "question": "Op een eiland zijn er Ridders (spreken altijd de waarheid) en Schurken (liegen altijd). Je ontmoet A en B. A zegt: 'B is een schurk.' B zegt: 'A en ik zijn beiden ridders.' Wat zijn A en B? Redeneer stap voor stap en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: A=..., B=...'.",
+    "answer": "",
+    "predicted_answer": "",
+    "expected_answer": "A=ridder, B=schurk",
+    "correct": false,
+    "wall_seconds": 7.88,
+    "completion_tokens": 2000
+  },
+  "kans_dobbelsteen": {
+    "question": "Je gooit twee eerlijke dobbelstenen. Wat is de kans dat de som van de ogen precies 7 is? Geef het antwoord als breuk EN als percentage, op de laatste regel als 'EINDANTWOORD: <breuk> = <percentage>%'.",
+    "answer": "Er zijn 36 even waarschijnlijke uitkomsten. De som 7 kan op 6 manieren: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1).\n\nKans = 6/36 = 1/6 ≈ 16,67%.\n\nEINDANTWOORD: 1/6 = 16,67%",
+    "predicted_answer": "1/6 = 16,67%",
+    "expected_answer": "1/6",
+    "correct": true,
+    "wall_seconds": 6.9,
+    "completion_tokens": 1551
+  },
+  "combinatoriek": {
+    "question": "Op hoeveel manieren kunnen 5 verschillende boeken worden verdeeld over 3 verschillende personen, als elke persoon minstens 1 boek moet krijgen? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "We tellen de manieren om 5 verschillende boeken te verdelen over 3 verschillende personen, waarbij elke persoon minstens 1 boek krijgt.\n\nMethode 1: inclusie-exclusie  \nElk boek kan naar 3 personen: \\(3^5 = 243\\).  \nTrek af de situaties waarin minstens 1 persoon niets krijgt:\n\n\\[\n\\binom{3}{1}2^5 = 3 \\cdot 32 = 96\n\\]\n\nTel op de situaties waarin 2 personen niets krijgen (dus alle boeken naar 1 persoon):\n\n\\[\n\\binom{3}{2}1^5 = 3 \\cdot 1 = 3\n\\]\n\nDus:\n\n\\[\n3^5 - \\binom{3}{1}2^5 + \\binom{3}{2}1^5\n= 243 - 96 + 3\n= 150\n\\]\n\nEINDANTWOORD: 150",
+    "predicted_answer": "150",
+    "expected_answer": "150",
+    "correct": true,
+    "wall_seconds": 1.95,
+    "completion_tokens": 479
+  },
+  "algebra": {
+    "question": "Twee getallen hebben een som van 47 en een verschil van 13. Wat zijn de twee getallen? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <groot getal> en <klein getal>'.",
+    "answer": "De twee getallen zijn 30 en 17.\n\nEINDANTWOORD: 30 en 17",
+    "predicted_answer": "30 en 17",
+    "expected_answer": "30 en 17",
+    "correct": true,
+    "wall_seconds": 0.68,
+    "completion_tokens": 116
+  },
+  "getaltheorie": {
+    "question": "Wat is de kleinste positieve gehele n waarvoor n! (n faculteit) deelbaar is door 1000? Toon je redenering en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "1000 = 10³ = 2³ · 5³.\n\nVoor n! deelbaar te zijn door 1000 moet n! dus minstens drie factoren 2 en drie factoren 5 bevatten. Factoren 5 komen zeldzamer voor dan factoren 2, dus bepalen we het aantal factoren 5 in n!:\n\n- 10! bevat ⌊10/5⌋ = 2 factoren 5 → nog niet genoeg.\n- 15! bevat ⌊15/5⌋ + ⌊15/25⌋ = 3 + 0 = 3 factoren 5 → genoeg.\n\nOok zijn er in 15! zeker minstens drie factoren 2, dus 15! is wel deelbaar door 1000.\n\nEINDANTWOORD: 15",
+    "predicted_answer": "15",
+    "expected_answer": "15",
+    "correct": true,
+    "wall_seconds": 1.96,
+    "completion_tokens": 396
+  },
+  "meetkunde": {
+    "question": "Een rechthoekige driehoek heeft een hypotenusa van 13 cm en een rechthoekszijde van 5 cm. Wat is de oppervlakte van de driehoek? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> cm2'.",
+    "answer": "De andere rechthoekszijde is:\n\n\\[\n\\sqrt{13^2 - 5^2} = \\sqrt{169 - 25} = \\sqrt{144} = 12 \\text{ cm}\n\\]\n\nDe oppervlakte is:\n\n\\[\n\\frac{1}{2} \\cdot 5 \\cdot 12 = 30 \\text{ cm}^2\n\\]\n\nEINDANTWOORD: 30 cm2",
+    "predicted_answer": "30 cm2",
+    "expected_answer": "30 cm2",
+    "correct": true,
+    "wall_seconds": 0.92,
+    "completion_tokens": 243
+  },
+  "rente": {
+    "question": "Je zet 1000 euro op een spaarrekening met 4% samengestelde rente per jaar. Na hoeveel volle jaren is het bedrag meer dan verdubbeld? Toon je berekening en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> jaar'.",
+    "answer": "We gebruiken de formule voor samengestelde rente:\n\n\\[\n1000 \\cdot (1{,}04)^n > 2000\n\\]\n\nDelen door 1000:\n\n\\[\n(1{,}04)^n > 2\n\\]\n\nNeem de natuurlijke logaritme:\n\n\\[\nn \\cdot \\ln(1{,}04) > \\ln(2)\n\\]\n\n\\[\nn > \\frac{\\ln(2)}{\\ln(1{,}04)}\n\\]\n\n\\[\nn > \\frac{0{,}693147}{0{,}039221} \\approx 17{,}67\n\\]\n\nOmdat het om volle jaren gaat, moet je afroken naar het eerst volgende hele aantal jaren:\n\n\\[\nn = 18\n\\]\n\nEINDANTWOORD: 18 jaar",
+    "predicted_answer": "18 jaar",
+    "expected_answer": "18 jaar",
+    "correct": true,
+    "wall_seconds": 2.11,
+    "completion_tokens": 519
+  },
+  "valstrik_schapen": {
+    "question": "Een boer heeft 17 schapen. Op 1 na sterven ze allemaal. Hoeveel schapen heeft hij nog? Geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal>'.",
+    "answer": "EINDANTWOORD: 1",
+    "predicted_answer": "1",
+    "expected_answer": "1 schaap",
+    "correct": true,
+    "wall_seconds": 1.3,
+    "completion_tokens": 274
+  },
+  "valstrik_caesar": {
+    "question": "Julius Caesar werd geboren in juli 100 v.Chr. en stierf op 15 maart 44 v.Chr. Hoe oud was hij toen hij stierf? Let goed op of zijn verjaardag dat jaar al was geweest. Toon je redenering en geef het eindantwoord op de laatste regel als 'EINDANTWOORD: <getal> jaar'.",
+    "answer": "Julius Caesar werd geboren in juli 100 v.Chr.\n\n- In juli 99 v.Chr. werd hij 1 jaar.\n- In juli 45 v.Chr. werd hij dus 55 jaar, want van 100 v.Chr. tot 45 v.Chr. zijn 55 jaar verstreken.\n- Hij stierf op 15 maart 44 v.Chr., dus vóór zijn verjaardag in juli 44 v.Chr.\n- Daarom had hij in 44 v.Chr. nog niet zijn 56e verjaardag gevierd.\n\nHij was dus 55 jaar oud toen hij stierf.\n\nEINDANTWOORD: 55 jaar",
+    "predicted_answer": "55 jaar",
+    "expected_answer": "55 jaar",
+    "correct": true,
+    "wall_seconds": 2.88,
+    "completion_tokens": 682
+  },
+  "_summary": {
+    "n_correct": 9,
+    "n_total": 10
+  }
+}

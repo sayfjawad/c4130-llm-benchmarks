@@ -90,8 +90,8 @@ METADATA = {
         "hf_repo": "QUASAR-QAT/Qwen3.8-27B-QUASAR-NVFP4", "quant": "NVFP4 (QUASAR QAT) + DFlash2",
         "params_total_b": 27, "params_active_b": 27, "architecture": "Hybride Gated DeltaNet — vLLM/1Cat TP×4 (sm_70)",
         "disk_gb": 20.0, "ctx_cap": 131072,
-        "verdict": "ANDERE runtime: 1Cat-vLLM op V100 met NVFP4 + DFlash2-speculatie — ~5× sneller decode dan llama.cpp Q8_0 (124 vs 24 t/s), zelfde kaarten.",
-        "notes": "Performance-entry — kwaliteits-battery is NIET opnieuw gedraaid (zelfde gewichten als de Q8_0/BF16-entries hierboven, die 40/43 scoorden). Engine = 1Cat-vLLM v1.5.1 (CUDA 12.8.1, docker) op 4× V100-32GB sm_70, attention-backend FLASH_ATTN_V100, TP=4, NVFP4-gewichten + DFlash2-drafter (7 spec-tokens). tg128=124 t/s single-stream (DFlash2) vs Q8_0 llama.cpp 24 t/s → ~5×; pp512≈1175 t/s. Concurrency (max-num-seqs 4): 1 user 137 → 4 users 233 tok/s aggregaat. Context geverifieerd tot 124.861 tokens (retrieval correct), 131k geserveerd. Vervangt sinds 2026-10-10 de GLM-4.5-Air op de c4130 :8080.",
+        "verdict": "Snelste sterke model met 128k: 1Cat-vLLM + NVFP4 + DFlash2 — 124 t/s (~5× llama.cpp Q8_0), 39/43, 5/5 retrieval tot 127k tokens.",
+        "notes": "39/43 (2026-10-11, volledige battery op c4140, identieke prompts+scoring; thinking per taaktype als bij Q8_0/BF16 via FORCE_THINKING=1, want de productie-server zet thinking standaard UIT). Vs Q8_0 (40/43): 1 extra kennisfout (literatuur_1: Mulisch → gehallucineerde auteur — plausibel NVFP4-kwantisatieverlies); rekenen 9/10 zoals Q8_0 maar andere fout (logica_ridders: thinking-runaway, 2000-token budget op, lege content). Sweep: 5/5 naalden tot 127.006 tokens; 131k/200k = harde max-model-len 131072. Engine = 1Cat-vLLM v1.5.1 (CUDA 12.8.1, docker) op 4× V100-32GB sm_70, FLASH_ATTN_V100, TP=4, fp8_e5m2 KV, NVFP4-gewichten + DFlash2-drafter. tg128=124 t/s single-stream vs Q8_0 llama.cpp 24 t/s → ~5×; pp512≈1175 t/s. Concurrency (max-num-seqs 4): 1 user 137 → 4 users 233 tok/s aggregaat. Productie op c4130 :8080 sinds 2026-10-10.",
     },
 }
 

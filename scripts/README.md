@@ -52,6 +52,13 @@ python3 bench_<test>.py <PORT> <MODEL_NAME> [--nothink] [--out-dir <dir>]
 | `--nothink` | Stuurt `enable_thinking: false` mee (Nemotron/Qwen) of gebruikt server met `--reasoning off` |
 | `--out-dir <dir>` | Output directory (default: `results/`) |
 
+Omgevingsvariabelen (voor vLLM of een server elders):
+
+| Variabele | Effect |
+|---|---|
+| `BENCH_URL` | Volledige chat-completions-URL i.p.v. `http://127.0.0.1:<PORT>/v1/chat/completions` (bv. vLLM op `:8001`) |
+| `FORCE_THINKING=1` | Stuurt expliciet `enable_thinking: true` waar een script thinking niet zelf uitzet — nodig bij servers die thinking standaard UIT hebben (vLLM `--default-chat-template-kwargs`), zodat de thinking-per-taaktype gelijk blijft aan de llama.cpp-runs |
+
 ## Thinking/redeneren per taaktype
 
 Dit is de belangrijkste les uit 7 modellen testen:
