@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="pageTitle">📄 Long-context — C4130 LLM Benchmarks</title>
+<title data-i18n="pageTitle">📄 Long-context — C41xx LLM Benchmarks</title>
 <style>
 :root { color-scheme: light; --surface-0: #ffffff; --surface-1: #fcfcfb; --surface-2: #f3f2ef; --border: #e4e2dc; --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #79776f; --series-1: #2a78d6; --series-2: #eb6834; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #d03b3b; --link: #1c5cab; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; --surface-0: #121211; --surface-1: #1a1a19; --surface-2: #232320; --border: #34342f; --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #918f84; --series-1: #3987e5; --series-2: #d95926; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #e66767; --link: #86b6ef; } }
@@ -77,12 +77,12 @@ code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-
     <pre>python3 scripts/bench_longctx.py &lt;port&gt; &lt;model_name&gt;</pre>
     <p data-i18n="methText2">Gebruik altijd <code>--nothink</code> voor deze test.</p>
   </section>
-  <footer><p>C4130 LLM Benchmark Suite — <a href="https://github.com/sayfjawad/c4130-llm-benchmarks">GitHub</a> — <span data-i18n="footerDashboard">Dashboard:</span> <a href="https://c4130.multicode.nl">c4130.multicode.nl</a></p></footer>
+  <footer><p>C41xx LLM Benchmark Suite — <a href="https://github.com/sayfjawad/c41xx-llm-benchmarks">GitHub</a> — <span data-i18n="footerDashboard">Dashboard:</span> <a href="https://c4130.multicode.nl">c4130.multicode.nl</a></p></footer>
 </div>
 <script>
 const I18N = {
   nl: {
-    pageTitle: "📄 Long-context — C4130 LLM Benchmarks", pageHeading: "📄 Long-context",
+    pageTitle: "📄 Long-context — C41xx LLM Benchmarks", pageHeading: "📄 Long-context",
     leadText: "Kan een model feiten terugvinden in een ~8.000-token transcript? 6 \"needles\" verspreid door de tekst — van vroeg tot zeer laat.",
     breadcrumb: "← Dashboard", navOverview: "📊 Overzicht", navSpeed: "⚡ Snelheid", navHard: "🧩 Zware taken", navLongctx: "📄 Long-context", navReliability: "🔁 Betrouwbaarheid", navTools: "🔧 Tools", navKnowledge: "📚 Kennis", navMath: "🧮 Rekenen",
     whatTitle: "Wat test dit?", whatText1: "Een ~8.000-token fictief transcript van een tweedaagse strategieconferentie van \"Meridian Logistics Group\" met 5 appendices. Er zijn 6 specifieke vragen (\"needles\") verspreid door de tekst — van vroeg in het document tot helemaal aan het einde.",
@@ -103,7 +103,7 @@ const I18N = {
     allCorrect: "Perfecte needle retrieval", loadError: "Data laden mislukt: ",
   },
   en: {
-    pageTitle: "📄 Long-Context — C4130 LLM Benchmarks", pageHeading: "📄 Long-Context",
+    pageTitle: "📄 Long-Context — C41xx LLM Benchmarks", pageHeading: "📄 Long-Context",
     leadText: "Can a model find facts in an ~8,000-token transcript? 6 \"needles\" scattered throughout the text — from early to very late.",
     breadcrumb: "← Dashboard", navOverview: "📊 Overview", navSpeed: "⚡ Speed", navHard: "🧩 Hard Tasks", navLongctx: "📄 Long-Context", navReliability: "🔁 Reliability", navTools: "🔧 Tools", navKnowledge: "📚 Knowledge", navMath: "🧮 Math",
     whatTitle: "What Does This Test?", whatText1: "An ~8,000-token fictional transcript of a two-day strategy conference by \"Meridian Logistics Group\" with 5 appendices. There are 6 specific questions (\"needles\") scattered throughout the text — from early in the document to the very end.",

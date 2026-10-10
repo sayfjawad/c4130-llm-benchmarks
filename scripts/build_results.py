@@ -205,7 +205,7 @@ def main():
 
     out = {
         "meta": {
-            "title": "C4130 LLM Benchmark Suite",
+            "title": "C41xx LLM Benchmark Suite",
             "hardware": "Dell PowerEdge C4130 — 4× NVIDIA Tesla V100-SXM2-32GB (128GB dedicated VRAM)",
             "memory_gb": 128,
             "gpu_addressable_gb": 128,

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="pageTitle">🔁 Betrouwbaarheid — C4130 LLM Benchmarks</title>
+<title data-i18n="pageTitle">🔁 Betrouwbaarheid — C41xx LLM Benchmarks</title>
 <style>
 :root { color-scheme: light; --surface-0: #ffffff; --surface-1: #fcfcfb; --surface-2: #f3f2ef; --border: #e4e2dc; --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #79776f; --series-1: #2a78d6; --series-2: #eb6834; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #d03b3b; --link: #1c5cab; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; --surface-0: #121211; --surface-1: #1a1a19; --surface-2: #232320; --border: #34342f; --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #918f84; --series-1: #3987e5; --series-2: #d95926; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #e66767; --link: #86b6ef; } }
@@ -77,12 +77,12 @@ code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-
     <p data-i18n="methText1">Dezelfde notulen-taak 5× achter elkaar, zelfde prompt, temperature=0.7. Elke run wordt gecheckt op aanwezigheid van alle 3 verplichte headers (Besluiten, Actiepunten, Openstaande vragen).</p>
     <pre>python3 scripts/bench_notulen_repeat.py &lt;port&gt; &lt;model_name&gt; 5</pre>
   </section>
-  <footer><p>C4130 LLM Benchmark Suite — <a href="https://github.com/sayfjawad/c4130-llm-benchmarks">GitHub</a> — <span data-i18n="footerDashboard">Dashboard:</span> <a href="https://c4130.multicode.nl">c4130.multicode.nl</a></p></footer>
+  <footer><p>C41xx LLM Benchmark Suite — <a href="https://github.com/sayfjawad/c41xx-llm-benchmarks">GitHub</a> — <span data-i18n="footerDashboard">Dashboard:</span> <a href="https://c4130.multicode.nl">c4130.multicode.nl</a></p></footer>
 </div>
 <script>
 const I18N = {
   nl: {
-    pageTitle: "🔁 Betrouwbaarheid — C4130 LLM Benchmarks", pageHeading: "🔁 Betrouwbaarheid",
+    pageTitle: "🔁 Betrouwbaarheid — C41xx LLM Benchmarks", pageHeading: "🔁 Betrouwbaarheid",
     leadText: "Dezelfde notulen-taak 5× herhaald bij temperature=0.7. Produceert het model consistente resultaten, of breekt er iets?",
     breadcrumb: "← Dashboard", navOverview: "📊 Overzicht", navSpeed: "⚡ Snelheid", navHard: "🧩 Zware taken", navLongctx: "📄 Long-context", navReliability: "🔁 Betrouwbaarheid", navTools: "🔧 Tools", navKnowledge: "📚 Kennis", navMath: "🧮 Rekenen",
     whatTitle: "Wat test dit?", whatText1: "Dezelfde notulen-structureringstaak (raadsvergaderingstranscript → gestructureerde notulen) wordt <strong>5 keer herhaald</strong> met temperature=0.7. Dit test niet of het model de taak kán doen, maar of het de taak consistent kan doen zonder te degraderen.",
@@ -102,7 +102,7 @@ const I18N = {
     allCorrect: "Consistent, geen faalruns", loadError: "Data laden mislukt: ",
   },
   en: {
-    pageTitle: "🔁 Reliability — C4130 LLM Benchmarks", pageHeading: "🔁 Reliability",
+    pageTitle: "🔁 Reliability — C41xx LLM Benchmarks", pageHeading: "🔁 Reliability",
     leadText: "The same minutes task repeated 5× at temperature=0.7. Does the model produce consistent results, or does something break?",
     breadcrumb: "← Dashboard", navOverview: "📊 Overview", navSpeed: "⚡ Speed", navHard: "🧩 Hard Tasks", navLongctx: "📄 Long-Context", navReliability: "🔁 Reliability", navTools: "🔧 Tools", navKnowledge: "📚 Knowledge", navMath: "🧮 Math",
     whatTitle: "What Does This Test?", whatText1: "The same minutes-structuring task (council meeting transcript → structured minutes) is <strong>repeated 5 times</strong> at temperature=0.7. This tests not whether the model can do the task, but whether it can do it consistently without degrading.",

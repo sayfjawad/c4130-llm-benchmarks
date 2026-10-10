@@ -4,7 +4,7 @@
 # Dense models (llama-3.3-70b, qwen2.5-72b) are unaffected by enable_thinking and are skipped.
 set -uo pipefail
 
-SCRIPTS=/data/git/c4130-llm-benchmarks/scripts
+SCRIPTS=/data/git/c41xx-llm-benchmarks/scripts
 M=/data/models
 PORT=8081
 OUT_DIR="$SCRIPTS/../results"

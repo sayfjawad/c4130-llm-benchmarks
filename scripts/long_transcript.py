@@ -392,7 +392,7 @@ TRANSCRIPT = TRANSCRIPT + "\n" + _appendix_c_text + "\n" + _appendix_d_text + "\
 
 
 # ============================================================================
-# Long-context sweep support (c4130-llm-benchmarks).
+# Long-context sweep support (c41xx-llm-benchmarks).
 #
 # build_transcript(target_tokens) returns a deterministic Dutch document of
 # ~target_tokens tokens (~4 chars/token) with five verifiable needles planted

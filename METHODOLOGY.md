@@ -1,4 +1,4 @@
-# METHODOLOGY — C4130 LLM Benchmark Suite
+# METHODOLOGY — C41xx LLM Benchmark Suite
 
 Universele, reproduceerbare benchmark voor lokale LLM's. Draait op elke machine met [`llama.cpp`](https://github.com/ggml-org/llama.cpp) (CUDA, Metal, Vulkan, CPU). Alle tests zijn **geautomatiseerd gescoord** — geen handmatige beoordeling nodig.
 
@@ -182,8 +182,8 @@ Universele, reproduceerbare benchmark voor lokale LLM's. Draait op elke machine 
 
 ```bash
 # 1. Clone de repo
-git clone https://github.com/sayfjawad/c4130-llm-benchmarks
-cd c4130-llm-benchmarks
+git clone https://github.com/sayfjawad/c41xx-llm-benchmarks
+cd c41xx-llm-benchmarks
 
 # 2. Download een model (voorbeeld)
 hf download unsloth/gpt-oss-120b-GGUF --include "UD-Q4_K_XL/*" --local-dir ~/models/gpt-oss-120b

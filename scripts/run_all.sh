@@ -9,7 +9,7 @@
 # Each step is guarded so one failure does not stop the rest.
 set -uo pipefail
 
-SCRIPTS=/data/git/c4130-llm-benchmarks/scripts
+SCRIPTS=/data/git/c41xx-llm-benchmarks/scripts
 M=/data/models
 export PATH="/usr/local/bin:$PATH"
 cd "$SCRIPTS"

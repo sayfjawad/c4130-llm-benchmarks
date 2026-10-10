@@ -1,12 +1,12 @@
-# 🧪 C4130 LLM Benchmark Suite
+# 🧪 C41xx LLM Benchmark Suite
 
 **Kan een machine uit 2017 — een Dell C4130 met 4× Tesla V100-SXM2-32GB (128 GB dedicated VRAM) — een Opus-klasse LLM draaien, met minimaal 64k en liefst 200k context?**
 
 Het korte antwoord: **ja voor 128k, en alleen met hybride Mamba-MoE-architectuur voor 200k.** Het lange antwoord, met zelf gemeten cijfers, staat hieronder. 7 modellen, zelf gedownload, zelf gedraaid, zelf getest — inclusief de modellen die faalden en waaróm.
 
-📊 **[Bekijk het interactieve resultaten-dashboard →](https://sayfjawad.github.io/c4130-llm-benchmarks/)**
+📊 **[Bekijk het interactieve resultaten-dashboard →](https://sayfjawad.github.io/c41xx-llm-benchmarks/)**
 
-[![Pages Build](https://github.com/sayfjawad/c4130-llm-benchmarks/actions/workflows/deploy.yml/badge.svg)](https://github.com/sayfjawad/c4130-llm-benchmarks/actions/workflows/deploy.yml)
+[![Pages Build](https://github.com/sayfjawad/c41xx-llm-benchmarks/actions/workflows/deploy.yml/badge.svg)](https://github.com/sayfjawad/c41xx-llm-benchmarks/actions/workflows/deploy.yml)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Models tested](https://img.shields.io/badge/modellen%20getest-9-informational)
 
@@ -163,8 +163,8 @@ Onze machine had 1.7 TB vrij op `/data`; de volledige set paste ruim.
 Deze suite is **portable** en draait op elke machine met `llama.cpp` (CUDA/Metal/Vulkan/CPU), mits je de thinking-toggle per modelfamilie respecteert. Alle tests zijn automatisch gescoord.
 
 ```bash
-git clone https://github.com/sayfjawad/c4130-llm-benchmarks.git
-cd c4130-llm-benchmarks
+git clone https://github.com/sayfjawad/c41xx-llm-benchmarks.git
+cd c41xx-llm-benchmarks
 
 # Eén model: downloaden, server starten, batterij draaien
 ./scripts/run_benchmarks.sh my-model ~/models/my-model.gguf

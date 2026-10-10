@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="pageTitle">📚 Kennis — C4130 LLM Benchmarks</title>
+<title data-i18n="pageTitle">📚 Kennis — C41xx LLM Benchmarks</title>
 <style>
 :root { color-scheme: light; --surface-0: #ffffff; --surface-1: #fcfcfb; --surface-2: #f3f2ef; --border: #e4e2dc; --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #79776f; --series-1: #2a78d6; --series-2: #eb6834; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #d03b3b; --link: #1c5cab; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; --surface-0: #121211; --surface-1: #1a1a19; --surface-2: #232320; --border: #34342f; --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #918f84; --series-1: #3987e5; --series-2: #d95926; --status-good: #0ca30c; --status-warning: #fab219; --status-critical: #e66767; --link: #86b6ef; } }
@@ -78,12 +78,12 @@ code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-
     <pre>python3 scripts/bench_knowledge.py &lt;port&gt; &lt;model_name&gt;</pre>
     <p data-i18n="methText2">Gebruik <code>--nothink</code> voor de 12 pure kennisvragen. De 2 combo-vragen scoren het best met thinking AAN.</p>
   </section>
-  <footer><p>C4130 LLM Benchmark Suite — <a href="https://github.com/sayfjawad/c4130-llm-benchmarks">GitHub</a> — <span data-i18n="footerDashboard">Dashboard:</span> <a href="https://c4130.multicode.nl">c4130.multicode.nl</a></p></footer>
+  <footer><p>C41xx LLM Benchmark Suite — <a href="https://github.com/sayfjawad/c41xx-llm-benchmarks">GitHub</a> — <span data-i18n="footerDashboard">Dashboard:</span> <a href="https://c4130.multicode.nl">c4130.multicode.nl</a></p></footer>
 </div>
 <script>
 const I18N = {
   nl: {
-    pageTitle: "📚 Kennis — C4130 LLM Benchmarks", pageHeading: "📚 Kennis",
+    pageTitle: "📚 Kennis — C41xx LLM Benchmarks", pageHeading: "📚 Kennis",
     leadText: "14 vragen over scheikunde, geschiedenis, geografie, biologie, wiskunde, technologie, literatuur, astronomie, economie, muziek en natuurkunde — plus 2 kennis+redeneer-combinaties.",
     breadcrumb: "← Dashboard", navOverview: "📊 Overzicht", navSpeed: "⚡ Snelheid", navHard: "🧩 Zware taken", navLongctx: "📄 Long-context", navReliability: "🔁 Betrouwbaarheid", navTools: "🔧 Tools", navKnowledge: "📚 Kennis", navMath: "🧮 Rekenen",
     whatTitle: "Wat test dit?", whatText1: "12 pure kennisvragen uit 12 verschillende domeinen plus 2 \"combo\"-vragen die kennis combineren met redeneren. Dit test de breedte en accuraatheid van de in het model opgeslagen kennis.",
@@ -104,7 +104,7 @@ const I18N = {
     allCorrect: "Perfecte kennis + combo's", loadError: "Data laden mislukt: ",
   },
   en: {
-    pageTitle: "📚 Knowledge — C4130 LLM Benchmarks", pageHeading: "📚 Knowledge",
+    pageTitle: "📚 Knowledge — C41xx LLM Benchmarks", pageHeading: "📚 Knowledge",
     leadText: "14 questions across chemistry, history, geography, biology, mathematics, technology, literature, astronomy, economics, music, and physics — plus 2 knowledge+reasoning combinations.",
     breadcrumb: "← Dashboard", navOverview: "📊 Overview", navSpeed: "⚡ Speed", navHard: "🧩 Hard Tasks", navLongctx: "📄 Long-Context", navReliability: "🔁 Reliability", navTools: "🔧 Tools", navKnowledge: "📚 Knowledge", navMath: "🧮 Math",
     whatTitle: "What Does This Test?", whatText1: "12 pure factual questions from 12 different domains plus 2 \"combo\" questions that combine knowledge with reasoning. This tests the breadth and accuracy of the model's stored knowledge.",
