@@ -136,7 +136,7 @@ Elk model werd doorgemeten op 8k/32k/64k/128k en daarna opzettelijk op 200k geze
 - **GPT-OSS-120B:** 5/5 tot 117k, daarna harde HTTP 400 bij 131k (`max_position_embeddings=131072`). SWA houdt de KV klein, maar de harde cap blijft.
 - **Llama-3.3-70B:** 5/5 tot 79k, cap op 131k.
 - **Qwen3.8-27B (llama.cpp):** 5/5 tot 76k, cap op 131k (open bug [#27756](https://github.com/ggml-org/llama.cpp/issues/27756): stille EOS boven ~130k).
-- **Qwen3.8-27B NVFP4 (1Cat-vLLM, release-profiel):** 5/5 op **elke** maat tot en met **253k tokens** (alleen de opzettelijke 262k-poging faalt op de harde cap). Zelfde model, andere runtime — de 131k-grens was een llama.cpp/flag-grens, geen modelgrens.
+- **Qwen3.8-27B NVFP4 (1Cat-vLLM, release-profiel):** 5/5 op **elke** maat tot en met **253k tokens** (alleen de opzettelijke 262k-poging faalt op de harde cap) — zowel met prefill-budget 8192 als met de stabiele productie-instelling 4096 (herhaald 2026-10-11). Zelfde model, andere runtime — de 131k-grens was een llama.cpp/flag-grens, geen modelgrens.
 - **Qwen2.5-72B:** clamt al bij **32k** — native 32k zonder YaRN-extensie, dus geen 128k zoals de kaart suggereert.
 
 ### De kwaliteits-batterij: waar de modellen zich écht onderscheiden

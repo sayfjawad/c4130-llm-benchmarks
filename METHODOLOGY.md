@@ -232,7 +232,7 @@ docker run -d --name q38 --gpus all -p 8001:8000 -v ~/models:/models:ro \
 
 Opstarten duurt ~5 minuten (o.a. ~186 s compilatie).
 
-> ⚠️ **Gebruik in productie `--max-num-batched-tokens 4096`, niet 8192.** Met 8192 crasht de engine onder gelijktijdige lange prompts (`SM70 GQA architecture requires KV in [8192, 262144] with 32-token alignment, got 8160` → `EngineDeadError`; gereproduceerd met 10 gelijktijdige ~6k-token RAG-requests). Met 4096 staat alleen `q8000_prefill` uit en bleef 20× gelijktijdig RAG foutloos. De single-user-batterij en sweep hierboven zijn met 8192 gemeten. De meegeleverde launcher `serve_qwen38_27b_nvfp4_v100.sh` werkt in dít image niet (zoekt `/usr/local/bin/python`); de argumenten hierboven zijn het equivalent.
+> ⚠️ **Gebruik in productie `--max-num-batched-tokens 4096`, niet 8192.** Met 8192 crasht de engine onder gelijktijdige lange prompts (`SM70 GQA architecture requires KV in [8192, 262144] with 32-token alignment, got 8160` → `EngineDeadError`; gereproduceerd met 10 gelijktijdige ~6k-token RAG-requests). Met 4096 staat alleen `q8000_prefill` uit en bleef 20× gelijktijdig RAG foutloos. De single-user-batterij en sweep hierboven zijn met 8192 gemeten; de sweep is herhaald met 4096 en haalt ook 5/5 op elke maat tot 253.161 tokens (`results/qwen3.8-27b-nvfp4-vllm-262k-longctx-sweep-budget4096.json`). De meegeleverde launcher `serve_qwen38_27b_nvfp4_v100.sh` werkt in dít image niet (zoekt `/usr/local/bin/python`); de argumenten hierboven zijn het equivalent.
 
 ### Eigen flags (entry `qwen3.8-27b-nvfp4-vllm`, eerste productie-config)
 
