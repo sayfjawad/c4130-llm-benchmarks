@@ -1,0 +1,542 @@
+{
+  "model": "qwen3.8-27b-nvfp4-vllm",
+  "url": "http://127.0.0.1:8001",
+  "results": [
+    {
+      "scenario": "chat",
+      "users": 1,
+      "errors": 0,
+      "wall_s": 4.37,
+      "prompt_tokens": 69,
+      "runs": [
+        {
+          "ttft": 0.2392914820011356,
+          "total": 4.364056029000494,
+          "out": 400,
+          "prompt": 69,
+          "decode_tps": 96.73279418827929
+        }
+      ],
+      "ttft_p50": 0.24,
+      "ttft_p95": 0.24,
+      "ttft_max": 0.24,
+      "decode_p50": 96.7,
+      "decode_min": 96.7,
+      "e2e_p50": 4.4,
+      "e2e_max": 4.4,
+      "aggregate_tps": 91.6
+    },
+    {
+      "scenario": "chat",
+      "users": 5,
+      "errors": 0,
+      "wall_s": 15.53,
+      "prompt_tokens": 69,
+      "runs": [
+        {
+          "ttft": 0.3104274829966016,
+          "total": 11.290523914001824,
+          "out": 400,
+          "prompt": 69,
+          "decode_tps": 36.3384786743145
+        },
+        {
+          "ttft": 0.30969125500269,
+          "total": 11.727221380999254,
+          "out": 400,
+          "prompt": 69,
+          "decode_tps": 34.946262072172445
+        },
+        {
+          "ttft": 0.8729702909986372,
+          "total": 10.501222555998538,
+          "out": 400,
+          "prompt": 76,
+          "decode_tps": 41.440542792010454
+        },
+        {
+          "ttft": 0.8725179679968278,
+          "total": 10.695886702997086,
+          "out": 400,
+          "prompt": 69,
+          "decode_tps": 40.61743081865383
+        },
+        {
+          "ttft": 10.695383029997174,
+          "total": 15.522006651997799,
+          "out": 400,
+          "prompt": 73,
+          "decode_tps": 82.66648308380329
+        }
+      ],
+      "ttft_p50": 0.87,
+      "ttft_p95": 10.7,
+      "ttft_max": 10.7,
+      "decode_p50": 40.6,
+      "decode_min": 34.9,
+      "e2e_p50": 11.3,
+      "e2e_max": 15.5,
+      "aggregate_tps": 128.8
+    },
+    {
+      "scenario": "chat",
+      "users": 10,
+      "errors": 0,
+      "wall_s": 21.58,
+      "prompt_tokens": 70,
+      "runs": [
+        {
+          "ttft": 0.31801907699991716,
+          "total": 7.16054164399975,
+          "out": 385,
+          "prompt": 70,
+          "decode_tps": 56.11965415385811
+        },
+        {
+          "ttft": 0.31752203500218457,
+          "total": 8.473843387997476,
+          "out": 400,
+          "prompt": 70,
+          "decode_tps": 48.91911227277392
+        },
+        {
+          "ttft": 0.31705765899823746,
+          "total": 7.619852474999789,
+          "out": 389,
+          "prompt": 77,
+          "decode_tps": 53.1303438992743
+        },
+        {
+          "ttft": 0.48046967099799076,
+          "total": 7.647801253995567,
+          "out": 400,
+          "prompt": 70,
+          "decode_tps": 55.66925366568951
+        },
+        {
+          "ttft": 7.353359622000426,
+          "total": 15.538764603996242,
+          "out": 400,
+          "prompt": 74,
+          "decode_tps": 48.74529737717551
+        },
+        {
+          "ttft": 7.81167590199766,
+          "total": 15.168128479999723,
+          "out": 400,
+          "prompt": 70,
+          "decode_tps": 54.23809856303924
+        },
+        {
+          "ttft": 7.975812067998049,
+          "total": 15.961653123995347,
+          "out": 390,
+          "prompt": 70,
+          "decode_tps": 48.711212416112936
+        },
+        {
+          "ttft": 8.664972681996005,
+          "total": 16.534048228000756,
+          "out": 400,
+          "prompt": 77,
+          "decode_tps": 50.70481248621108
+        },
+        {
+          "ttft": 15.36255519399856,
+          "total": 21.48762247999548,
+          "out": 400,
+          "prompt": 70,
+          "decode_tps": 65.14214152588832
+        },
+        {
+          "ttft": 15.729231430996151,
+          "total": 21.57012853500055,
+          "out": 400,
+          "prompt": 74,
+          "decode_tps": 68.3114242376319
+        }
+      ],
+      "ttft_p50": 7.35,
+      "ttft_p95": 15.73,
+      "ttft_max": 15.73,
+      "decode_p50": 53.1,
+      "decode_min": 48.7,
+      "e2e_p50": 15.2,
+      "e2e_max": 21.6,
+      "aggregate_tps": 183.7
+    },
+    {
+      "scenario": "chat",
+      "users": 20,
+      "errors": 0,
+      "wall_s": 40.78,
+      "prompt_tokens": 70,
+      "runs": [
+        {
+          "ttft": 0.28595806600060314,
+          "total": 7.007493073004298,
+          "out": 372,
+          "prompt": 70,
+          "decode_tps": 55.195725323668775
+        },
+        {
+          "ttft": 0.46346956599882105,
+          "total": 7.786379998993652,
+          "out": 400,
+          "prompt": 70,
+          "decode_tps": 54.48653286843794
+        },
+        {
+          "ttft": 0.46296280100068543,
+          "total": 8.040188785998907,
+          "out": 400,
+          "prompt": 77,
+          "decode_tps": 52.65779333887633
+        },
+        {
+          "ttft": 0.4625270510005066,
+          "total": 8.464748705999227,
+          "out": 400,
+          "prompt": 70,
+          "decode_tps": 49.86115321496475
+        },
+        {
+          "ttft": 7.206688760998077,
+          "total": 14.928769805002958,
+          "out": 400,
+          "prompt": 74,
+          "decode_tps": 51.670009382997584
+        },
+        {
+          "ttft": 7.978397050006606,
+          "total": 15.730399521002255,
+          "out": 400,
+          "prompt": 70,
+          "decode_tps": 51.47057182874626
+        },
+        {
+          "ttft": 8.23237986699678,
+          "total": 16.729466033997596,
+          "out": 400,
+          "prompt": 70,
+          "decode_tps": 46.957273606280665
+        },
+        {
+          "ttft": 15.121948820997204,
+          "total": 22.45020032899629,
+          "out": 386,
+          "prompt": 77,
+          "decode_tps": 52.53640647837439
+        },
+        {
+          "ttft": 8.656499258002441,
+          "total": 16.41667340300046,
+          "out": 400,
+          "prompt": 70,
+          "decode_tps": 51.41637191958943
+        },
+        {
+          "ttft": 15.922328396998637,
+          "total": 23.718282811998506,
+          "out": 400,
+          "prompt": 74,
+          "decode_tps": 51.180391618542664
+        },
+        {
+          "ttft": 16.61104195000371,
+          "total": 24.258350128999155,
+          "out": 400,
+          "prompt": 71,
+          "decode_tps": 52.17522174611941
+        },
+        {
+          "ttft": 16.927881247000187,
+          "total": 24.654742730999715,
+          "out": 400,
+          "prompt": 71,
+          "decode_tps": 51.638042279680185
+        },
+        {
+          "ttft": 22.644966423998994,
+          "total": 31.06079070099804,
+          "out": 397,
+          "prompt": 78,
+          "decode_tps": 47.05421441394538
+        },
+        {
+          "ttft": 23.91035986800125,
+          "total": 32.59856755199871,
+          "out": 400,
+          "prompt": 71,
+          "decode_tps": 45.92431655782189
+        },
+        {
+          "ttft": 24.450231933005853,
+          "total": 33.18919820600422,
+          "out": 400,
+          "prompt": 75,
+          "decode_tps": 45.657574080910344
+        },
+        {
+          "ttft": 24.846290737994423,
+          "total": 32.878557384996384,
+          "out": 400,
+          "prompt": 71,
+          "decode_tps": 49.67464571770989
+        },
+        {
+          "ttft": 31.253967399999965,
+          "total": 39.56854423399636,
+          "out": 400,
+          "prompt": 71,
+          "decode_tps": 47.988010450343126
+        },
+        {
+          "ttft": 32.79047841799911,
+          "total": 40.61572462999902,
+          "out": 400,
+          "prompt": 78,
+          "decode_tps": 50.98881098311499
+        },
+        {
+          "ttft": 33.07051901399973,
+          "total": 40.76441834199795,
+          "out": 400,
+          "prompt": 71,
+          "decode_tps": 51.859269661617816
+        },
+        {
+          "ttft": 33.379472135005926,
+          "total": 40.566703152006085,
+          "out": 400,
+          "prompt": 75,
+          "decode_tps": 55.51512106070253
+        }
+      ],
+      "ttft_p50": 16.61,
+      "ttft_p95": 33.07,
+      "ttft_max": 33.38,
+      "decode_p50": 51.5,
+      "decode_min": 45.7,
+      "e2e_p50": 24.3,
+      "e2e_max": 40.8,
+      "aggregate_tps": 195.1
+    },
+    {
+      "scenario": "rag",
+      "users": 1,
+      "errors": 0,
+      "wall_s": 5.79,
+      "prompt_tokens": 10026,
+      "runs": [
+        {
+          "ttft": 2.3174806339957286,
+          "total": 5.791666721997899,
+          "out": 400,
+          "prompt": 10026,
+          "decode_tps": 114.84704327667285
+        }
+      ],
+      "ttft_p50": 2.32,
+      "ttft_p95": 2.32,
+      "ttft_max": 2.32,
+      "decode_p50": 114.8,
+      "decode_min": 114.8,
+      "e2e_p50": 5.8,
+      "e2e_max": 5.8,
+      "aggregate_tps": 69.0
+    },
+    {
+      "scenario": "rag",
+      "users": 5,
+      "errors": 0,
+      "wall_s": 22.5,
+      "prompt_tokens": 10026,
+      "runs": [
+        {
+          "ttft": 4.203446523999446,
+          "total": 19.273297997002373,
+          "out": 400,
+          "prompt": 10026,
+          "decode_tps": 26.476704214025833
+        },
+        {
+          "ttft": 8.061643674998777,
+          "total": 15.61016772199946,
+          "out": 354,
+          "prompt": 10026,
+          "decode_tps": 46.76410882472586
+        },
+        {
+          "ttft": 9.02562102599768,
+          "total": 19.14605059200403,
+          "out": 400,
+          "prompt": 10026,
+          "decode_tps": 39.42520397950365
+        },
+        {
+          "ttft": 9.612352910000482,
+          "total": 19.949371998998686,
+          "out": 400,
+          "prompt": 10026,
+          "decode_tps": 38.59913545333972
+        },
+        {
+          "ttft": 18.417873054000665,
+          "total": 22.487921899999492,
+          "out": 400,
+          "prompt": 10026,
+          "decode_tps": 98.03322149124769
+        }
+      ],
+      "ttft_p50": 9.03,
+      "ttft_p95": 18.42,
+      "ttft_max": 18.42,
+      "decode_p50": 39.4,
+      "decode_min": 26.5,
+      "e2e_p50": 19.3,
+      "e2e_max": 22.5,
+      "aggregate_tps": 86.9
+    },
+    {
+      "scenario": "rag",
+      "users": 10,
+      "errors": 4,
+      "wall_s": 35.52,
+      "prompt_tokens": 10027,
+      "runs": [
+        {
+          "ttft": 4.305849329997727,
+          "total": 18.416242622995924,
+          "out": 400,
+          "prompt": 10027,
+          "decode_tps": 28.277028975371664
+        },
+        {
+          "ttft": 8.16361488399707,
+          "total": 24.410825759994623,
+          "out": 400,
+          "prompt": 10027,
+          "decode_tps": 24.558061260191653
+        },
+        {
+          "ttft": 9.127148817999114,
+          "total": 21.50502003300062,
+          "out": 400,
+          "prompt": 10027,
+          "decode_tps": 32.234945175098225
+        },
+        {
+          "ttft": 9.711526072998822,
+          "total": 15.412553845999355,
+          "out": 364,
+          "prompt": 10027,
+          "decode_tps": 63.67272962940643
+        },
+        {
+          "error": "'NoneType' object is not subscriptable"
+        },
+        {
+          "ttft": 21.21953324200149,
+          "total": 33.396241119997285,
+          "out": 400,
+          "prompt": 10027,
+          "decode_tps": 32.767477383687776
+        },
+        {
+          "error": "'NoneType' object is not subscriptable"
+        },
+        {
+          "ttft": 27.210312080998847,
+          "total": 33.42372697599785,
+          "out": 400,
+          "prompt": 10027,
+          "decode_tps": 64.21589524323305
+        },
+        {
+          "error": "'NoneType' object is not subscriptable"
+        },
+        {
+          "error": "'NoneType' object is not subscriptable"
+        }
+      ],
+      "ttft_p50": 9.13,
+      "ttft_p95": 27.21,
+      "ttft_max": 27.21,
+      "decode_p50": 32.2,
+      "decode_min": 24.6,
+      "e2e_p50": 21.5,
+      "e2e_max": 33.4,
+      "aggregate_tps": 66.6
+    },
+    {
+      "scenario": "rag",
+      "users": 20,
+      "errors": 20,
+      "wall_s": 0.03,
+      "prompt_tokens": null,
+      "runs": [
+        {
+          "error": "<urlopen error [Errno 32] Broken pipe>"
+        },
+        {
+          "error": "<urlopen error [Errno 32] Broken pipe>"
+        },
+        {
+          "error": "<urlopen error [Errno 32] Broken pipe>"
+        },
+        {
+          "error": "<urlopen error [Errno 104] Connection reset by peer>"
+        },
+        {
+          "error": "<urlopen error [Errno 104] Connection reset by peer>"
+        },
+        {
+          "error": "<urlopen error [Errno 32] Broken pipe>"
+        },
+        {
+          "error": "<urlopen error [Errno 32] Broken pipe>"
+        },
+        {
+          "error": "[Errno 104] Connection reset by peer"
+        },
+        {
+          "error": "<urlopen error [Errno 32] Broken pipe>"
+        },
+        {
+          "error": "<urlopen error [Errno 104] Connection reset by peer>"
+        },
+        {
+          "error": "<urlopen error [Errno 32] Broken pipe>"
+        },
+        {
+          "error": "<urlopen error [Errno 32] Broken pipe>"
+        },
+        {
+          "error": "<urlopen error [Errno 32] Broken pipe>"
+        },
+        {
+          "error": "<urlopen error [Errno 32] Broken pipe>"
+        },
+        {
+          "error": "<urlopen error [Errno 32] Broken pipe>"
+        },
+        {
+          "error": "<urlopen error [Errno 32] Broken pipe>"
+        },
+        {
+          "error": "<urlopen error [Errno 32] Broken pipe>"
+        },
+        {
+          "error": "[Errno 104] Connection reset by peer"
+        },
+        {
+          "error": "[Errno 104] Connection reset by peer"
+        },
+        {
+          "error": "[Errno 104] Connection reset by peer"
+        }
+      ]
+    }
+  ]
+}

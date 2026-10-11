@@ -164,6 +164,17 @@ De eerste ronde concludeerde dat llama.cpp de enige praktische runtime op sm_70 
 | VRAM per GPU | 27.0 GB | **24.5 GB** |
 | SM70-versnellingspaden aan | 4/8 | **8/8** |
 
+**De multi-user-les (en een crash).** Alle N requests tegelijk afgevuurd, unieke prompt per gebruiker, gemeten met [`scripts/bench_concurrency.py`](scripts/bench_concurrency.py). Met het profiel ongewijzigd (`--max-num-batched-tokens 8192`) **crashte de engine** bij 10 gelijktijdige RAG-vragen van ~6k tokens: `RuntimeError: SM70 GQA architecture requires KV in [8192, 262144] with 32-token alignment, got 8160` in het `q8000_prefill`-pad → `EngineDeadError`. De scheduler knipt gelijktijdige lange prompts in stukken, en een stuk van 8160 tokens valt net buiten wat de kernel accepteert. Met **`--max-num-batched-tokens 4096`** staat alleen dat ene pad uit (7/8 aan) en draait alles stabiel — dit is de productie-config op de c4130:
+
+| Gelijktijdig | Chat: wachten op 1e woord (p50 / max) | Chat: t/s per gebruiker | RAG ~6k: wachten (p50 / max) | RAG: klaar (max) | Totale doorvoer chat / RAG | Fouten |
+|---|---|---|---|---|---|---|
+| 1 | 0.3 s / 0.3 s | 100 | 2.4 s / 2.4 s | 5.9 s | 94 / 66 t/s | 0 |
+| 5 | 1.1 s / 10.7 s | 38 | 7.7 s / 18.5 s | 22.6 s | 125 / 89 t/s | 0 |
+| 10 | 7.9 s / 16.1 s | 51 | 18.9 s / 38.6 s | 43.6 s | 182 / 91 t/s | 0 |
+| 20 | 17.4 s / 34.0 s | 50 | 41.0 s / 79.4 s | 85.4 s | 191 / 92 t/s | 0 |
+
+`--max-num-seqs 4` betekent: maximaal 4 requests tegelijk in behandeling, de rest **wacht in de rij**. Dat zie je terug in de wachttijd tot het eerste woord, die lineair oploopt met het aantal gebruikers; de streamsnelheid per gebruiker blijft daarna redelijk (~30–50 t/s). Totale doorvoer verzadigt rond ~190 t/s (chat) en ~90 t/s (RAG, prefill-gebonden).
+
 **De taal-les.** 1Cat adverteert 229 t/s single-request (v1.5.1). Wij zagen 350–390 t/s op Engelse code/SQL-prompts, maar **~97 t/s op Nederlandse proza** — op precies dezelfde server. DFlash2 laat een kleine drafter 7 tokens vooruit raden en het grote model die in één keer controleren; de drafter raadt Engels en code veel beter dan Nederlands, dus op Nederlandse tekst worden minder gok-tokens geaccepteerd. Voor Nederlandstalige toepassingen is ~100 t/s de realistische verwachting — nog steeds ~4× llama.cpp Q8_0.
 
 **Andere opties op 1Cat-vLLM (nog niet zelf getest, cijfers uit de 1Cat-documentatie):**
@@ -187,6 +198,7 @@ De eerste ronde concludeerde dat llama.cpp de enige praktische runtime op sm_70 
 7. **Gebruik het officiële serving-profiel en controleer wat er écht aan staat.** Twee "redelijke" flags (`fp8_e5m2` KV, 4096-token prefill-budget) schakelden bij 1Cat-vLLM de helft van de V100-versnellingen uit, halveerden de context en kostten 2.5 GB/GPU. Vraag `/v1/sm70/acceleration` op: dat endpoint noemt per pad of het aan staat en waarom niet.
 8. **Speculatieve decoding maakt snelheid taal- en tekstafhankelijk.** Dezelfde server deed 350–390 t/s op Engelse code en ~97 t/s op Nederlandse proza. Meet met je eigen soort tekst, niet met de demo-prompt van de leverancier.
 9. **Tel tokens, niet stream-chunks.** Bij speculatieve decoding kan één SSE-chunk meerdere geaccepteerde tokens bevatten. Neem `usage.completion_tokens` (`stream_options.include_usage`) als bron — anders meet je een ondergrens (zie de 124 t/s-meting).
+10. **Test met gelijktijdige gebruikers vóór je naar productie gaat.** De volledige single-user-batterij (39/43, 5/5 tot 253k) liet niets zien van de kernel-crash die pas bij 10 gelijktijdige lange prompts optrad. Een officieel "release-profiel" is gevalideerd op het contract van de leverancier, niet op jouw verkeer.
 
 ## 💾 Hoeveel schijfruimte heb je nodig?
 
